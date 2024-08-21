@@ -49,7 +49,7 @@ add_rules_for_chain() {
     # 查找包含 "china_ip_route" 的规则的位置
     local position=$($ipt_cmd -t $table -L $chain --line-numbers | grep $route_rule | head -n 1 | awk '{print $1}')
     if [ -z "$position" ]; then
-        LOG_OUT "警告：未在 $chain 链中找到 'china_ip_route' 规则。请确认 $chain 链是否已正确配置，且包含必要的 'china_ip_route' 规则。"
+        LOG_OUT "警告：未在 $chain 链中找到 '$route_rule' 规则。请确认 $chain 链是否已正确配置，且包含必要的 '$route_rule' 规则。"
         return
     fi
 
