@@ -41,8 +41,13 @@ add_rules_for_chain() {
     local action=$7
     local action_modifiers=$8   # 用于动作的修饰，如 "REJECT --reject-with icmp-port-unreachable"
 
+    local route_rule="china_ip_route"
+    if [ "$ipt_cmd" = "ip6tables" ]; then
+        route_rule="china_ip6_route"
+    fi
+
     # 查找包含 "china_ip_route" 的规则的位置
-    local position=$($ipt_cmd -t $table -L $chain --line-numbers | grep "china_ip_route" | head -n 1 | awk '{print $1}')
+    local position=$($ipt_cmd -t $table -L $chain --line-numbers | grep $route_rule | head -n 1 | awk '{print $1}')
     if [ -z "$position" ]; then
         LOG_OUT "警告：未在 $chain 链中找到 'china_ip_route' 规则。请确认 $chain 链是否已正确配置，且包含必要的 'china_ip_route' 规则。"
         return
