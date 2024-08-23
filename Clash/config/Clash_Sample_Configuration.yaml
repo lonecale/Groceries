@@ -157,7 +157,7 @@ proxy-providers:
       additional-prefix: "[机场名称2] " # 为订阅节点添加机场名称前缀
 
 # 锚点 - 节点筛选组
-FilterCY: &FilterCY '^(?=.*((?i)🇭🇰|Hong Kong|香港 IEPL|香港高级|高级 专线 香港)).*$'
+FilterCY: &FilterCY '^(?=.*((?i)HKG|Hong Kong|香港 IEPL|香港高级|高级 专线 香港)).*$'
 FilterHK: &FilterHK '^(?=.*((?i)🇭🇰|香港|(\b(HK|Hong)\b)))(?!.*((?i)标准|回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 FilterTW: &FilterTW '^(?=.*((?i)🇹🇼|台湾|(\b(TW|Tai|Taiwan)\b)))(?!.*((?i)标准|回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 FilterJP: &FilterJP '^(?=.*((?i)🇯🇵|日本|川日|东京|大阪|泉日|埼玉|(\b(JP|Japan)\b)))(?!.*((?i)标准|回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
@@ -215,7 +215,7 @@ proxy-groups:
   - {name: TikTok, type: select, include-all-providers: true, filter: "(?i)实验性", proxies: [节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽冷门节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png}
   - {name: PikPak, type: select, proxies: [DIRECT, 节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽油管节点, 🔽奈飞节点, 🔽Disney节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili_2.png}
   - {name: EmbyProxy, type: select, proxies: [DIRECT, 节点选择, 手动切换, 🔽Emby节点, 🔽冷门节点, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
-  - {name: 哔哩哔哩东南亚, type: select, proxies: [节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png}
+  - {name: 哔哩哔哩东南亚, type: select, include-all-providers: true, filter: "(?i)实验性", proxies: [节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png}
   - {name: 哔哩哔哩, type: select, proxies: [DIRECT, 香港策略, 台湾策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili_3.png}
   - {name: 网易音乐, type: select, include-all-providers: true, filter: "(?i)网易|音乐|解锁|Music|NetEase", proxies: [DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netease_Music.png}
   - {name: 国内媒体, type: select, proxies: [DIRECT, 香港策略, 台湾策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/StreamingCN.png}
