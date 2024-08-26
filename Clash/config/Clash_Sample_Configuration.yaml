@@ -608,6 +608,7 @@ rules:
   - DOMAIN-SUFFIX,hubciddata.mypikpak.com, 国际媒体
   - RULE-SET, PikPak, PikPak
   - RULE-SET, Emby, EmbyProxy
+  - RULE-SET, Emby_Repcz, EmbyProxy
 #  - RULE-SET, Emby_Nebula, EmbyProxy
   - RULE-SET, Emby_ddgksf2013, EmbyProxy
   - RULE-SET, BiliBiliIntl, 哔哩哔哩东南亚
