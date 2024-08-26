@@ -188,9 +188,9 @@ RuleProvidersYaml: &RuleProvidersYaml {type: http, behavior: classical, interval
 
 RuleProvidersText: &RuleProvidersText {type: http, behavior: classical, interval: 42300, format: text}
 
-RuleProvidersDomain: &RuleProvidersDomain {type: http, behavior: domain, interval: 42300, format: mrs}
+RuleProvidersDomain: &RuleProvidersDomain {type: http, behavior: domain, interval: 42300, format: yaml}
 
-RuleProvidersIpcidr: &RuleProvidersIpcidr {type: http, behavior: ipcidr, interval: 42300, format: mrs}
+RuleProvidersIpcidr: &RuleProvidersIpcidr {type: http, behavior: ipcidr, interval: 42300, format: yaml}
 
 # 策略组
 proxy-groups: 
@@ -382,10 +382,15 @@ rule-providers:
     path: './rules/Emby.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Emby/Emby_No_Resolve.yaml'
 
-  Emby_Nebula:
+  Emby_Repcz:
     <<: *RuleProvidersText
-    path: './rules/Emby_Nebula.list'
-    url: 'https://raw.githubusercontent.com/Pegasus02/Clash_Rules/main/list/Nebula.list'
+    path: './rules/Emby_Repcz.list'
+    url: 'https://raw.githubusercontent.com/Repcz/Tool/X/Clash/Rules/Emby.list'
+
+#  Emby_Nebula:
+#    <<: *RuleProvidersText
+#    path: './rules/Emby_Nebula.list'
+#    url: 'https://raw.githubusercontent.com/Pegasus02/Clash_Rules/main/list/Nebula.list'
 
   Emby_ddgksf2013:
     <<: *RuleProvidersText
@@ -536,13 +541,13 @@ rule-providers:
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia_Classical_No_Resolve.yaml'
 
 #  geolocation-!cn@cn:
-#    <<: *RuleProvidersText
-#    path: './rules/geolocation-!cn@cn.txt'
+#    <<: *RuleProvidersDomain
+#    path: './rules/geolocation-!cn@cn.yaml'
 #    url: 'https://raw.githubusercontent.com/yuumimi/rules/release/clash/geolocation-!cn@cn.txt'
 
 #  cn@!cn:
-#    <<: *RuleProvidersText
-#    path: './rules/cn@!cn.txt'
+#    <<: *RuleProvidersDomain
+#    path: './rules/cn@!cn.yaml'
 #    url: 'https://raw.githubusercontent.com/yuumimi/rules/release/clash/cn@!cn.txt'
 
 #  PrivateTracker:
@@ -551,20 +556,18 @@ rule-providers:
 #    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrivateTracker/PrivateTracker_No_Resolve.yaml'
 
   category-pt:
-    type: http
-    behavior: domain
-    url: "https://raw.githubusercontent.com/ixff/clash-rules/release/category-pt.txt"
-    path: ./rules/category-pt.yaml
-    interval: 42300
+    <<: *RuleProvidersDomain
+    path: './rules/category-pt.yaml'
+    url: 'https://raw.githubusercontent.com/ixff/clash-rules/release/category-pt.txt'
 
 #  geolocation-!cn:
-#    <<: *RuleProvidersText
-#    path: './rules/geolocation-!cn.txt'
+#    <<: *RuleProvidersDomain
+#    path: './rules/geolocation-!cn.yaml'
 #    url: 'https://raw.githubusercontent.com/yuumimi/rules/release/clash/geolocation-!cn.txt'
 
 #  cn:
-#    <<: *RuleProvidersText
-#    path: './rules/cn.txt'
+#    <<: *RuleProvidersDomain
+#    path: './rules/cn.yaml'
 #    url: 'https://raw.githubusercontent.com/yuumimi/rules/release/clash/cn.txt'
 
   ChinaCompanyIp:
@@ -605,7 +608,7 @@ rules:
   - DOMAIN-SUFFIX,hubciddata.mypikpak.com, 国际媒体
   - RULE-SET, PikPak, PikPak
   - RULE-SET, Emby, EmbyProxy
-  - RULE-SET, Emby_Nebula, EmbyProxy
+#  - RULE-SET, Emby_Nebula, EmbyProxy
   - RULE-SET, Emby_ddgksf2013, EmbyProxy
   - RULE-SET, BiliBiliIntl, 哔哩哔哩东南亚
   - RULE-SET, BiliBili, 哔哩哔哩
