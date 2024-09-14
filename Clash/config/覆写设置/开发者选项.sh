@@ -37,6 +37,45 @@ ruby_edit "$CONFIG_FILE" "['dns']['proxy-server-nameserver']" "['https://dns.ali
 #ruby_edit "$CONFIG_FILE" "['tun']['mtu']" "1500"
 ruby_edit "$CONFIG_FILE" "['dns']['cache-algorithm']" "'arc'"
 
+# 定义要删除的规则，使用一个字符串变量
+rules_to_remove="DOMAIN-SUFFIX,cloudfront.net,🎬 EmbyProxy"
+# rules_to_remove="DOMAIN-SUFFIX,aaa.net,🎬 EmbyProxy;DOMAIN-SUFFIX,bbb.net,🎬 EmbyProxy;"
+
+remove_specified_rule() {
+  local config_path=$1
+  echo "[$LOGTIME] 正在检查并删除指定的规则" | tee -a "$LOG_FILE"
+  
+  # 使用分号分割字符串并逐行处理每个规则
+  echo "$rules_to_remove" | tr ';' '\n' | while read -r rule; do
+    echo "[$LOGTIME] 正在删除规则: $rule" | tee -a "$LOG_FILE"
+    ruby -ryaml -e '
+      require "yaml"
+      yaml = YAML.load_file(ARGV[0])
+      found = false
+      yaml["rules"].delete_if do |r|
+        if r == ARGV[1]
+          found = true
+          true  # 返回 true 表示删除这个元素
+        else
+          false
+        end
+      end
+      File.open(ARGV[0], "w") { |f| f.write(yaml.to_yaml) }
+      puts "找到并试图删除规则: #{found ? "是" : "否"}"
+    ' "$config_path" "$rule" | while read -r line; do
+      echo "[$LOGTIME] $line" | tee -a "$LOG_FILE"
+    done
+    if [ $? -eq 0 ]; then
+      echo "[$LOGTIME] 成功删除规则: $rule" | tee -a "$LOG_FILE"
+    else
+      echo "[$LOGTIME] 删除规则时发生错误: $rule" | tee -a "$LOG_FILE"
+    fi
+  done
+  echo "[$LOGTIME] 所有指定规则的删除操作已完成" | tee -a "$LOG_FILE"
+}
+
+# 调用函数删除指定规则
+remove_specified_rule "$CONFIG_FILE"
 
 append_no_resolve() {
   local config_path=$1
