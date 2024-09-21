@@ -16,8 +16,8 @@ china_ip_route=$(uci -q get openclash.config.china_ip_route)
 china_ip6_route=$(uci -q get openclash.config.china_ip6_route)
 disable_udp_quic=$(uci -q get openclash.config.disable_udp_quic)
 
-china_ip_route_status=$([ "$china_ip_route" == "1" ] && echo "是" || echo "否")
-china_ip6_route_status=$([ "$china_ip6_route" == "1" ] && echo "是" || echo "否")
+china_ip_route_status=$([ "$china_ip_route" == "1" ] && echo "绕过中国大陆" || ([ "$china_ip_route" == "2" ] && echo "海外用户回国模式" || echo "停用"))
+china_ip6_route_status=$([ "$china_ip6_route" == "1" ] && echo "绕过中国大陆" || ([ "$china_ip6_route" == "2" ] && echo "海外用户回国模式" || echo "停用"))
 disable_udp_quic_status=$([ "$disable_udp_quic" == "1" ] && echo "是" || echo "否")
 
 LOG_OUT "当前运行模式:$en_mode, 代理端口:$proxy_port, DNS端口:$dns_port, IPV4 绕过大陆IP:$china_ip_route_status, IPV6 绕过大陆IP:$china_ip6_route_status, 禁用 QUIC:$disable_udp_quic_status"
