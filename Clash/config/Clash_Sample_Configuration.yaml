@@ -168,7 +168,7 @@ FilterUK: &FilterUK '^(?=.*((?i)🇬🇧|英国|伦敦|(\b(UK|United Kingdom)\b)
 FilterFR: &FilterFR '^(?=.*((?i)🇫🇷|法国|(\b(FR|France)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 FilterDE: &FilterDE '^(?=.*((?i)🇩🇪|德国|(\b(DE|Germany)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 FilterGame: &FilterGame '^(?=.*((?i)游戏|🎮|(\b(GAME)\b)))(?!.*((?i)回国|校园)).*$'
-FilterStreaming:: &FilterStreaming '^(?=.*((?i)🇭🇰|香港|🇹🇼|台湾|🇯🇵|日本|川日|东京|大阪|泉日|埼玉|🇸🇬|新加坡|狮|🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(\b(HK|Hong|TW|Tai|Taiwan|JP|Japan|SG|Singapore|US|United States)\b)))(?!.*((?i)标准|回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterStreaming: &FilterStreaming '^(?=.*((?i)🇭🇰|香港|🇹🇼|台湾|🇯🇵|日本|川日|东京|大阪|泉日|埼玉|🇸🇬|新加坡|狮|🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(\b(HK|Hong|TW|Tai|Taiwan|JP|Japan|SG|Singapore|US|United States)\b)))(?!.*((?i)标准|回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 FilterFinal: &FilterFinal '^(?=.*(.))(?!.*((?i)🇭🇰|香港|🇹🇼|台湾|🇯🇵|日本|川日|东京|大阪|泉日|埼玉|🇸🇬|新加坡|狮|🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|🇰🇷|韩国|韓|首尔|🇬🇧|英国|伦敦|🇫🇷|法国|🇩🇪|德国|游戏|🎮|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|(\b(HK|Hong|TW|Tai|Taiwan|JP|Japan|SG|Singapore|US|United States|KR|Korea|UK|United Kingdom|FR|France|DE|Germany|GAME|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|Traffic)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$'
 FilterAll: &FilterAll '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|Traffic)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$'
 
