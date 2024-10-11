@@ -194,8 +194,8 @@ RuleProvidersIpcidr: &RuleProvidersIpcidr {type: http, behavior: ipcidr, interva
 
 # 策略组
 proxy-groups: 
-  - {name: 节点选择, type: select, proxies: [手动切换, 自动选择, 负载均衡, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available.png}
-  - {name: 手动切换, type: select, include-all-providers: true, filter: *FilterAll, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png}
+  - {name: 节点选择, type: select, proxies: [手动切换, 自动选择, 负载均衡, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png}
+  - {name: 手动切换, type: select, include-all-providers: true, filter: *FilterAll, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png}
   - {name: 自动选择, <<: *UrlTest, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png}
   - {name: 负载均衡, <<: *LoadBalance, filter: *FilterCY, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin.png}
   - {name: ProxyDNS, type: select, proxies: [节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png}
@@ -226,7 +226,7 @@ proxy-groups:
   - {name: ESET, type: select, proxies: [DIRECT, 节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://www.eset.com/typo3conf/ext/eset_base/Resources/Public/img/device/apple-touch-icon.png}
   - {name: Speedtest, type: select, proxies: [DIRECT, 节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽油管节点, 🔽奈飞节点, 🔽Disney节点, 🔽冷门节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png}
   - {name: Developer, type: select, proxies: [节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png}
-  - {name: 全球直连, type: select, proxies: [DIRECT, 节点选择, 手动切换], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png}
+  - {name: 全球直连, type: select, proxies: [DIRECT, 节点选择, 手动切换], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png}
   - {name: 广告拦截, type: select, proxies: [REJECT, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png}
   - {name: 应用净化, type: select, proxies: [REJECT, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hijacking.png}
   - {name: 漏网之鱼, type: select, proxies: [节点选择, 手动切换, 负载均衡, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/shindgewongxj/WHATSINStash/main/icon/fallback.png}
