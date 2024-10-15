@@ -157,7 +157,7 @@ proxy-providers:
       additional-prefix: "[机场名称2] " # 为订阅节点添加机场名称前缀
 
 # 锚点 - 节点筛选组
-FilterCY: &FilterCY '^(?=.*((?i)HKG|Hong Kong|香港 IEPL|香港高级|高级 专线 香港)).*$'
+FilterZY: &FilterZY '^(?=.*((?i)HKG|Hong Kong|香港 IEPL|香港高级|高级 专线 香港)).*$'
 FilterHK: &FilterHK '^(?=.*((?i)🇭🇰|香港|(\b(HK|Hong)\b)))(?!.*((?i)标准|回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 FilterTW: &FilterTW '^(?=.*((?i)🇹🇼|台湾|(\b(TW|Tai|Taiwan)\b)))(?!.*((?i)标准|回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 FilterJP: &FilterJP '^(?=.*((?i)🇯🇵|日本|川日|东京|大阪|泉日|埼玉|(\b(JP|Japan)\b)))(?!.*((?i)标准|回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
@@ -173,7 +173,7 @@ FilterFinal: &FilterFinal '^(?=.*(.))(?!.*((?i)🇭🇰|香港|🇹🇼|台湾|�
 FilterAll: &FilterAll '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|Traffic)\b|(\d{4}-\d{2}-\d{2}|\d+G)))).*$'
 
 # 锚点 - 策略筛选组
-#Select: &Select {type: select, proxies: [节点选择, 负载均衡, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略，DIRECT]}
+#Select: &Select {type: select, proxies: [节点选择, HK负载均衡, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略，DIRECT]}
 
 # 策略组参数锚点
 # 锚点 - 时延优选参数 [每 300 秒一次惰性健康检查，容差 20ms，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
@@ -194,42 +194,43 @@ RuleProvidersIpcidr: &RuleProvidersIpcidr {type: http, behavior: ipcidr, interva
 
 # 策略组
 proxy-groups: 
-  - {name: 节点选择, type: select, proxies: [手动切换, 自动选择, 负载均衡, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png}
+  #- {name: 节点选择, type: select, proxies: [手动切换, 自动选择, HK负载均衡, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png}
   - {name: 手动切换, type: select, include-all-providers: true, filter: *FilterAll, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png}
   - {name: 自动选择, <<: *UrlTest, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png}
-  - {name: 负载均衡, <<: *LoadBalance, filter: *FilterCY, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin.png}
-  - {name: ProxyDNS, type: select, proxies: [节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png}
-  - {name: 国际CDN下载, type: select, include-all-providers: true, filter: "(?i)实验性", proxies: [DIRECT, 节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Download.png}
-  - {name: 苹果服务, type: select, proxies: [DIRECT, 节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽冷门节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_1.png}
-  - {name: 微软云盘, type: select, proxies: [DIRECT, 节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png}
-  - {name: 微软服务, type: select, proxies: [DIRECT, 节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽冷门节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png}
-  - {name: 谷歌推送, type: select, proxies: [节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png}
-  - {name: 谷歌服务, type: select, proxies: [节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png}
-  - {name: 国际电商, type: select, proxies: [DIRECT, 节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽冷门节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Amazon.png}
-  - {name: 电报消息, type: select, proxies: [节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png}
-  - {name: OpenAi, type: select, include-all-providers: true, filter: *FilterUS, proxies: [节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ChatGPT.png}
-  - {name: 油管视频, type: select, proxies: [节点选择, 手动切换, 🔽油管节点, 🔽冷门节点, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png}
-  - {name: 奈飞视频, type: select, proxies: [节点选择, 手动切换, 🔽奈飞节点, 🔽冷门节点, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png}
-  - {name: Disney视频, type: select, proxies: [节点选择, 手动切换, 🔽Disney节点, 🔽冷门节点, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Disney+.png}
-  - {name: 巴哈姆特, type: select, proxies: [节点选择, 手动切换, 台湾策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png}
-  - {name: TikTok, type: select, include-all-providers: true, filter: "(?i)实验性", proxies: [节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽冷门节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png}
-  - {name: PikPak, type: select, proxies: [DIRECT, 节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽油管节点, 🔽奈飞节点, 🔽Disney节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili_2.png}
-  - {name: EmbyProxy, type: select, proxies: [DIRECT, 节点选择, 手动切换, 🔽Emby节点, 🔽冷门节点, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
-  - {name: 哔哩哔哩东南亚, type: select, include-all-providers: true, filter: "(?i)实验性", proxies: [节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png}
+  - {name: HK负载均衡, <<: *LoadBalance, filter: *FilterZY, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin.png}
+  - {name: ProxyDNS, type: select, proxies: [手动切换, HK负载均衡, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png}
+  - {name: 国际CDN下载, type: select, include-all-providers: true, filter: "(?i)实验性", proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Download.png}
+  - {name: 苹果服务, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_1.png}
+  - {name: 微软云盘, type: select, proxies: [DIRECT, 手动切换, HK负载均衡, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png}
+  - {name: 微软服务, type: select, proxies: [DIRECT, 手动切换, HK负载均衡, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png}
+  - {name: 谷歌推送, type: select, proxies: [手动切换, HK负载均衡, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png}
+  - {name: 谷歌服务, type: select, proxies: [手动切换, HK负载均衡, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png}
+  - {name: 国际电商, type: select, proxies: [手动切换, HK负载均衡, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽冷门地区节点, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Amazon.png}
+  - {name: 电报消息, type: select, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png}
+  - {name: OpenAi, type: select, include-all-providers: true, filter: *FilterUS, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ChatGPT.png}
+  - {name: 油管视频, type: select, proxies: [手动切换, 🔽油管节点, 🔽冷门地区节点, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png}
+  - {name: 奈飞视频, type: select, proxies: [手动切换, 🔽奈飞节点, 🔽冷门地区节点, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png}
+  - {name: Disney视频, type: select, proxies: [手动切换, 🔽Disney节点, 🔽冷门地区节点, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Disney+.png}
+  - {name: 巴哈姆特, type: select, proxies: [台湾策略, 手动切换], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png}
+  - {name: TikTok, type: select, include-all-providers: true, filter: "(?i)实验性", proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png}
+  - {name: PikPak, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽油管节点, 🔽奈飞节点, 🔽Disney节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili_2.png}
+  - {name: EmbyProxy, type: select, proxies: [DIRECT, 手动切换, 🔽Emby节点, 🔽冷门地区节点, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
+  - {name: 哔哩哔哩东南亚, type: select, include-all-providers: true, filter: "(?i)实验性", proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png}
   - {name: 哔哩哔哩, type: select, proxies: [DIRECT, 香港策略, 台湾策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili_3.png}
   - {name: 网易音乐, type: select, include-all-providers: true, filter: "(?i)网易|音乐|解锁|Music|NetEase", proxies: [DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netease_Music.png}
   - {name: 国内媒体, type: select, proxies: [DIRECT, 香港策略, 台湾策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/StreamingCN.png}
-  - {name: 国际媒体, type: select, include-all-providers: true, filter: "(?i)实验性", proxies: [节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽油管节点, 🔽奈飞节点, 🔽Disney节点, 🔽冷门节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming!CN.png}
-  - {name: Nintendo, type: select, include-all-providers: true, filter: *FilterGame, proxies: [DIRECT, 节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽冷门节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Nintendo.png}
-  - {name: 游戏平台, type: select, include-all-providers: true, filter: *FilterGame, proxies: [DIRECT, 节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽冷门节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png}
-  - {name: 1Password, type: select, proxies: [DIRECT, 节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://1password.com/img/favicon/apple-touch-icon-v2.png}
-  - {name: ESET, type: select, proxies: [DIRECT, 节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://www.eset.com/typo3conf/ext/eset_base/Resources/Public/img/device/apple-touch-icon.png}
-  - {name: Speedtest, type: select, proxies: [DIRECT, 节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽油管节点, 🔽奈飞节点, 🔽Disney节点, 🔽冷门节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png}
-  - {name: Developer, type: select, proxies: [节点选择, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png}
-  - {name: 全球直连, type: select, proxies: [DIRECT, 节点选择, 手动切换], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png}
+  - {name: 国际媒体, type: select, include-all-providers: true, filter: "(?i)实验性", proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽油管节点, 🔽奈飞节点, 🔽Disney节点, 🔽冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Streaming!CN.png}
+  - {name: Nintendo, type: select, include-all-providers: true, filter: *FilterGame, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Nintendo.png}
+  - {name: 游戏平台, type: select, include-all-providers: true, filter: *FilterGame, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png}
+  - {name: 1Password, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://1password.com/img/favicon/apple-touch-icon-v2.png}
+  - {name: ESET, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://www.eset.com/typo3conf/ext/eset_base/Resources/Public/img/device/apple-touch-icon.png}
+  - {name: Speedtest, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🔽油管节点, 🔽奈飞节点, 🔽Disney节点, 🔽冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png}
+  - {name: Developer, type: select, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png}
+  - {name: 全球直连, type: select, proxies: [DIRECT, 手动切换], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png}
   - {name: 广告拦截, type: select, proxies: [REJECT, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png}
   - {name: 应用净化, type: select, proxies: [REJECT, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hijacking.png}
-  - {name: 漏网之鱼, type: select, proxies: [节点选择, 手动切换, 负载均衡, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/shindgewongxj/WHATSINStash/main/icon/fallback.png}
+  #- {name: 漏网之鱼, type: select, proxies: [手动切换, HK负载均衡, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/shindgewongxj/WHATSINStash/main/icon/fallback.png}
+  - {name: 漏网之鱼, <<: *FallBack, proxies: [香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/shindgewongxj/WHATSINStash/main/icon/fallback.png}
 
   - {name: 香港策略, type: select, proxies: [⏱香港时延优选策略组, 🚥香港故障转移策略组, 🎛香港负载均衡策略组], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
   - {name: 台湾策略, type: select, proxies: [⏱台湾时延优选策略组, 🚥台湾故障转移策略组, 🎛台湾负载均衡策略组], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png}
@@ -245,7 +246,7 @@ proxy-groups:
   - {name: 🔽奈飞节点, type: select, include-all-providers: true, filter: *FilterStreaming}
   - {name: 🔽Disney节点, type: select, include-all-providers: true, filter: *FilterStreaming}
   - {name: 🔽Emby节点, type: select, include-all-providers: true, filter: *FilterStreaming}
-  - {name: 🔽冷门节点, type: select, include-all-providers: true, filter: *FilterFinal}
+  - {name: 🔽冷门地区节点, type: select, include-all-providers: true, filter: *FilterFinal}
 
 # 时延优选策略组
   - {name: ⏱香港时延优选策略组, <<: *UrlTest, filter: *FilterHK}
@@ -299,12 +300,12 @@ rule-providers:
 
   BanAD:
     <<: *RuleProvidersText
-    path: './rules/BanAD.list'
+    path: './rules/BanAD.text'
     url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list'
 
   BanProgramAD:
     <<: *RuleProvidersText
-    path: './rules/BanProgramAD.list'
+    path: './rules/BanProgramAD.text'
     url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list'
 
   BlockHttpDNS:
@@ -389,17 +390,17 @@ rule-providers:
 
   Emby_Repcz:
     <<: *RuleProvidersText
-    path: './rules/Emby_Repcz.list'
+    path: './rules/Emby_Repcz.text'
     url: 'https://raw.githubusercontent.com/Repcz/Tool/X/Clash/Rules/Emby.list'
 
 #  Emby_Nebula:
 #    <<: *RuleProvidersText
-#    path: './rules/Emby_Nebula.list'
+#    path: './rules/Emby_Nebula.text'
 #    url: 'https://raw.githubusercontent.com/Pegasus02/Clash_Rules/main/list/Nebula.list'
 
   Emby_ddgksf2013:
     <<: *RuleProvidersText
-    path: './rules/Emby_ddgksf2013.list'
+    path: './rules/Emby_ddgksf2013.text'
     url: 'https://raw.githubusercontent.com/ddgksf2013/Filter/master/Emby.list'
 
   BiliBiliIntl:
@@ -492,7 +493,7 @@ rule-providers:
 
 #  GoogleCN:
 #    <<: *RuleProvidersText
-#    path: './rules/GoogleCN.list'
+#    path: './rules/GoogleCN.text'
 #    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/GoogleCN.list'
 
   Google:
@@ -582,7 +583,7 @@ rule-providers:
 
   ChinaCompanyIp:
     <<: *RuleProvidersText
-    path: './rules/ChinaCompanyIp.list'
+    path: './rules/ChinaCompanyIp.text'
     url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list'
 
   CloudCN:
@@ -655,14 +656,14 @@ rules:
   - RULE-SET, IPTVMainland, 国内媒体
   - RULE-SET, GlobalMedia, 国际媒体
 #  - RULE-SET, geolocation-!cn@cn, 全球直连
-#  - RULE-SET, cn@!cn, 节点选择
+#  - RULE-SET, cn@!cn, 漏网之鱼
 # Transmission检测地址
   - DOMAIN-SUFFIX,portcheck.transmissionbt.com, 全球直连
   - DOMAIN-SUFFIX,fsm.name, 国际媒体
 #  - RULE-SET, PrivateTracker, 全球直连
   - RULE-SET, category-pt, 全球直连
-#  - RULE-SET, geolocation-!cn, 节点选择
-  - GEOSITE, geolocation-!cn, 节点选择
+#  - RULE-SET, geolocation-!cn, 漏网之鱼
+  - GEOSITE, geolocation-!cn, 漏网之鱼
 #  - RULE-SET, cn, 全球直连
   - GEOSITE, cn, 全球直连
   - RULE-SET, ChinaCompanyIp, 全球直连
