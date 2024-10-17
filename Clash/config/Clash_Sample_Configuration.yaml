@@ -300,12 +300,12 @@ rule-providers:
 
   BanAD:
     <<: *RuleProvidersText
-    path: './rules/BanAD.text'
+    path: './rules/BanAD.txt'
     url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list'
 
   BanProgramAD:
     <<: *RuleProvidersText
-    path: './rules/BanProgramAD.text'
+    path: './rules/BanProgramAD.txt'
     url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list'
 
   BlockHttpDNS:
@@ -390,17 +390,17 @@ rule-providers:
 
   Emby_Repcz:
     <<: *RuleProvidersText
-    path: './rules/Emby_Repcz.text'
+    path: './rules/Emby_Repcz.txt'
     url: 'https://raw.githubusercontent.com/Repcz/Tool/X/Clash/Rules/Emby.list'
 
 #  Emby_Nebula:
 #    <<: *RuleProvidersText
-#    path: './rules/Emby_Nebula.text'
+#    path: './rules/Emby_Nebula.txt'
 #    url: 'https://raw.githubusercontent.com/Pegasus02/Clash_Rules/main/list/Nebula.list'
 
   Emby_ddgksf2013:
     <<: *RuleProvidersText
-    path: './rules/Emby_ddgksf2013.text'
+    path: './rules/Emby_ddgksf2013.txt'
     url: 'https://raw.githubusercontent.com/ddgksf2013/Filter/master/Emby.list'
 
   BiliBiliIntl:
@@ -493,7 +493,7 @@ rule-providers:
 
 #  GoogleCN:
 #    <<: *RuleProvidersText
-#    path: './rules/GoogleCN.text'
+#    path: './rules/GoogleCN.txt'
 #    url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/GoogleCN.list'
 
   Google:
@@ -583,7 +583,7 @@ rule-providers:
 
   ChinaCompanyIp:
     <<: *RuleProvidersText
-    path: './rules/ChinaCompanyIp.text'
+    path: './rules/ChinaCompanyIp.txt'
     url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list'
 
   CloudCN:
