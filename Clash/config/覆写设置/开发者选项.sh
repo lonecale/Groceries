@@ -32,7 +32,7 @@ ruby_edit() {
 # 添加 proxy-server-nameserver 并赋值
 #ruby_edit "$CONFIG_FILE" "['dns']['proxy-server-nameserver']" "['https://doh.pub/dns-query']"
 ruby_edit "$CONFIG_FILE" "['dns']['proxy-server-nameserver']" "['https://dns.alidns.com/dns-query', 'https://doh.pub/dns-query']"
-#ruby_edit "$CONFIG_FILE" "['dns']['proxy-server-nameserver']" "['8.134.187.254:5553']"
+#ruby_edit "$CONFIG_FILE" "['dns']['proxy-server-nameserver']" "['223.5.5.5']"
 #ruby_edit "$CONFIG_FILE" "['dns']['prefer-h3']" "true"
 #ruby_edit "$CONFIG_FILE" "['tun']['mtu']" "1500"
 ruby_edit "$CONFIG_FILE" "['dns']['cache-algorithm']" "'arc'"
@@ -104,6 +104,70 @@ append_no_resolve() {
 
 # 调用函数为IP-CIDR 规则追加 ',no-resolve'
 append_no_resolve "$CONFIG_FILE"
+
+# 为指定 type 的 proxy-groups 项添加自定义参数
+append_proxy_groups_custom_params() {
+  local config_path=$1
+  local type=$2
+  shift 2 # 移除前两个参数
+  echo "[$LOGTIME] 正在为 type '$type' 的代理组添加自定义参数" | tee -a "$LOG_FILE"
+  
+  local key
+  local value
+  local error_occurred=0
+  local changes=""
+
+  if [ $(($# % 2)) -ne 0 ]; then
+    echo "[$LOGTIME] 错误：参数应该成对出现。" | tee -a "$LOG_FILE"
+    return 1 # 提前返回并指示错误
+  fi
+
+  while [ $# -gt 1 ]; do
+    key="$1"
+    value="$2"
+    changes+="$key: $value, "
+    shift 2 # 移动到下一对参数
+
+    # 添加参数并重新排序
+    ruby -ryaml -e '
+      require "yaml"
+      yaml = YAML.load_file(ARGV[0])
+      found = false
+      yaml["proxy-groups"].each do |group|
+        if group["type"] == ARGV[1]
+          found = true
+          group[ARGV[2]] = ARGV[3] =~ /^[0-9]+$/ ? ARGV[3].to_i : (ARGV[3] =~ /^[0-9]+\.[0-9]+$/ ? ARGV[3].to_f : (ARGV[3] == "true" || ARGV[3] == "false" ? eval(ARGV[3]) : ARGV[3]))
+          puts "#{group["name"]} (类型: #{ARGV[1]}) 已添加或更新 #{ARGV[2]}: #{group[ARGV[2]]}"
+          # 重新排序，确保特定的键在 'proxies' 前
+          if group.key?("proxies")
+            proxies_value = group.delete("proxies")  # 删除并缓存 'proxies'
+            group["proxies"] = proxies_value  # 重新插入，确保其在末尾
+          end
+        end
+      end
+      puts "没有找到匹配类型的组: #{ARGV[1]}" unless found
+      File.open(ARGV[0], "w") { |f| f.write(yaml.to_yaml) }
+    ' "$config_path" "$type" "$key" "$value" | while read -r line; do
+      echo "[$LOGTIME] $line" | tee -a "$LOG_FILE"
+    done
+
+    if [ $? -ne 0 ]; then
+      echo "[$LOGTIME] 在添加 $key: $value 时发生错误" | tee -a "$LOG_FILE"
+      error_occurred=1
+    fi
+  done
+
+  if [ $error_occurred -eq 0 ]; then
+    echo "[$LOGTIME] 自定义参数的添加已完成" | tee -a "$LOG_FILE"
+  else
+    echo "[$LOGTIME] 在添加自定义参数时至少发生一次错误" | tee -a "$LOG_FILE"
+  fi
+}
+
+# 调用函数为指定 type 的 proxy-groups 项添加自定义参数
+append_proxy_groups_custom_params "$CONFIG_FILE" "url-test" "lazy" "true" "timeout" "2000" "max-failed-times" "3"
+append_proxy_groups_custom_params "$CONFIG_FILE" "load-balance" "lazy" "true" "timeout" "2000" "max-failed-times" "3"
+append_proxy_groups_custom_params "$CONFIG_FILE" "fallback" "lazy" "true" "timeout" "2000" "max-failed-times" "3"
 
 #Simple Demo:
     #General Demo
