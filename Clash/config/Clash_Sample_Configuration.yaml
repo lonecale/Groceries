@@ -326,12 +326,12 @@ rule-providers:
   ChinaDownloadCDN:
     <<: *RuleProvidersYaml
     path: './rules/ChinaDownloadCDN.yaml'
-    url: 'https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/ChinaDownloadCDN.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/ChinaDownloadCDN.yaml'
 
   InternationalDownloadCDN:
     <<: *RuleProvidersYaml
     path: './rules/InternationalDownloadCDN.yaml'
-    url: 'https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/InternationalDownloadCDN.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/InternationalDownloadCDN.yaml'
 
   OpenAI:
     <<: *RuleProvidersYaml
@@ -341,7 +341,7 @@ rule-providers:
   AI:
     <<: *RuleProvidersYaml
     path: './rules/AI.yaml'
-    url: 'https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/AI.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/AI.yaml'
 
   Nintendo:
     <<: *RuleProvidersYaml
@@ -376,7 +376,7 @@ rule-providers:
   TikTok:
     <<: *RuleProvidersYaml
     path: './rules/TikTok.yaml'
-    url: 'https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/TikTok.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/TikTok.yaml'
 
   PikPak:
     <<: *RuleProvidersYaml
@@ -422,24 +422,24 @@ rule-providers:
   1Password:
     <<: *RuleProvidersYaml
     path: './rules/1PasswordUS.yaml'
-    url: 'https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/1PasswordUS.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/1PasswordUS.yaml'
 
 #欧盟数据中心
 #  1Password:
 #    <<: *RuleProvidersYaml
 #    path: './rules/1PasswordEU.yaml'
-#    url: 'https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/1PasswordEU.yaml'
+#    url: 'https://kelee.one/Tool/Clash/Rule/1PasswordEU.yaml'
 
 #加拿大数据中心
 #  1Password:
 #    <<: *RuleProvidersYaml
 #    path: './rules/1PasswordCA.yaml'
-#    url: 'https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/1PasswordCA.yaml'
+#    url: 'https://kelee.one/Tool/Clash/Rule/1PasswordCA.yaml'
 
   ESET_China:
     <<: *RuleProvidersYaml
     path: './rules/ESET_China.yaml'
-    url: 'https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/ESET_China.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/ESET_China.yaml'
 
   Speedtest:
     <<: *RuleProvidersYaml
@@ -534,7 +534,7 @@ rule-providers:
 #  Telegram_lodepuly:
 #    <<: *RuleProvidersYaml
 #    path: './rules/Telegram_lodepuly.yaml'
-#    url: 'https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/Telegram.yaml'
+#    url: 'https://kelee.one/Tool/Clash/Rule/Telegram.yaml'
 
   ChinaMedia:
     <<: *RuleProvidersYaml
