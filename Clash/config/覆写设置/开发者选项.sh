@@ -40,74 +40,66 @@ ruby_edit "$CONFIG_FILE" "['dns']['cache-algorithm']" "'arc'"
 rules_to_remove="DOMAIN-SUFFIX,cloudfront.net,🎬 EmbyProxy"
 # rules_to_remove="DOMAIN-SUFFIX,aaa.net,🎬 EmbyProxy;DOMAIN-SUFFIX,bbb.net,🎬 EmbyProxy;"
 
+# 删除指定的规则
 remove_specified_rule() {
   local config_path=$1
   echo "[$LOGTIME] 正在检查并删除指定的规则" | tee -a "$LOG_FILE"
 
-  rules_found=false
-  rules_deleted=""
-  delete_errors=""
-
-  echo "$rules_to_remove" | tr ';' '\n' | while read -r rule; do
-    echo "[$LOGTIME] 正在检查规则: $rule" | tee -a "$LOG_FILE"
-    found=$(ruby -ryaml -e '
-      require "yaml"
-      yaml = YAML.load_file(ARGV[0])
-      found = false
-      yaml["rules"].delete_if do |r|
-        if r == ARGV[1]
-          found = true
-          true  # 返回 true 表示删除这个元素
-        else
-          false
-        end
+  ruby -ryaml -e '
+    require "yaml"
+    yaml = YAML.load_file(ARGV[0])
+    rules_to_remove = ARGV[1].split(";")
+    rules_found = false
+    rules_to_remove.each do |rule|
+      original_size = yaml["rules"].size
+      yaml["rules"].delete_if { |r| r == rule }
+      if yaml["rules"].size < original_size
+        puts "成功删除规则: #{rule}"
+        rules_found = true
+      else
+        puts "没有找到需要删除的规则: #{rule}"
       end
-      File.open(ARGV[0], "w") { |f| f.write(yaml.to_yaml) }
-      puts found
-    ' "$config_path" "$rule")
-
-    if [ "$found" = "true" ]; then
-      echo "[$LOGTIME] 成功删除规则: $rule" | tee -a "$LOG_FILE"
-      rules_found=true
-      rules_deleted="$rules_deleted$rule;"
-    else
-      echo "[$LOGTIME] 删除规则时未找到: $rule" | tee -a "$LOG_FILE"
-      delete_errors=true
-    fi
+    end
+    File.open(ARGV[0], "w") { |f| f.write(yaml.to_yaml) } if rules_found
+  ' "$config_path" "$rules_to_remove" | while read -r line; do
+    echo "[$LOGTIME] $line" | tee -a "$LOG_FILE"
   done
 
-  if [ "$rules_found" = "true" ]; then
-    echo "[$LOGTIME] 删除了以下规则: $rules_deleted" | tee -a "$LOG_FILE"
+  # 使用 $? 来判断 Ruby 脚本执行是否成功
+  if [ $? -ne 0 ]; then
+    echo "[$LOGTIME] 在删除规则时发生错误，请检查日志。" | tee -a "$LOG_FILE"
+  else
+    echo "[$LOGTIME] 所有指定规则的删除操作已完成，没有错误。" | tee -a "$LOG_FILE"
   fi
-
-  if [ "$delete_errors" = "true" ]; then
-    echo "[$LOGTIME] 一些规则未能删除，请检查日志以获取详细信息。" | tee -a "$LOG_FILE"
-  fi
-
-  echo "[$LOGTIME] 所有指定规则的删除操作已完成" | tee -a "$LOG_FILE"
 }
 
 # 调用函数删除指定规则
 remove_specified_rule "$CONFIG_FILE"
 
+# 为IP-CIDR 规则追加no-resolve
 append_no_resolve() {
   local config_path=$1
   echo "[$LOGTIME] 正在检查并为需要的 IP-CIDR 规则追加 ',no-resolve'" | tee -a "$LOG_FILE"
+  
   ruby -ryaml -e '
     require "yaml"
     yaml = YAML.load_file(ARGV[0])
+    need_update = false
     yaml["rules"].each_with_index do |rule, index|
       if (rule.include?("IP-CIDR") || rule.include?("IP-CIDR6")) && !rule.include?("no-resolve")
         original_rule = rule.clone
         updated_rule = rule + ",no-resolve"
         yaml["rules"][index] = updated_rule
         puts "修改前: #{original_rule} 修改后: #{updated_rule}"
+        need_update = true
       end
     end
-    File.open(ARGV[0], "w") { |f| f.write(yaml.to_yaml) }
+
+    File.open(ARGV[0], "w") { |f| f.write(yaml.to_yaml) } if need_update
   ' "$config_path" | while read -r line; do
     echo "[$LOGTIME] $line" | tee -a "$LOG_FILE"
   done
+  
   if [ $? -eq 0 ]; then
     echo "[$LOGTIME] IP-CIDR 规则的检查和更新已完成" | tee -a "$LOG_FILE"
   else
