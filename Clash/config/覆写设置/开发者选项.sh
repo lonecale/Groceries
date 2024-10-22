@@ -11,7 +11,6 @@ LOGTIME=$(echo $(date "+%Y-%m-%d %H:%M:%S"))
 LOG_FILE="/tmp/openclash.log"
 CONFIG_FILE="$1" #config path
 
-
 # 使用 Ruby 编辑 YAML 文件的函数
 ruby_edit() {
   local config_path=$1
@@ -44,11 +43,14 @@ rules_to_remove="DOMAIN-SUFFIX,cloudfront.net,🎬 EmbyProxy"
 remove_specified_rule() {
   local config_path=$1
   echo "[$LOGTIME] 正在检查并删除指定的规则" | tee -a "$LOG_FILE"
-  
-  # 使用分号分割字符串并逐行处理每个规则
+
+  rules_found=false
+  rules_deleted=""
+  delete_errors=""
+
   echo "$rules_to_remove" | tr ';' '\n' | while read -r rule; do
-    echo "[$LOGTIME] 正在删除规则: $rule" | tee -a "$LOG_FILE"
-    ruby -ryaml -e '
+    echo "[$LOGTIME] 正在检查规则: $rule" | tee -a "$LOG_FILE"
+    found=$(ruby -ryaml -e '
       require "yaml"
       yaml = YAML.load_file(ARGV[0])
       found = false
@@ -61,16 +63,27 @@ remove_specified_rule() {
         end
       end
       File.open(ARGV[0], "w") { |f| f.write(yaml.to_yaml) }
-      puts "找到并试图删除规则: #{found ? "是" : "否"}"
-    ' "$config_path" "$rule" | while read -r line; do
-      echo "[$LOGTIME] $line" | tee -a "$LOG_FILE"
-    done
-    if [ $? -eq 0 ]; then
+      puts found
+    ' "$config_path" "$rule")
+
+    if [ "$found" = "true" ]; then
       echo "[$LOGTIME] 成功删除规则: $rule" | tee -a "$LOG_FILE"
+      rules_found=true
+      rules_deleted="$rules_deleted$rule;"
     else
-      echo "[$LOGTIME] 删除规则时发生错误: $rule" | tee -a "$LOG_FILE"
+      echo "[$LOGTIME] 删除规则时未找到: $rule" | tee -a "$LOG_FILE"
+      delete_errors=true
     fi
   done
+
+  if [ "$rules_found" = "true" ]; then
+    echo "[$LOGTIME] 删除了以下规则: $rules_deleted" | tee -a "$LOG_FILE"
+  fi
+
+  if [ "$delete_errors" = "true" ]; then
+    echo "[$LOGTIME] 一些规则未能删除，请检查日志以获取详细信息。" | tee -a "$LOG_FILE"
+  fi
+
   echo "[$LOGTIME] 所有指定规则的删除操作已完成" | tee -a "$LOG_FILE"
 }
 
@@ -84,7 +97,7 @@ append_no_resolve() {
     require "yaml"
     yaml = YAML.load_file(ARGV[0])
     yaml["rules"].each_with_index do |rule, index|
-      if rule.include?("IP-CIDR") && !rule.include?("no-resolve")
+      if (rule.include?("IP-CIDR") || rule.include?("IP-CIDR6")) && !rule.include?("no-resolve")
         original_rule = rule.clone
         updated_rule = rule + ",no-resolve"
         yaml["rules"][index] = updated_rule
@@ -111,51 +124,58 @@ append_proxy_groups_custom_params() {
   local type=$2
   shift 2 # 移除前两个参数
   echo "[$LOGTIME] 正在为 type '$type' 的代理组添加自定义参数" | tee -a "$LOG_FILE"
-  
-  local key
-  local value
+
+  local found=false
   local error_occurred=0
-  local changes=""
 
   if [ $(($# % 2)) -ne 0 ]; then
     echo "[$LOGTIME] 错误：参数应该成对出现。" | tee -a "$LOG_FILE"
     return 1 # 提前返回并指示错误
   fi
 
-  while [ $# -gt 1 ]; do
-    key="$1"
-    value="$2"
-    changes+="$key: $value, "
-    shift 2 # 移动到下一对参数
-
-    # 添加参数并重新排序
-    ruby -ryaml -e '
-      require "yaml"
-      yaml = YAML.load_file(ARGV[0])
-      found = false
-      yaml["proxy-groups"].each do |group|
-        if group["type"] == ARGV[1]
-          found = true
-          group[ARGV[2]] = ARGV[3] =~ /^[0-9]+$/ ? ARGV[3].to_i : (ARGV[3] =~ /^[0-9]+\.[0-9]+$/ ? ARGV[3].to_f : (ARGV[3] == "true" || ARGV[3] == "false" ? eval(ARGV[3]) : ARGV[3]))
-          puts "#{group["name"]} (类型: #{ARGV[1]}) 已添加或更新 #{ARGV[2]}: #{group[ARGV[2]]}"
-          # 重新排序，确保特定的键在 'proxies' 前
-          if group.key?("proxies")
-            proxies_value = group.delete("proxies")  # 删除并缓存 'proxies'
-            group["proxies"] = proxies_value  # 重新插入，确保其在末尾
+  # 使用 Ruby 更新配置文件
+  ruby -ryaml -e '
+    require "yaml"
+    yaml = YAML.load_file(ARGV[0])
+    found = false
+    output_lines = {}
+    yaml["proxy-groups"].each do |group|
+      if group["type"] == ARGV[1]
+        found = true
+        ARGV[2..-1].each_slice(2) do |key, value|
+          original_value = group[key]
+          group[key] = value =~ /^[0-9]+$/ ? value.to_i : (value =~ /^[0-9]+\.[0-9]+$/ ? value.to_f : (value == "true" || value == "false" ? eval(value) : value))
+          if original_value != group[key]
+            output_lines[group["name"]] ||= []
+            if original_value.nil?
+              output_lines[group["name"]] << "已添加 #{key}: #{group[key]}"
+            else
+              output_lines[group["name"]] << "已更新 #{key}: 从 #{original_value} 修改为 #{group[key]}"
+            end
           end
         end
+        
+        # 重新排序，确保特定的键在 'proxies' 前
+        if group.key?("proxies")
+          proxies_value = group.delete("proxies")  # 删除并缓存 'proxies'
+          group["proxies"] = proxies_value  # 重新插入，确保其在末尾
+        end
       end
-      puts "没有找到匹配类型的组: #{ARGV[1]}" unless found
-      File.open(ARGV[0], "w") { |f| f.write(yaml.to_yaml) }
-    ' "$config_path" "$type" "$key" "$value" | while read -r line; do
-      echo "[$LOGTIME] $line" | tee -a "$LOG_FILE"
-    done
-
-    if [ $? -ne 0 ]; then
-      echo "[$LOGTIME] 在添加 $key: $value 时发生错误" | tee -a "$LOG_FILE"
-      error_occurred=1
-    fi
+    end
+    puts "没有找到匹配类型的组: #{ARGV[1]}" unless found
+    File.open(ARGV[0], "w") { |f| f.write(yaml.to_yaml) }
+    
+    output_lines.each do |name, lines|
+      puts "#{name} (类型: #{ARGV[1]}) " + lines.join(", ")
+    end
+  ' "$config_path" "$type" "$@" | while read -r line; do
+    echo "[$LOGTIME] $line" | tee -a "$LOG_FILE"
   done
+
+  if [ $? -ne 0 ]; then
+    echo "[$LOGTIME] 在添加自定义参数时发生错误" | tee -a "$LOG_FILE"
+    error_occurred=1
+  fi
 
   if [ $error_occurred -eq 0 ]; then
     echo "[$LOGTIME] 自定义参数的添加已完成" | tee -a "$LOG_FILE"
