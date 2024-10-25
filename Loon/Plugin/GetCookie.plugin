@@ -1,0 +1,27 @@
+#!name = 获取 Cookie/Token
+#!desc = 自用获取 Cookie/Token
+#!author = lonecale[https://github.com/lonecale],插件中所有脚本的作者
+#!tag = 定时任务
+#!system = iOS, iPadOS
+#!loon_version = 3.2.3(753)
+#!homepage = https://github.com/lonecale/rule
+#!icon = https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png
+#!date = 2024-09-20 00:42:35
+// 本插件中的所有脚本均为个人收集整合，非本人制作。引用脚本的版权归原作者所有，若有任何版权问题或侵权行为，请联系我进行处理。感谢各位原作者的贡献与分享！
+
+[Argument]
+arg1 = switch,true,tag=微付金币获取 Token
+arg2 = switch,true,tag=高德打车获取 Token
+arg3 = switch,true,tag=腾讯视频获取 Cookie
+
+[Script]
+http-response https:\/\/payapp\.weixin\.qq\.com\/(coupon-center-user\/home\/login|coupon-center-award\/award\/detail) script-path=https://raw.githubusercontent.com/FoKit/Scripts/main/scripts/wechat_pay_coupon.js, requires-body=true, timeout=60, enable = {arg1}, tag=微付金币获取 Token, img-url=https://raw.githubusercontent.com/FoKit/Scripts/main/images/wechat_pay_coupon.png
+
+http-response ^https?:\/\/(m5(|-zb)|dache)\.amap\.com\/(ws\/yuece\/(act|openapi\/activity\/current)\/query|common\/(alipaymini|wxmini)\?_ENCRYPT=) script-path=https://raw.githubusercontent.com/wf021325/qx/master/task/ampDache.js, requires-body=true, enable = {arg2}, tag=高德打车获取 Token, img-url=https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Amap.png
+
+http-request https://vip.video.qq.com/rpc/trpc.new_task_system.task_system.TaskSystem/ReadTaskList? script-path=https://raw.githubusercontent.com/WowYiJiu/Personal/main/Script/tenvideo.js, timeout=60, enable = {arg3}, tag=腾讯视频获取 Cookie
+http-request https://pbaccess.video.qq.com/trpc.videosearch.hot_rank.HotRankServantHttp/HotRankHttp script-path=https://raw.githubusercontent.com/WowYiJiu/Personal/main/Script/tenvideo.js, timeout=60, enable = {arg3}, tag=腾讯视频获取 Cookie
+http-request https://pbaccess.video.qq.com/trpc.video_account_login.web_login_trpc.WebLoginTrpc/NewRefresh script-path=https://raw.githubusercontent.com/WowYiJiu/Personal/main/Script/tenvideo.js, requires-body=true, timeout=60, enable = {arg3}, tag=腾讯视频获取 Cookie
+
+[MITM]
+hostname = payapp.weixin.qq.com,*.amap.com,vip.video.qq.com, pbaccess.video.qq.com
