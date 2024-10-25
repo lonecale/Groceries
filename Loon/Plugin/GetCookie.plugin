@@ -19,9 +19,9 @@ http-response https:\/\/payapp\.weixin\.qq\.com\/(coupon-center-user\/home\/logi
 
 http-response ^https?:\/\/(m5(|-zb)|dache)\.amap\.com\/(ws\/yuece\/(act|openapi\/activity\/current)\/query|common\/(alipaymini|wxmini)\?_ENCRYPT=) script-path=https://raw.githubusercontent.com/wf021325/qx/master/task/ampDache.js, requires-body=true, enable = {arg2}, tag=高德打车获取 Token, img-url=https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Amap.png
 
-http-request https://vip.video.qq.com/rpc/trpc.new_task_system.task_system.TaskSystem/ReadTaskList? script-path=https://raw.githubusercontent.com/WowYiJiu/Personal/main/Script/tenvideo.js, timeout=60, enable = {arg3}, tag=腾讯视频获取 Cookie
-http-request https://pbaccess.video.qq.com/trpc.videosearch.hot_rank.HotRankServantHttp/HotRankHttp script-path=https://raw.githubusercontent.com/WowYiJiu/Personal/main/Script/tenvideo.js, timeout=60, enable = {arg3}, tag=腾讯视频获取 Cookie
-http-request https://pbaccess.video.qq.com/trpc.video_account_login.web_login_trpc.WebLoginTrpc/NewRefresh script-path=https://raw.githubusercontent.com/WowYiJiu/Personal/main/Script/tenvideo.js, requires-body=true, timeout=60, enable = {arg3}, tag=腾讯视频获取 Cookie
+http-request https://vip.video.qq.com/rpc/trpc.new_task_system.task_system.TaskSystem/ReadTaskList? script-path=https://raw.githubusercontent.com/WowYiJiu/Personal/main/Script/tenvideo.js, timeout=60, enable = {arg3}, tag=腾讯视频获取 Cookie, img-url=https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Tencent_Video.png
+http-request https://pbaccess.video.qq.com/trpc.videosearch.hot_rank.HotRankServantHttp/HotRankHttp script-path=https://raw.githubusercontent.com/WowYiJiu/Personal/main/Script/tenvideo.js, timeout=60, enable = {arg3}, tag=腾讯视频获取 Cookie, img-url=https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Tencent_Video.png
+http-request https://pbaccess.video.qq.com/trpc.video_account_login.web_login_trpc.WebLoginTrpc/NewRefresh script-path=https://raw.githubusercontent.com/WowYiJiu/Personal/main/Script/tenvideo.js, requires-body=true, timeout=60, enable = {arg3}, tag=腾讯视频获取 Cookie, img-url=https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Tencent_Video.png
 
 [MITM]
 hostname = payapp.weixin.qq.com,*.amap.com,vip.video.qq.com, pbaccess.video.qq.com
