@@ -115,12 +115,12 @@ dns:
   cache-algorithm: arc
   # 优先使用 DOH 的 http/3
   # prefer-h3: true
+  # DNS监听地址，仅支持 udp
+  listen: 0.0.0.0:1053
   # 是否解析 IPV6, 如为 false, 则回应 AAAA 的空解析
   ipv6: true
   # DNS处理模式，可选值 normal/fake-ip/redir-host
   enhanced-mode: fake-ip
-  # DNS监听地址，仅支持 udp
-  listen: 0.0.0.0:1053
   # Fake-IP解析地址池
   fake-ip-range: 28.0.0.1/8
   # fakeip 过滤，以下地址不会下发 fakeip 映射用于连接
@@ -242,7 +242,7 @@ proxy-groups:
   - {name: 广告拦截, type: select, proxies: [REJECT, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png}
   - {name: 应用净化, type: select, proxies: [REJECT, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hijacking.png}
   #- {name: 漏网之鱼, type: select, proxies: [手动切换, HK负载均衡, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/shindgewongxj/WHATSINStash/main/icon/fallback.png}
-  - {name: 漏网之鱼, <<: *FallBack, proxies: [HK负载均衡, HK故障转移, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/shindgewongxj/WHATSINStash/main/icon/fallback.png}
+  - {name: 漏网之鱼, <<: *FallBack, include-all-providers: false, proxies: [HK负载均衡, HK故障转移, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/shindgewongxj/WHATSINStash/main/icon/fallback.png}
 
   - {name: 香港策略, type: select, proxies: [⏱香港时延优选策略组, 🚥香港故障转移策略组, 🎛香港负载均衡策略组], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
   - {name: 台湾策略, type: select, proxies: [⏱台湾时延优选策略组, 🚥台湾故障转移策略组, 🎛台湾负载均衡策略组], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png}
@@ -590,22 +590,22 @@ rule-providers:
 
 #  cn:
 #    <<: *RuleProvidersDomainYaml
-#    path: './rules/cn.yaml'
+#    path: './ruleset/cn.yaml'
 #    url: 'https://raw.githubusercontent.com/yuumimi/rules/release/clash/cn.txt'
 
   ChinaCompanyIp:
     <<: *RuleProvidersText
-    path: './rules/ChinaCompanyIp.txt'
+    path: './ruleset/ChinaCompanyIp.txt'
     url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list'
 
   CloudCN:
     <<: *RuleProvidersYaml
-    path: './rules/CloudCN.yaml'
+    path: './ruleset/CloudCN.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Cloud/CloudCN/CloudCN_No_Resolve.yaml'
 
   Download:
     <<: *RuleProvidersYaml
-    path: './rules/Download.yaml'
+    path: './ruleset/Download.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Download/Download_No_Resolve.yaml'
 
 
