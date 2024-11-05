@@ -125,21 +125,25 @@ dns:
   fake-ip-range: 28.0.0.1/8
   # fakeip 过滤，以下地址不会下发 fakeip 映射用于连接
   # fake-ip-filter": ['+.*']
-  fake-ip-filter: ['*', '+.lan', '+.local', '+.direct', '+.market.xiaomi.com', '+.msftconnecttest.com', '+.msftncsi.com', "localhost.*.qq.com" "localhost.*.weixin.qq.com"]
+  fake-ip-filter: ['*', '+.lan', '+.local', '+.direct', '+.market.xiaomi.com', '+.msftconnecttest.com', '+.msftncsi.com', 'localhost.*.qq.com', 'localhost.*.weixin.qq.com']
   # fake-ip-filter: ['*.lan','*.direct', cable.auth.com, '*.msftconnecttest.com', '*.msftncsi.com', network-test.debian.org, detectportal.firefox.com, resolver1.opendns.com, '*.srv.nintendo.net', '*.stun.playstation.net', 'xbox.*.microsoft.com', '*.xboxlive.com', 'stun.*', global.turn.twilio.com, global.stun.twilio.com, app.yinxiang.com, injections.adguard.org, local.adguard.org, cable.auth.com, 'localhost.*.qq.com', 'localhost.*.weixin.qq.com', '*.logon.battlenet.com.cn', '*.logon.battle.net', '*.blzstatic.cn', 'music.163.com', '*.music.163.com', '*.126.net', musicapi.taihe.com, music.taihe.com, songsearch.kugou.com, trackercdn.kugou.com, '*.kuwo.cn', api-jooxtt.sanook.com, api.joox.com, joox.com, y.qq.com, '*.y.qq.com', streamoc.music.tc.qq.com, mobileoc.music.tc.qq.com, isure.stream.qqmusic.qq.com, dl.stream.qqmusic.qq.com, aqqmusic.tc.qq.com, amobile.music.tc.qq.com, '*.xiami.com', '*.music.migu.cn', music.migu.cn, proxy.golang.org, '*.mcdn.bilivideo.cn', '*.cmpassport.com', id6.me, 'open.e.189.cn', mdn.open.wo.cn, opencloud.wostore.cn, auth.wosms.cn, '*.jegotrip.com.cn', '*.icitymobile.mobi', '*.pingan.com.cn', '*.cmbchina.com', '*.10099.com.cn', pool.ntp.org, '*.pool.ntp.org', 'ntp.*.com', 'time.*.com', 'ntp?.*.com', 'time?.*.com', 'time.*.gov', 'time.*.edu.cn', '*.ntp.org.cn', 'PDC._msDCS.*.*', 'DC._msDCS.*.*', 'GC._msDCS.*.*']
+  # 此设置决定 nameserver、fallback 和 nameserver-policy 中的 DNS 服务器连接是否遵循 'rules' 中的规则：如果设置为 false（默认值），这些 DNS 服务器的连接将不考虑 'rules' 中的设置，而默认采用直连。如果设置为 true，则这些 DNS 服务器的连接方式（代理或直连）将根据 'rules' 中对其地址或域名的具体配置来决定。例如，如果 DNS 服务器的域名或地址在 'rules' 中被配置为通过代理，则 DNS 查询将通过代理发送；如果配置为直连，则将直连发送。特别指定的设置（如 8.8.8.8#RULES）将优先考虑。仅当proxy-server-nameserver非空时可以开启此选项, 强烈不建议和prefer-h3一起使用,此外，这三者配置中的dns服务器如果出现域名会采用default-nameserver配置项解析，也请确保正确配置default-nameserver
+  respect-rules: false
   # 默认 DNS, 用于解析 DNS 服务器 的域名,只支持纯 IP
-  default-nameserver: [223.5.5.5, 180.184.1.1]
-  # 默认的域名解析服务器，如不配置 fallback/proxy-server-nameserver , 则所有域名都由 nameserver 解析
-  nameserver: [https://dns.alidns.com/dns-query, https://doh.pub/dns-query]
+  default-nameserver: ['223.5.5.5', '180.184.1.1']
   # 代理节点域名解析服务器，仅用于解析代理节点的域名
-  proxy-server-nameserver: [https://doh.pub/dns-query]
+  proxy-server-nameserver: ['https://doh.pub/dns-query']
   # 指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询
   nameserver-policy:
     # 'geosite:cn': system
-    'geosite:private,cn,apple': [https://dns.alidns.com/dns-query, https://doh.pub/dns-query]
+    'geosite:private,cn,apple': ['https://dns.alidns.com/dns-query', 'https://doh.pub/dns-query']
     'geosite:category-ads-all': rcode://success
-    # 'www.baidu.com,+.google.cn': [223.5.5.5, https://dns.alidns.com/dns-query]
-    # 'geosite:gfw,geolocation-!cn': [https://dns.cloudflare.com/dns-query, https://dns.google/dns-query]
+    # 'www.baidu.com,+.google.cn': ['223.5.5.5', 'https://dns.alidns.com/dns-query']
+    # 'geosite:gfw,geolocation-!cn': ['https://dns.cloudflare.com/dns-query', 'https://dns.google/dns-query']
+  # 默认的域名解析服务器，如不配置 fallback/proxy-server-nameserver , 则所有域名都由 nameserver 解析
+  nameserver: ['https://dns.alidns.com/dns-query', 'https://doh.pub/dns-query']
+  # 后备域名解析服务器，一般情况下使用境外 DNS, 保证结果可信 配置 fallback后默认启用 fallback-filter,geoip-code为 cn
+  # fallback: ['https://dns.cloudflare.com/dns-query#ProxyDNS', 'https://dns.google/dns-query#ProxyDNS']
 
 # 锚点 - 节点订阅的参数 [每12小时更新一次订阅节点，每 300 秒一次健康检查]
 NodeParam: &NodeParam {type: http, interval: 42300, health-check: {enable: true, url: 'http://www.apple.com/library/test/success.html', interval: 300}}
