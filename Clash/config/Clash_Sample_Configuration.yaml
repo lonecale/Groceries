@@ -1,5 +1,5 @@
 # mihomo 配置
-# 日期：2024-8-22 23:00
+# 日期：2024-10-22 23:00
 # 适用版本：所有使用 mihomo 核心的程序
 
 # HTTP(S) 代理服务器端口
@@ -26,12 +26,17 @@ log-level: info
 # 是否允许 UDP 通过代理，默认为 false
 udp: true
 
+# TCP Keep Alive 包的间隔，单位为秒
+keep-alive-interval: 30
+# TCP Keep Alive 的最大空闲时间
+keep-alive-idle: 600
+# 禁用 TCP Keep Alive，在 Android 默认为 true
+disable-keep-alive: false
+
 # 开启统一延迟时，会进行两次延迟测试，以消除连接握手等带来的不同类型节点的延迟差异，可选值 true/false
 unified-delay: true 
 # TCP 并发，可选值 true/false
 tcp-concurrent: true
-# 控制 Clash 发出 TCP Keep Alive 包的间隔，减少移动设备耗电问题的临时措施。
-keep-alive-interval: 1800
 # 控制是否让 Clash 去匹配进程，always 开启，强制匹配所有进程，strict 默认，由 Clash 判断是否开启，off 不匹配进程，推荐在路由器上使用此模式
 find-process-mode: strict
 # 全局 TLS 指纹，优先低于 proxy 内的 client-fingerprint，目前支持开启 TLS 传输的 TCP/grpc/WS/HTTP , 支持协议有 VLESS,Vmess 和 trojan
