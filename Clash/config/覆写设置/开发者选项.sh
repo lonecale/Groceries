@@ -34,13 +34,49 @@ ruby_edit "$CONFIG_FILE" "['dns']['proxy-server-nameserver']" "['https://dns.ali
 #ruby_edit "$CONFIG_FILE" "['dns']['proxy-server-nameserver']" "['223.5.5.5']"
 #ruby_edit "$CONFIG_FILE" "['dns']['prefer-h3']" "true"
 #ruby_edit "$CONFIG_FILE" "['tun']['mtu']" "1500"
-ruby_edit "$CONFIG_FILE" "['dns']['cache-algorithm']" "'arc'"
+#ruby_edit "$CONFIG_FILE" "['dns']['cache-algorithm']" "'arc'"
+ruby_edit "$CONFIG_FILE" "['disable-keep-alive']" "false"
+ruby_edit "$CONFIG_FILE" "['keep-alive-interval']" "30"
+ruby_edit "$CONFIG_FILE" "['keep-alive-idle']" "600"
 
 # 定义要删除的规则，使用一个字符串变量
 rules_to_remove="DOMAIN-SUFFIX,cloudfront.net,🎬 EmbyProxy"
 # rules_to_remove="DOMAIN-SUFFIX,aaa.net,🎬 EmbyProxy;DOMAIN-SUFFIX,bbb.net,🎬 EmbyProxy;"
 
-# 删除指定的规则
+
+# 删除规则文件指定规则
+check_and_remove_specified_rules() {
+  local rule_dir=$1
+  echo "[$LOGTIME] 正在检查目录 $rule_dir 中的规则文件" | tee -a "$LOG_FILE"
+
+  # 遍历目录下所有的 yaml 和 txt 文件
+  for file in "$rule_dir"/*.yaml "$rule_dir"/*.txt; do
+    if [ -f "$file" ]; then
+      local filename=$(basename "$file")
+      local file_modified=false
+
+      # 循环处理每个规则
+      echo "$rules_to_remove" | tr ';' '\n' | while IFS= read -r rule; do
+        if grep -qF "$rule" "$file"; then
+          echo "[$LOGTIME] 在文件 $filename 发现并正在删除规则 '$rule'..." | tee -a "$LOG_FILE"
+          sed -i "/$rule/d" "$file"
+          file_modified=true
+        fi
+      done
+
+      if [ "$file_modified" = true ]; then
+        echo "[$LOGTIME] 文件 $filename 的规则已删除。" | tee -a "$LOG_FILE"
+      fi
+    fi
+  done
+
+  echo "[$LOGTIME] 检查并修改操作完成" | tee -a "$LOG_FILE"
+}
+
+# 调用函数删除规则文件指定规则
+check_and_remove_specified_rules "/etc/openclash/rule_provider"
+
+# 删除配置文件指定规则
 remove_specified_rule() {
   local config_path=$1
   echo "[$LOGTIME] 正在检查并删除指定的规则" | tee -a "$LOG_FILE"
@@ -73,10 +109,57 @@ remove_specified_rule() {
   fi
 }
 
-# 调用函数删除指定规则
+# 调用函数删除配置文件指定规则
 remove_specified_rule "$CONFIG_FILE"
 
-# 为IP-CIDR 规则追加no-resolve
+# 检查规则文件 为IP-CIDR 规则追加no-resolve
+check_and_append_no_resolve() {
+    local rule_dir=$1
+    echo "[$LOGTIME] 正在检查目录 $rule_dir 中的规则文件" | tee -a "$LOG_FILE"
+    
+    # 列出并处理所有 yaml 和 txt 文件
+    for file in "$rule_dir"/*.yaml "$rule_dir"/*.txt; do
+        if [ -f "$file" ]; then
+            local filename=$(basename "$file")
+            
+            local changes=$(sed -n '/^[^#]*\(IP-CIDR\|IP-CIDR6\)/ { /no-resolve/!p }' "$file")
+            if [ -n "$changes" ]; then
+                echo "正在处理文件: $filename" | tee -a "$LOG_FILE"
+
+                # 记录修改前的行
+                sed -n '/^[^#]*\(IP-CIDR\|IP-CIDR6\)/ { /no-resolve/!p }' "$file" | awk -v filename="$filename" '{print filename ":" NR " 修改前: " $0}' | tee -a "$LOG_FILE"
+
+                # 执行就地修改并标记
+                sed -i -E '/^[^#]*(IP-CIDR|IP-CIDR6)/ {
+                    /no-resolve([ ]*#|$)/! {
+                        # 添加no-resolve，并在其后添加NEED_RESOLVE标记，同时处理注释前的空格
+                        s/([ ]*)(#[^#]*)?$/,no-resolve\1\2 #NEED_RESOLVE/;
+                        # 如果存在注释且注释前无空格，则确保添加一个空格
+                        s/(no-resolve)(#)/\1 \2/;
+                        # 如果存在注释且注释前有空格，则保持这些空格
+                        s/(no-resolve)([ ]+)(#)/\1\2\3/;
+                    }
+                }' "$file"
+
+
+                # 记录修改后的行，同时去除 #NEED_RESOLVE 标记
+                sed -n '/#NEED_RESOLVE$/p' "$file" | awk -v filename="$filename" '{sub(/ #NEED_RESOLVE$/, ""); print filename ":" NR " 修改后: " $0}' | tee -a "$LOG_FILE"
+                # 移除所有的 #NEED_RESOLVE 标记
+                sed -i 's/ #NEED_RESOLVE//' "$file"
+                
+                echo "文件 $filename 已更新。" | tee -a "$LOG_FILE"
+            fi
+        fi
+    done
+
+    echo "[$LOGTIME] 检查并修改操作完成" | tee -a "$LOG_FILE"
+}
+
+# 调用函数为规则文件的IP-CIDR 规则追加 ',no-resolve'
+check_and_append_no_resolve "/etc/openclash/rule_provider"
+
+
+# 检查配置文件 为IP-CIDR 规则追加no-resolve
 append_no_resolve() {
   local config_path=$1
   echo "[$LOGTIME] 正在检查并为需要的 IP-CIDR 规则追加 ',no-resolve'" | tee -a "$LOG_FILE"
@@ -107,7 +190,7 @@ append_no_resolve() {
   fi
 }
 
-# 调用函数为IP-CIDR 规则追加 ',no-resolve'
+# 调用函数为配置文件的IP-CIDR 规则追加 ',no-resolve'
 append_no_resolve "$CONFIG_FILE"
 
 # 为指定 type 的 proxy-groups 项添加自定义参数
