@@ -371,34 +371,6 @@ rule-providers:
     path: './ruleset/AI.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/AI.yaml'
 
-  Speedtest:
-    <<: *RuleProvidersYaml
-    path: './ruleset/Speedtest.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Speedtest/Speedtest_No_Resolve.yaml'
-
-#美国数据中心
-  1Password:
-    <<: *RuleProvidersYaml
-    path: './ruleset/1PasswordUS.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/1PasswordUS.yaml'
-
-#欧盟数据中心
-#  1Password:
-#    <<: *RuleProvidersYaml
-#    path: './ruleset/1PasswordEU.yaml'
-#    url: 'https://kelee.one/Tool/Clash/Rule/1PasswordEU.yaml'
-
-#加拿大数据中心
-#  1Password:
-#    <<: *RuleProvidersYaml
-#    path: './ruleset/1PasswordCA.yaml'
-#    url: 'https://kelee.one/Tool/Clash/Rule/1PasswordCA.yaml'
-
-  ESET_China:
-    <<: *RuleProvidersYaml
-    path: './ruleset/ESET_China.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/ESET_China.yaml'
-
   Nintendo:
     <<: *RuleProvidersYaml
     path: './ruleset/Nintendo.yaml'
@@ -473,6 +445,35 @@ rule-providers:
     <<: *RuleProvidersYaml
     path: './ruleset/NetEaseMusic.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/NetEaseMusic/NetEaseMusic_No_Resolve.yaml'
+
+  Speedtest:
+    <<: *RuleProvidersYaml
+    path: './ruleset/Speedtest.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Speedtest/Speedtest_No_Resolve.yaml'
+
+#美国数据中心
+  1Password:
+    <<: *RuleProvidersYaml
+    path: './ruleset/1PasswordUS.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/1PasswordUS.yaml'
+
+#欧盟数据中心
+#  1Password:
+#    <<: *RuleProvidersYaml
+#    path: './ruleset/1PasswordEU.yaml'
+#    url: 'https://kelee.one/Tool/Clash/Rule/1PasswordEU.yaml'
+
+#加拿大数据中心
+#  1Password:
+#    <<: *RuleProvidersYaml
+#    path: './ruleset/1PasswordCA.yaml'
+#    url: 'https://kelee.one/Tool/Clash/Rule/1PasswordCA.yaml'
+
+  ESET_China:
+    <<: *RuleProvidersYaml
+    path: './ruleset/ESET_China.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/ESET_China.yaml'
+
 
   GitHub:
     <<: *RuleProvidersYaml
@@ -638,9 +639,6 @@ rules:
   - RULE-SET, InternationalDownloadCDN, 国际CDN下载
   - RULE-SET, OpenAI, OpenAi
   - RULE-SET, AI, OpenAi
-  - RULE-SET, Speedtest, Speedtest
-  - RULE-SET, 1Password, 1Password
-  - RULE-SET, ESET_China, ESET
   - RULE-SET, Nintendo, Nintendo
   - RULE-SET, Game, 游戏平台
   - RULE-SET, YouTube, 油管视频
@@ -662,6 +660,9 @@ rules:
   - RULE-SET, BiliBiliIntl, 哔哩哔哩东南亚
   - RULE-SET, BiliBili, 哔哩哔哩
   - RULE-SET, NetEaseMusic, 网易音乐
+  - RULE-SET, Speedtest, Speedtest
+  - RULE-SET, 1Password, 1Password
+  - RULE-SET, ESET_China, ESET
   - RULE-SET, GitHub, Developer
   - RULE-SET, GitBook, Developer
   - RULE-SET, Docker, Developer
