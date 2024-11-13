@@ -474,7 +474,6 @@ rule-providers:
     path: './ruleset/ESET_China.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/ESET_China.yaml'
 
-
   GitHub:
     <<: *RuleProvidersYaml
     path: './ruleset/GitHub.yaml'
