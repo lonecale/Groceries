@@ -217,14 +217,19 @@ proxy-groups:
   - {name: HK故障转移, <<: *LoadBalance, filter: *FilterZY, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png}
   - {name: ProxyDNS, type: select, proxies: [手动切换, HK负载均衡, HK故障转移, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png}
   - {name: 国际CDN下载, type: select, include-all-providers: true, filter: "(?i)实验性", proxies: [DIRECT, 手动切换, HK负载均衡, HK故障转移, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Download.png}
-  - {name: 苹果服务, type: select, proxies: [DIRECT, 手动切换, HK负载均衡, HK故障转移, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_1.png}
+  - {name: 苹果国际服务, type: select, proxies: [手动切换, HK负载均衡, HK故障转移, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️冷门地区节点, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_1.png}
+  - {name: 苹果服务, type: select, proxies: [DIRECT, 手动切换, HK负载均衡, HK故障转移, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_2.png}
   - {name: 微软云盘, type: select, proxies: [DIRECT, 手动切换, HK负载均衡, HK故障转移, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png}
   - {name: 微软服务, type: select, proxies: [DIRECT, 手动切换, HK负载均衡, HK故障转移, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png}
   - {name: 谷歌推送, type: select, proxies: [手动切换, HK负载均衡, HK故障转移, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png}
   - {name: 谷歌服务, type: select, proxies: [手动切换, HK负载均衡, HK故障转移, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png}
   - {name: 国际电商, type: select, proxies: [手动切换, HK负载均衡, HK故障转移, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️冷门地区节点, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Amazon.png}
+  - {name: Developer, type: select, proxies: [手动切换, HK负载均衡, HK故障转移, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png}
   - {name: 电报消息, type: select, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png}
   - {name: OpenAi, type: select, include-all-providers: true, filter: *FilterUS, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ChatGPT.png}
+  - {name: Speedtest, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️油管节点, 🏷️奈飞节点, 🏷️Disney节点, 🏷️冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png}
+  - {name: 1Password, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://1password.com/img/favicon/apple-touch-icon-v2.png}
+  - {name: ESET, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://www.eset.com/typo3conf/ext/eset_base/Resources/Public/img/device/apple-touch-icon.png}
   - {name: 油管视频, type: select, proxies: [手动切换, 🏷️油管节点, 🏷️冷门地区节点, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png}
   - {name: 奈飞视频, type: select, proxies: [手动切换, 🏷️奈飞节点, 🏷️冷门地区节点, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png}
   - {name: Disney视频, type: select, proxies: [手动切换, 🏷️Disney节点, 🏷️冷门地区节点, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Disney+.png}
@@ -239,10 +244,6 @@ proxy-groups:
   - {name: 国际媒体, type: select, include-all-providers: true, filter: "(?i)实验性", proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️油管节点, 🏷️奈飞节点, 🏷️Disney节点, 🏷️冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png}
   - {name: Nintendo, type: select, include-all-providers: true, filter: *FilterGame, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Nintendo.png}
   - {name: 游戏平台, type: select, include-all-providers: true, filter: *FilterGame, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png}
-  - {name: 1Password, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://1password.com/img/favicon/apple-touch-icon-v2.png}
-  - {name: ESET, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://www.eset.com/typo3conf/ext/eset_base/Resources/Public/img/device/apple-touch-icon.png}
-  - {name: Speedtest, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️油管节点, 🏷️奈飞节点, 🏷️Disney节点, 🏷️冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png}
-  - {name: Developer, type: select, proxies: [手动切换, HK负载均衡, HK故障转移, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png}
   - {name: 全球直连, type: select, proxies: [DIRECT, 手动切换], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png}
   - {name: 广告拦截, type: select, proxies: [REJECT, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png}
   - {name: 应用净化, type: select, proxies: [REJECT, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hijacking.png}
@@ -310,11 +311,6 @@ rule-providers:
     path: './ruleset/Direct.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Direct/Direct_No_Resolve.yaml'
 
-  NaSDDNS:
-    <<: *RuleProvidersYaml
-    path: './ruleset/NaSDDNS.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/NaSDDNS/NaSDDNS_No_Resolve.yaml'
-
   BanAD:
     <<: *RuleProvidersText
     path: './ruleset/BanAD.txt'
@@ -329,6 +325,21 @@ rule-providers:
     <<: *RuleProvidersYaml
     path: './ruleset/BlockHttpDNS.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BlockHttpDNS/BlockHttpDNS_No_Resolve.yaml'
+
+  NaSDDNS:
+    <<: *RuleProvidersYaml
+    path: './ruleset/NaSDDNS.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/NaSDDNS/NaSDDNS_No_Resolve.yaml'
+
+#  PrivateTracker:
+#    <<: *RuleProvidersYaml
+#    path: './ruleset/PrivateTracker.yaml'
+#    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrivateTracker/PrivateTracker_No_Resolve.yaml'
+
+  category-pt:
+    <<: *RuleProvidersDomainYaml
+    path: './ruleset/category-pt.yaml'
+    url: 'https://raw.githubusercontent.com/ixff/clash-rules/release/category-pt.txt'
 
 #  DNSlist:
 #    <<: *RuleProvidersYaml
@@ -359,6 +370,34 @@ rule-providers:
     <<: *RuleProvidersYaml
     path: './ruleset/AI.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/AI.yaml'
+
+  Speedtest:
+    <<: *RuleProvidersYaml
+    path: './ruleset/Speedtest.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Speedtest/Speedtest_No_Resolve.yaml'
+
+#美国数据中心
+  1Password:
+    <<: *RuleProvidersYaml
+    path: './ruleset/1PasswordUS.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/1PasswordUS.yaml'
+
+#欧盟数据中心
+#  1Password:
+#    <<: *RuleProvidersYaml
+#    path: './ruleset/1PasswordEU.yaml'
+#    url: 'https://kelee.one/Tool/Clash/Rule/1PasswordEU.yaml'
+
+#加拿大数据中心
+#  1Password:
+#    <<: *RuleProvidersYaml
+#    path: './ruleset/1PasswordCA.yaml'
+#    url: 'https://kelee.one/Tool/Clash/Rule/1PasswordCA.yaml'
+
+  ESET_China:
+    <<: *RuleProvidersYaml
+    path: './ruleset/ESET_China.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/ESET_China.yaml'
 
   Nintendo:
     <<: *RuleProvidersYaml
@@ -435,39 +474,6 @@ rule-providers:
     path: './ruleset/NetEaseMusic.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/NetEaseMusic/NetEaseMusic_No_Resolve.yaml'
 
-#美国数据中心
-  1Password:
-    <<: *RuleProvidersYaml
-    path: './ruleset/1PasswordUS.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/1PasswordUS.yaml'
-
-#欧盟数据中心
-#  1Password:
-#    <<: *RuleProvidersYaml
-#    path: './ruleset/1PasswordEU.yaml'
-#    url: 'https://kelee.one/Tool/Clash/Rule/1PasswordEU.yaml'
-
-#加拿大数据中心
-#  1Password:
-#    <<: *RuleProvidersYaml
-#    path: './ruleset/1PasswordCA.yaml'
-#    url: 'https://kelee.one/Tool/Clash/Rule/1PasswordCA.yaml'
-
-  ESET_China:
-    <<: *RuleProvidersYaml
-    path: './ruleset/ESET_China.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/ESET_China.yaml'
-
-  Speedtest:
-    <<: *RuleProvidersYaml
-    path: './ruleset/Speedtest.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Speedtest/Speedtest_No_Resolve.yaml'
-
-  Developer:
-    <<: *RuleProvidersYaml
-    path: './ruleset/Developer.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Developer/Developer_No_Resolve.yaml'
-
   GitHub:
     <<: *RuleProvidersYaml
     path: './ruleset/GitHub.yaml'
@@ -483,10 +489,20 @@ rule-providers:
     path: './ruleset/Docker.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Docker/Docker_No_Resolve.yaml'
 
+  Developer:
+    <<: *RuleProvidersYaml
+    path: './ruleset/Developer.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Developer/Developer_No_Resolve.yaml'
+
   GlobalScholar:
     <<: *RuleProvidersYaml
     path: './ruleset/GlobalScholar.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalScholar/GlobalScholar_No_Resolve.yaml'
+
+  AppleProxy:
+    <<: *RuleProvidersYaml
+    path: './ruleset/AppleProxy.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/AppleProxy/AppleProxy.yaml'
 
   Apple:
     <<: *RuleProvidersYaml
@@ -553,15 +569,15 @@ rule-providers:
 #    path: './ruleset/Telegram_lodepuly.yaml'
 #    url: 'https://kelee.one/Tool/Clash/Rule/Telegram.yaml'
 
-  ChinaMedia:
-    <<: *RuleProvidersYaml
-    path: './ruleset/ChinaMedia.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia_No_Resolve.yaml'
-
   IPTVMainland:
     <<: *RuleProvidersYaml
     path: './ruleset/IPTVMainland.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/IPTVMainland/IPTVMainland_Classical_No_Resolve.yaml'
+
+  ChinaMedia:
+    <<: *RuleProvidersYaml
+    path: './ruleset/ChinaMedia.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia_No_Resolve.yaml'
 
   GlobalMedia:
     <<: *RuleProvidersYaml
@@ -577,16 +593,6 @@ rule-providers:
 #    <<: *RuleProvidersDomainYaml
 #    path: './ruleset/cn@!cn.yaml'
 #    url: 'https://raw.githubusercontent.com/yuumimi/rules/release/clash/cn@!cn.txt'
-
-#  PrivateTracker:
-#    <<: *RuleProvidersYaml
-#    path: './ruleset/PrivateTracker.yaml'
-#    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrivateTracker/PrivateTracker_No_Resolve.yaml'
-
-  category-pt:
-    <<: *RuleProvidersDomainYaml
-    path: './ruleset/category-pt.yaml'
-    url: 'https://raw.githubusercontent.com/ixff/clash-rules/release/category-pt.txt'
 
 #  geolocation-!cn:
 #    <<: *RuleProvidersDomainYaml
@@ -618,15 +624,23 @@ rule-providers:
 rules:
   - RULE-SET, Lan, DIRECT
   - RULE-SET, Direct, 全球直连
-  - RULE-SET, NaSDDNS, 全球直连
   - RULE-SET, BanAD, 广告拦截
   - GEOSITE,category-ads-all,广告拦截
   - RULE-SET, BanProgramAD, 应用净化
   - RULE-SET, BlockHttpDNS, 应用净化
+  - RULE-SET, NaSDDNS, 全球直连
+# Transmission检测地址
+  - DOMAIN-SUFFIX,portcheck.transmissionbt.com, 全球直连
+  - DOMAIN-SUFFIX,fsm.name, 国际媒体
+#  - RULE-SET, PrivateTracker, 全球直连
+  - RULE-SET, category-pt, 全球直连
   - RULE-SET, ChinaDownloadCDN, 全球直连
   - RULE-SET, InternationalDownloadCDN, 国际CDN下载
   - RULE-SET, OpenAI, OpenAi
   - RULE-SET, AI, OpenAi
+  - RULE-SET, Speedtest, Speedtest
+  - RULE-SET, 1Password, 1Password
+  - RULE-SET, ESET_China, ESET
   - RULE-SET, Nintendo, Nintendo
   - RULE-SET, Game, 游戏平台
   - RULE-SET, YouTube, 油管视频
@@ -648,14 +662,12 @@ rules:
   - RULE-SET, BiliBiliIntl, 哔哩哔哩东南亚
   - RULE-SET, BiliBili, 哔哩哔哩
   - RULE-SET, NetEaseMusic, 网易音乐
-  - RULE-SET, 1Password, 1Password
-  - RULE-SET, ESET_China, ESET
-  - RULE-SET, Speedtest, Speedtest
-  - RULE-SET, Developer, Developer
   - RULE-SET, GitHub, Developer
   - RULE-SET, GitBook, Developer
   - RULE-SET, Docker, Developer
+  - RULE-SET, Developer, Developer
   - RULE-SET, GlobalScholar, Developer
+  - RULE-SET, AppleProxy, 苹果国际服务
   - RULE-SET, Apple, 苹果服务
   - RULE-SET, OneDrive, 微软云盘
   - RULE-SET, Microsoft, 微软服务
@@ -669,16 +681,12 @@ rules:
   - RULE-SET, Shopify, 国际电商
   - RULE-SET, Telegram, 电报消息
 #  - RULE-SET, Telegram_lodepuly, 电报消息
-  - RULE-SET, ChinaMedia, 国内媒体
   - RULE-SET, IPTVMainland, 国内媒体
+  - RULE-SET, ChinaMedia, 国内媒体
+  - GEOSITE, category-porn, 国际媒体
   - RULE-SET, GlobalMedia, 国际媒体
 #  - RULE-SET, geolocation-!cn@cn, 全球直连
 #  - RULE-SET, cn@!cn, 漏网之鱼
-# Transmission检测地址
-  - DOMAIN-SUFFIX,portcheck.transmissionbt.com, 全球直连
-  - DOMAIN-SUFFIX,fsm.name, 国际媒体
-#  - RULE-SET, PrivateTracker, 全球直连
-  - RULE-SET, category-pt, 全球直连
 #  - RULE-SET, geolocation-!cn, 漏网之鱼
   - GEOSITE, geolocation-!cn, 漏网之鱼
 #  - RULE-SET, cn, 全球直连
