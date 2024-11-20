@@ -36,7 +36,7 @@ ruby_edit "$CONFIG_FILE" "['dns']['proxy-server-nameserver']" "['https://dns.ali
 #ruby_edit "$CONFIG_FILE" "['tun']['mtu']" "1500"
 #ruby_edit "$CONFIG_FILE" "['dns']['cache-algorithm']" "'arc'"
 ruby_edit "$CONFIG_FILE" "['disable-keep-alive']" "false"
-ruby_edit "$CONFIG_FILE" "['keep-alive-interval']" "30"
+ruby_edit "$CONFIG_FILE" "['keep-alive-interval']" "600"
 ruby_edit "$CONFIG_FILE" "['keep-alive-idle']" "600"
 
 # 定义要删除的规则，使用一个字符串变量
