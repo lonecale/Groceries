@@ -155,7 +155,8 @@ if [ "$china_ip_route" == "1" ]; then
            echo "mosdns 白名单 IPV4 集合已存在，正在清空..."
            nft flush set inet fw4 mosdns_ip_route
        else
-           nft add set inet fw4 mosdns_ip_route { type ipv4_addr\; flags interval\; }
+           nft add set inet fw4 mosdns_ip_route { type ipv4_addr\; flags interval\; auto-merge\; }
+
        fi
 
        # 检查 IPv4 集合操作是否成功
@@ -219,7 +220,8 @@ if [ "$china_ip6_route" == "1" ]; then
            LOG_OUT "mosdns 白名单 IPV6 集合已存在，正在清空..."
            nft flush set inet fw4 mosdns_ip6_route
        else
-           nft add set inet fw4 mosdns_ip6_route { type ipv6_addr\; flags interval\; }
+           nft add set inet fw4 mosdns_ip6_route { type ipv4_addr\; flags interval\; auto-merge\; }
+
        fi
 
        # 检查 IPv6 集合操作是否成功
