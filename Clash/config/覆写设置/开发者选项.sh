@@ -18,11 +18,22 @@ ruby_edit() {
   local value=$3
   echo "[$LOGTIME] 正在编辑 $config_path:" | tee -a "$LOG_FILE"
   ruby -ryaml -e "
-  yaml = YAML.load_file(ARGV[0])
-  yaml${key_name} = ${value}
-  File.open(ARGV[0], 'w') {|f| f.write(yaml.to_yaml)}
-  " "$config_path"
-  echo "[$LOGTIME] 将 $key_name 设置为 $value" | tee -a "$LOG_FILE"
+  begin
+    yaml = YAML.load_file(ARGV[0], aliases: true)
+    yaml${key_name} = ${value}
+    File.open(ARGV[0], 'w') {|f| f.write(yaml.to_yaml)}
+  rescue Exception => e
+    STDERR.puts '错误：' + e.message
+    # STDERR.puts e.backtrace.join('\n')
+    exit 1
+  end
+  " "$config_path" 2>>"$LOG_FILE" # 将 Ruby 的标准错误追加到日志文件中
+  if [ $? -eq 0 ]; then
+    echo "[$LOGTIME] 将 $key_name 设置为 $value 成功" | tee -a "$LOG_FILE"
+  else
+    echo "[$LOGTIME] 设置 $key_name 失败，请检查错误信息。" | tee -a "$LOG_FILE"
+    exit 1 # 终止整个脚本
+  fi
 }
 
 # 创建 nameserver-policy 并赋值
