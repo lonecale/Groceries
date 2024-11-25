@@ -23,7 +23,7 @@ ruby_edit() {
     yaml${key_name} = ${value}
     File.open(ARGV[0], 'w') {|f| f.write(yaml.to_yaml)}
   rescue Exception => e
-    STDERR.puts '错误：' + e.message
+    STDERR.puts "错误：" + e.message
     # STDERR.puts e.backtrace.join('\n')
     exit 1
   end
@@ -94,7 +94,7 @@ remove_specified_rule() {
 
   ruby -ryaml -e '
     require "yaml"
-    yaml = YAML.load_file(ARGV[0])
+    yaml = YAML.load_file(ARGV[0], aliases: true)
     rules_to_remove = ARGV[1].split(";")
     rules_found = false
     rules_to_remove.each do |rule|
@@ -177,7 +177,7 @@ append_no_resolve() {
   
   ruby -ryaml -e '
     require "yaml"
-    yaml = YAML.load_file(ARGV[0])
+    yaml = YAML.load_file(ARGV[0] , aliases: true)
     need_update = false
     yaml["rules"].each_with_index do |rule, index|
       if (rule.include?("IP-CIDR") || rule.include?("IP-CIDR6")) && !rule.include?("no-resolve")
@@ -222,7 +222,7 @@ append_proxy_groups_custom_params() {
   # 使用 Ruby 更新配置文件
   ruby -ryaml -e '
     require "yaml"
-    yaml = YAML.load_file(ARGV[0])
+    yaml = YAML.load_file(ARGV[0] , aliases: true)
     found = false
     output_lines = {}
     yaml["proxy-groups"].each do |group|
