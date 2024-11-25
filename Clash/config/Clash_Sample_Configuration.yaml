@@ -247,8 +247,8 @@ proxy-groups:
   - {name: 全球直连, type: select, proxies: [DIRECT, 手动切换], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png}
   - {name: 广告拦截, type: select, proxies: [REJECT, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png}
   - {name: 应用净化, type: select, proxies: [REJECT, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hijacking.png}
-  #- {name: 漏网之鱼, type: select, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/shindgewongxj/WHATSINStash/main/icon/fallback.png}
-  - {name: 漏网之鱼, <<: *FallBack, include-all-providers: false, proxies: [香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/shindgewongxj/WHATSINStash/main/icon/fallback.png}
+  #- {name: 兜底策略, type: select, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/shindgewongxj/WHATSINStash/main/icon/fallback.png}
+  - {name: 兜底策略, <<: *FallBack, include-all-providers: false, proxies: [香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/shindgewongxj/WHATSINStash/main/icon/fallback.png}
 
   - {name: 香港策略, type: select, proxies: [⏱香港时延优选策略组, 🚥香港故障转移策略组, 🎛香港负载均衡策略组], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png}
   - {name: 台湾策略, type: select, proxies: [⏱台湾时延优选策略组, 🚥台湾故障转移策略组, 🎛台湾负载均衡策略组], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/China.png}
@@ -686,13 +686,13 @@ rules:
   - GEOSITE, category-porn, 国际媒体
   - RULE-SET, GlobalMedia, 国际媒体
 #  - RULE-SET, geolocation-!cn@cn, 全球直连
-#  - RULE-SET, cn@!cn, 漏网之鱼
-#  - RULE-SET, geolocation-!cn, 漏网之鱼
-  - GEOSITE, geolocation-!cn, 漏网之鱼
+#  - RULE-SET, cn@!cn, 兜底策略
+#  - RULE-SET, geolocation-!cn, 兜底策略
+  - GEOSITE, geolocation-!cn, 兜底策略
 #  - RULE-SET, cn, 全球直连
   - GEOSITE, cn, 全球直连
   - RULE-SET, ChinaCompanyIp, 全球直连
 #  - RULE-SET, CloudCN, 全球直连
   - RULE-SET, Download, 全球直连
   - GEOIP, CN, 全球直连
-  - MATCH, 漏网之鱼
+  - MATCH, 兜底策略
