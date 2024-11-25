@@ -211,8 +211,8 @@ RuleProvidersIpcidrMrs: &RuleProvidersIpcidrMrs {type: http, behavior: ipcidr, i
 # 策略组
 proxy-groups: 
   #- {name: 节点选择, type: select, proxies: [手动切换, 自动选择, HK负载均衡, HK故障转移, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png}
-  - {name: 手动切换, type: select, include-all-providers: true, filter: *FilterAll, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png}
-  - {name: 自动选择, <<: *UrlTest, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png}
+  - {name: 手动切换, type: select, include-all-providers: true, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png}
+  - {name: 自动选择, <<: *UrlTest, filter: *FilterAll, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png}
   - {name: HK负载均衡, <<: *LoadBalance, filter: *FilterZY, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin.png}
   - {name: HK故障转移, <<: *FallBack, filter: *FilterZY, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png}
   - {name: ProxyDNS, type: select, proxies: [手动切换, HK负载均衡, HK故障转移, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png}
