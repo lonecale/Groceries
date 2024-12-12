@@ -1,6 +1,6 @@
 #!name = Talkatone
 #!desc = Talkatone去广告分流，使用前请在本插件的详情页面为[PROXY]项分配代理策略。
-#!author = LOWERTOP[https://github.com/LOWERTOP],可莉🅥[https://kelee.one/Tool/Loon/Rule/Talkatone.list],Repcz[https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/Talkatone.list],jqyisbest[https://raw.githubusercontent.com/jqyisbest/CustomNetworkControls/main/Loon/Talkatone.plugin]
+#!author = LOWERTOP[https://github.com/LOWERTOP/Shadowrocket-First/blob/main/Talkatone.sgmodule],可莉🅥[https://kelee.one/Tool/Loon/Rule/Talkatone.list],Repcz[https://github.com/Repcz/Tool/blob/X/Loon/Rules/Talkatone.list],jqyisbest[https://github.com/jqyisbest/CustomNetworkControls/blob/main/Loon/Talkatone.plugin]
 #!tag = 分流,去广告
 #!system = iOS,iPadOS
 #!loon_version = 3.2.3(753)
