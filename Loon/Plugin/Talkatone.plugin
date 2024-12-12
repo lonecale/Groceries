@@ -21,18 +21,13 @@ DOMAIN-SUFFIX,pubmatic.com,REJECT-DROP
 DOMAIN-SUFFIX,smaato.net,REJECT-DROP
 DOMAIN-SUFFIX,tappx.com,REJECT-DROP
 
-DOMAIN-SUFFIX,tktn.at, PROXY
-DOMAIN-SUFFIX,tktn.be, PROXY
-DOMAIN-SUFFIX,tenor.com, PROXY
-DOMAIN-SUFFIX,talkatone.com, PROXY
-IP-CIDR,50.117.27.0/24,no-resolve, PROXY
-IP-CIDR,63.251.124.0/24,no-resolve, PROXY
-IP-CIDR,69.46.75.0/24,no-resolve, PROXY
-IP-CIDR,205.164.56.0/24,no-resolve, PROXY
-IP-CIDR,205.164.56.29/24,no-resolve, PROXY
+DOMAIN-SUFFIX,tktn.at,PROXY
+DOMAIN-SUFFIX,tktn.be,PROXY
+DOMAIN-SUFFIX,tenor.com,PROXY
+DOMAIN-SUFFIX,talkatone.com,PROXY
+IP-CIDR,50.117.27.0/24,no-resolve,PROXY
+IP-CIDR,63.251.124.0/24,no-resolve,PROXY
+IP-CIDR,69.46.75.0/24,no-resolve,PROXY
+IP-CIDR,205.164.56.0/24,no-resolve,PROXY
+IP-CIDR,205.164.56.29/24,no-resolve,PROXY
 
-# [Script]
-# http-response ^https:\/\/gum\.criteo\.com\/appevent\/v1\/2379\?.* script-path=https://raw.githubusercontent.com/axinhouzilaoyue/myScript/main/surge/throttle-rewrite.js, requires-body=true, tag=throttle
-
-# [MITM]
-# hostname = gum.criteo.com
