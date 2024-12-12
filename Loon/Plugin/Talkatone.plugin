@@ -1,25 +1,25 @@
 #!name = Talkatone
 #!desc = Talkatone去广告分流，使用前请在本插件的详情页面为[PROXY]项分配代理策略。
-#!author = LOWERTOP[https://github.com/LOWERTOP],jqyisbest[https://github.com/jqyisbest],Repcz[https://github.com/Repcz/Tool]
+#!author = LOWERTOP[https://github.com/LOWERTOP],可莉🅥[https://kelee.one/Tool/Loon/Rule/Talkatone.list],Repcz[https://raw.githubusercontent.com/Repcz/Tool/X/Loon/Rules/Talkatone.list],jqyisbest[https://raw.githubusercontent.com/jqyisbest/CustomNetworkControls/main/Loon/Talkatone.plugin]
 #!tag = 分流,去广告
 #!system = iOS,iPadOS
-#!loon_version = 3.2.1(777)
-#!homepage = https://github.com/lonecale
+#!loon_version = 3.2.3(753)
+#!homepage = https://github.com/lonecale/Rules
 #!icon = https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Talkatone.png
 #!date = 2024-11-21 19:00:00
 
 [Rule]
 # 以下为该软件部分去广告规则
-DOMAIN-SUFFIX,ads.inmobi.com,REJECT
-DOMAIN-SUFFIX,adsappier.com,REJECT
-DOMAIN-SUFFIX,amazon-adsystem.com,REJECT
-DOMAIN-SUFFIX,appier.net,REJECT
-DOMAIN-SUFFIX,appiersig.com,REJECT
-DOMAIN-SUFFIX,criteo.com,REJECT
-DOMAIN-SUFFIX,googleads.g.doubleclick.net,REJECT
-DOMAIN-SUFFIX,pubmatic.com,REJECT
-DOMAIN-SUFFIX,smaato.net,REJECT
-DOMAIN-SUFFIX,tappx.com,REJECT
+DOMAIN-SUFFIX,ads.inmobi.com,REJECT-DROP
+DOMAIN-SUFFIX,adsappier.com,REJECT-DROP
+DOMAIN-SUFFIX,amazon-adsystem.com,REJECT-DROP
+DOMAIN-SUFFIX,appier.net,REJECT-DROP
+DOMAIN-SUFFIX,appiersig.com,REJECT-DROP
+DOMAIN-SUFFIX,criteo.com,REJECT-DROP
+DOMAIN-SUFFIX,googleads.g.doubleclick.net,REJECT-DROP
+DOMAIN-SUFFIX,pubmatic.com,REJECT-DROP
+DOMAIN-SUFFIX,smaato.net,REJECT-DROP
+DOMAIN-SUFFIX,tappx.com,REJECT-DROP
 
 DOMAIN-SUFFIX,tktn.at,PROXY
 DOMAIN-SUFFIX,tktn.be,PROXY
