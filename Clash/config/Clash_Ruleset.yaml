@@ -120,6 +120,14 @@ proxy-groups:
   - {name: HK故障转移, <<: *FallBack, filter: *FilterZY, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png}
   - {name: ProxyDNS, type: select, proxies: [手动切换, HK故障转移, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png}
   - {name: 国际CDN下载, type: select, include-all-providers: true, filter: "(?i)实验性", proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Download.png}
+  - {name: Speedtest, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️油管节点, 🏷️奈飞节点, 🏷️Disney节点, 🏷️冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png}
+  - {name: OpenAi, type: select, include-all-providers: true, filter: *FilterUS, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ChatGPT.png}
+  - {name: 电报消息, type: select, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png}
+  - {name: Twitter, type: select, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Twitter.png}
+  - {name: Talkatone, type: select, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Talkatone.png}
+  - {name: Developer, type: select, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png}
+  - {name: 1Password, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://1password.com/img/favicon/apple-touch-icon-v2.png}
+  - {name: ESET, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://www.eset.com/typo3conf/ext/eset_base/Resources/Public/img/device/apple-touch-icon.png}
   - {name: 苹果国际服务, type: select, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️冷门地区节点, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_1.png}
   - {name: 苹果服务, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Apple_2.png}
   - {name: 微软云盘, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/OneDrive.png}
@@ -127,19 +135,13 @@ proxy-groups:
   - {name: 谷歌推送, type: select, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png}
   - {name: 谷歌服务, type: select, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Google_Search.png}
   - {name: 国际电商, type: select, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️冷门地区节点, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Amazon.png}
-  - {name: Developer, type: select, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/GitHub.png}
-  - {name: 电报消息, type: select, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Telegram.png}
-  - {name: OpenAi, type: select, include-all-providers: true, filter: *FilterUS, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ChatGPT.png}
-  - {name: Speedtest, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️油管节点, 🏷️奈飞节点, 🏷️Disney节点, 🏷️冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png}
-  - {name: 1Password, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://1password.com/img/favicon/apple-touch-icon-v2.png}
-  - {name: ESET, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://www.eset.com/typo3conf/ext/eset_base/Resources/Public/img/device/apple-touch-icon.png}
+  - {name: TikTok, type: select, include-all-providers: true, filter: "(?i)实验性", proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png}
   - {name: 油管视频, type: select, proxies: [手动切换, 🏷️油管节点, 🏷️冷门地区节点, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png}
   - {name: 奈飞视频, type: select, proxies: [手动切换, 🏷️奈飞节点, 🏷️冷门地区节点, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netflix.png}
   - {name: Disney视频, type: select, proxies: [手动切换, 🏷️Disney节点, 🏷️冷门地区节点, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Disney+.png}
   - {name: 巴哈姆特, type: select, proxies: [台湾策略, 手动切换], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bahamut.png}
-  - {name: TikTok, type: select, include-all-providers: true, filter: "(?i)实验性", proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/TikTok.png}
-  - {name: PikPak, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️油管节点, 🏷️奈飞节点, 🏷️Disney节点], icon: https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/PikPak.png}
   - {name: EmbyProxy, type: select, proxies: [DIRECT, 手动切换, 🏷️Emby节点, 🏷️冷门地区节点, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Emby.png}
+  - {name: PikPak, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️油管节点, 🏷️奈飞节点, 🏷️Disney节点], icon: https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/PikPak.png}
   - {name: 哔哩哔哩东南亚, type: select, include-all-providers: true, filter: "(?i)实验性", proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili.png}
   - {name: 哔哩哔哩, type: select, proxies: [DIRECT, 香港策略, 台湾策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/bilibili_3.png}
   - {name: 网易音乐, type: select, include-all-providers: true, filter: "(?i)网易|音乐|解锁|Music|NetEase", proxies: [DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Netease_Music.png}
@@ -274,80 +276,30 @@ rule-providers:
     path: './ruleset/AI.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/AI.yaml'
 
-  Nintendo:
+  GitHub:
     <<: *RuleProvidersYaml
-    path: './ruleset/Nintendo.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Nintendo/Nintendo_No_Resolve.yaml'
+    path: './ruleset/GitHub.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub_No_Resolve.yaml'
 
-  Game:
+  GitBook:
     <<: *RuleProvidersYaml
-    path: './ruleset/Game.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/Game_No_Resolve.yaml'
+    path: './ruleset/GitBook.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitBook/GitBook_No_Resolve.yaml'
 
-  YouTube:
+  Docker:
     <<: *RuleProvidersYaml
-    path: './ruleset/YouTube.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube_No_Resolve.yaml'
+    path: './ruleset/Docker.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Docker/Docker_No_Resolve.yaml'
 
-  Netflix:
+  GlobalScholar:
     <<: *RuleProvidersYaml
-    path: './ruleset/Netflix.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix_Classical_No_Resolve.yaml'
+    path: './ruleset/GlobalScholar.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalScholar/GlobalScholar_No_Resolve.yaml'
 
-  Disney:
+  Developer:
     <<: *RuleProvidersYaml
-    path: './ruleset/Disney.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Disney/Disney_No_Resolve.yaml'
-
-  Bahamut:
-    <<: *RuleProvidersYaml
-    path: './ruleset/Bahamut.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Bahamut/Bahamut_No_Resolve.yaml'
-
-  TikTok:
-    <<: *RuleProvidersYaml
-    path: './ruleset/TikTok.yaml'
-    url: 'https://kelee.one/Tool/Clash/Rule/TikTok.yaml'
-
-  PikPak:
-    <<: *RuleProvidersYaml
-    path: './ruleset/PikPak.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PikPak/PikPak_No_Resolve.yaml'
-
-  Emby:
-    <<: *RuleProvidersYaml
-    path: './ruleset/Emby.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Emby/Emby_No_Resolve.yaml'
-
-  Emby_Repcz:
-    <<: *RuleProvidersText
-    path: './ruleset/Emby_Repcz.txt'
-    url: 'https://raw.githubusercontent.com/Repcz/Tool/X/Clash/Rules/Emby.list'
-
-#  Emby_Nebula:
-#    <<: *RuleProvidersText
-#    path: './ruleset/Emby_Nebula.txt'
-#    url: 'https://raw.githubusercontent.com/Pegasus02/Clash_Rules/main/list/Nebula.list'
-
-  Emby_ddgksf2013:
-    <<: *RuleProvidersText
-    path: './ruleset/Emby_ddgksf2013.txt'
-    url: 'https://raw.githubusercontent.com/ddgksf2013/Filter/master/Emby.list'
-
-  BiliBiliIntl:
-    <<: *RuleProvidersYaml
-    path: './ruleset/BiliBiliIntl.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BiliBiliIntl/BiliBiliIntl_No_Resolve.yaml'
-
-  BiliBili:
-    <<: *RuleProvidersYaml
-    path: './ruleset/BiliBili.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BiliBili/BiliBili_No_Resolve.yaml'
-
-  NetEaseMusic:
-    <<: *RuleProvidersYaml
-    path: './ruleset/NetEaseMusic.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/NetEaseMusic/NetEaseMusic_No_Resolve.yaml'
+    path: './ruleset/Developer.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Developer/Developer_No_Resolve.yaml'
 
   Speedtest:
     <<: *RuleProvidersYaml
@@ -377,30 +329,35 @@ rule-providers:
     path: './ruleset/ESET_China.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/ESET_China.yaml'
 
-  GitHub:
+  Telegram:
     <<: *RuleProvidersYaml
-    path: './ruleset/GitHub.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitHub/GitHub_No_Resolve.yaml'
+    path: './ruleset/Telegram.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram_No_Resolve.yaml'
 
-  GitBook:
-    <<: *RuleProvidersYaml
-    path: './ruleset/GitBook.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GitBook/GitBook_No_Resolve.yaml'
+#  Telegram_lodepuly:
+#    <<: *RuleProvidersYaml
+#    path: './ruleset/Telegram_lodepuly.yaml'
+#    url: 'https://kelee.one/Tool/Clash/Rule/Telegram.yaml'
 
-  Docker:
+  Twitter:
     <<: *RuleProvidersYaml
-    path: './ruleset/Docker.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Docker/Docker_No_Resolve.yaml'
+    path: './ruleset/Twitter.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Twitter/Twitter_No_Resolve.yaml'
 
-  Developer:
+  Talkatone:
     <<: *RuleProvidersYaml
-    path: './ruleset/Developer.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Developer/Developer_No_Resolve.yaml'
+    path: './ruleset/Talkatone.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/Talkatone.yaml'
 
-  GlobalScholar:
+  Nintendo:
     <<: *RuleProvidersYaml
-    path: './ruleset/GlobalScholar.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalScholar/GlobalScholar_No_Resolve.yaml'
+    path: './ruleset/Nintendo.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Nintendo/Nintendo_No_Resolve.yaml'
+
+  Game:
+    <<: *RuleProvidersYaml
+    path: './ruleset/Game.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Game/Game_No_Resolve.yaml'
 
   AppleProxy:
     <<: *RuleProvidersYaml
@@ -422,6 +379,11 @@ rule-providers:
     path: './ruleset/Microsoft.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Microsoft/Microsoft_No_Resolve.yaml'
 
+  YouTube:
+    <<: *RuleProvidersYaml
+    path: './ruleset/YouTube.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/YouTube/YouTube_No_Resolve.yaml'
+
   GoogleFCM:
     <<: *RuleProvidersYaml
     path: './ruleset/GoogleFCM.yaml'
@@ -436,6 +398,81 @@ rule-providers:
     <<: *RuleProvidersYaml
     path: './ruleset/Google.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Google/Google_No_Resolve.yaml'
+
+  TikTok:
+    <<: *RuleProvidersYaml
+    path: './ruleset/TikTok.yaml'
+    url: 'https://kelee.one/Tool/Clash/Rule/TikTok.yaml'
+
+  Netflix:
+    <<: *RuleProvidersYaml
+    path: './ruleset/Netflix.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Netflix/Netflix_Classical_No_Resolve.yaml'
+
+  Disney:
+    <<: *RuleProvidersYaml
+    path: './ruleset/Disney.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Disney/Disney_No_Resolve.yaml'
+
+  Bahamut:
+    <<: *RuleProvidersYaml
+    path: './ruleset/Bahamut.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Bahamut/Bahamut_No_Resolve.yaml'
+
+  Emby:
+    <<: *RuleProvidersYaml
+    path: './ruleset/Emby.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Emby/Emby_No_Resolve.yaml'
+
+  Emby_Repcz:
+    <<: *RuleProvidersText
+    path: './ruleset/Emby_Repcz.txt'
+    url: 'https://raw.githubusercontent.com/Repcz/Tool/X/Clash/Rules/Emby.list'
+
+#  Emby_Nebula:
+#    <<: *RuleProvidersText
+#    path: './ruleset/Emby_Nebula.txt'
+#    url: 'https://raw.githubusercontent.com/Pegasus02/Clash_Rules/main/list/Nebula.list'
+
+  Emby_ddgksf2013:
+    <<: *RuleProvidersText
+    path: './ruleset/Emby_ddgksf2013.txt'
+    url: 'https://raw.githubusercontent.com/ddgksf2013/Filter/master/Emby.list'
+
+  PikPak:
+    <<: *RuleProvidersYaml
+    path: './ruleset/PikPak.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PikPak/PikPak_No_Resolve.yaml'
+
+  BiliBiliIntl:
+    <<: *RuleProvidersYaml
+    path: './ruleset/BiliBiliIntl.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BiliBiliIntl/BiliBiliIntl_No_Resolve.yaml'
+
+  BiliBili:
+    <<: *RuleProvidersYaml
+    path: './ruleset/BiliBili.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/BiliBili/BiliBili_No_Resolve.yaml'
+
+  NetEaseMusic:
+    <<: *RuleProvidersYaml
+    path: './ruleset/NetEaseMusic.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/NetEaseMusic/NetEaseMusic_No_Resolve.yaml'
+
+  IPTVMainland:
+    <<: *RuleProvidersYaml
+    path: './ruleset/IPTVMainland.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/IPTVMainland/IPTVMainland_Classical_No_Resolve.yaml'
+
+  ChinaMedia:
+    <<: *RuleProvidersYaml
+    path: './ruleset/ChinaMedia.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia_No_Resolve.yaml'
+
+  GlobalMedia:
+    <<: *RuleProvidersYaml
+    path: './ruleset/GlobalMedia.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia_Classical_No_Resolve.yaml'
 
   AmazonCN:
     <<: *RuleProvidersYaml
@@ -461,31 +498,6 @@ rule-providers:
     <<: *RuleProvidersYaml
     path: './ruleset/Shopify.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Shopify/Shopify_No_Resolve.yaml'
-
-  Telegram:
-    <<: *RuleProvidersYaml
-    path: './ruleset/Telegram.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Telegram/Telegram_No_Resolve.yaml'
-
-#  Telegram_lodepuly:
-#    <<: *RuleProvidersYaml
-#    path: './ruleset/Telegram_lodepuly.yaml'
-#    url: 'https://kelee.one/Tool/Clash/Rule/Telegram.yaml'
-
-  IPTVMainland:
-    <<: *RuleProvidersYaml
-    path: './ruleset/IPTVMainland.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/IPTVMainland/IPTVMainland_Classical_No_Resolve.yaml'
-
-  ChinaMedia:
-    <<: *RuleProvidersYaml
-    path: './ruleset/ChinaMedia.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMedia/ChinaMedia_No_Resolve.yaml'
-
-  GlobalMedia:
-    <<: *RuleProvidersYaml
-    path: './ruleset/GlobalMedia.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/GlobalMedia/GlobalMedia_Classical_No_Resolve.yaml'
 
 #  geolocation-!cn@cn:
 #    <<: *RuleProvidersDomainYaml
@@ -541,13 +553,37 @@ rules:
   - RULE-SET, InternationalDownloadCDN, 国际CDN下载
   - RULE-SET, OpenAI, OpenAi
   - RULE-SET, AI, OpenAi
+  - RULE-SET, GitHub, Developer
+  - RULE-SET, GitBook, Developer
+  - RULE-SET, Docker, Developer
+  - RULE-SET, GlobalScholar, Developer
+  - RULE-SET, Developer, Developer
+  - DOMAIN-SUFFIX, fast.com, 奈飞视频
+  - RULE-SET, Speedtest, Speedtest
+  - RULE-SET, 1Password, 1Password
+  - RULE-SET, ESET_China, ESET
+  - RULE-SET, Telegram, 电报消息
+#  - RULE-SET, Telegram_lodepuly, 电报消息
+  - RULE-SET, Twitter, Twitter
+  - RULE-SET, Talkatone, Talkatone
   - RULE-SET, Nintendo, Nintendo
   - RULE-SET, Game, 游戏平台
+  - RULE-SET, AppleProxy, 苹果国际服务
+  - RULE-SET, Apple, 苹果服务
+  - RULE-SET, OneDrive, 微软云盘
+  - RULE-SET, Microsoft, 微软服务
   - RULE-SET, YouTube, 油管视频
+  - RULE-SET, GoogleFCM, 谷歌推送
+#  - RULE-SET, GoogleCN, 全球直连
+  - RULE-SET, Google, 谷歌服务
+  - RULE-SET, TikTok, TikTok
   - RULE-SET, Netflix, 奈飞视频
   - RULE-SET, Disney, Disney视频
   - RULE-SET, Bahamut, 巴哈姆特
-  - RULE-SET, TikTok, TikTok
+  - RULE-SET, Emby, EmbyProxy
+  - RULE-SET, Emby_Repcz, EmbyProxy
+#  - RULE-SET, Emby_Nebula, EmbyProxy
+  - RULE-SET, Emby_ddgksf2013, EmbyProxy
   - DOMAIN-SUFFIX,user.mypikpak.com, 国际媒体
   - DOMAIN-SUFFIX,rcv5-sp.mypikpak.com, 国际媒体
   - DOMAIN-SUFFIX,config.mypikpak.com, 国际媒体
@@ -555,39 +591,18 @@ rules:
   - DOMAIN-SUFFIX,access.mypikpak.com, 国际媒体
   - DOMAIN-SUFFIX,hubciddata.mypikpak.com, 国际媒体
   - RULE-SET, PikPak, PikPak
-  - RULE-SET, Emby, EmbyProxy
-  - RULE-SET, Emby_Repcz, EmbyProxy
-#  - RULE-SET, Emby_Nebula, EmbyProxy
-  - RULE-SET, Emby_ddgksf2013, EmbyProxy
   - RULE-SET, BiliBiliIntl, 哔哩哔哩东南亚
   - RULE-SET, BiliBili, 哔哩哔哩
   - RULE-SET, NetEaseMusic, 网易音乐
-  - RULE-SET, Speedtest, Speedtest
-  - RULE-SET, 1Password, 1Password
-  - RULE-SET, ESET_China, ESET
-  - RULE-SET, GitHub, Developer
-  - RULE-SET, GitBook, Developer
-  - RULE-SET, Docker, Developer
-  - RULE-SET, Developer, Developer
-  - RULE-SET, GlobalScholar, Developer
-  - RULE-SET, AppleProxy, 苹果国际服务
-  - RULE-SET, Apple, 苹果服务
-  - RULE-SET, OneDrive, 微软云盘
-  - RULE-SET, Microsoft, 微软服务
-  - RULE-SET, GoogleFCM, 谷歌推送
-#  - RULE-SET, GoogleCN, 全球直连
-  - RULE-SET, Google, 谷歌服务
+  - RULE-SET, IPTVMainland, 国内媒体
+  - RULE-SET, ChinaMedia, 国内媒体
+  - GEOSITE, category-porn, 国际媒体
+  - RULE-SET, GlobalMedia, 国际媒体
   - RULE-SET, AmazonCN, 全球直连
   - RULE-SET, Amazon, 国际电商
   - RULE-SET, eBay, 国际电商
   - RULE-SET, Bestbuy, 国际电商
   - RULE-SET, Shopify, 国际电商
-  - RULE-SET, Telegram, 电报消息
-#  - RULE-SET, Telegram_lodepuly, 电报消息
-  - RULE-SET, IPTVMainland, 国内媒体
-  - RULE-SET, ChinaMedia, 国内媒体
-  - GEOSITE, category-porn, 国际媒体
-  - RULE-SET, GlobalMedia, 国际媒体
 #  - RULE-SET, geolocation-!cn@cn, 全球直连
 #  - RULE-SET, cn@!cn, 兜底策略
 #  - RULE-SET, geolocation-!cn, 兜底策略
