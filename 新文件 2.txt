@@ -1,248 +1,357 @@
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057063] ------------[ cut here ]------------
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057070] WARNING: CPU: 0 PID: 0 at __alloc_pages_noprof+0x217/0x2f0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057079] Modules linked in: oaf(O) pppoe ppp_async mt7921u(O) mt7921e(O) mt7921_common(O) iptable_nat xt_state xt_nat xt_conntrack xt_REDIRECT xt_NETMAP xt_MASQUERADE xt_CT pppox ppp_generic nft_redir nft_nat nft_masq nft_fullcone(O) nft_flow_offload nft_fib_inet nft_ct nft_chain_nat nf_nat_tftp nf_nat_snmp_basic nf_nat_sip nf_nat_pptp nf_nat_irc nf_nat_h323 nf_nat_amanda nf_nat nf_flow_table_inet nf_flow_table nf_conntrack_tftp nf_conntrack_snmp nf_conntrack_sip nf_conntrack_pptp nf_conntrack_netlink nf_conntrack_irc nf_conntrack_h323 nf_conntrack_broadcast nf_conntrack_amanda nf_conntrack mt792x_usb(O) mt792x_lib(O) mt76x2e(O) mt76x2_common(O) mt76x02_lib(O) mt76_usb(O) mt76_connac_lib(O) mt76(O) mlx5_core mac80211(O) lz4 ipt_REJECT cfg80211(O) zstd xt_time xt_tcpudp xt_string xt_multiport xt_mark xt_mac xt_limit xt_comment xt_bpf xt_TCPMSS xt_LOG usbnet txgbe ts_kmp ts_fsm ts_bm tls tcp_bbr slhc r8168(O) r8152(O) r8126(O) r8125(O) r8101(O) ngbe nft_tproxy nft_socket nft_reject_ipv6 nft_reject_ipv4
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057164]  nft_reject_inet nft_reject nft_quota nft_numgen nft_log nft_limit nft_hash nft_fib_ipv6 nft_fib_ipv4 nft_fib nf_tproxy_ipv6 nf_tproxy_ipv4 nf_tables nf_socket_ipv6 nf_socket_ipv4 nf_reject_ipv6 nf_reject_ipv4 nf_defrag_ipv6 nf_defrag_ipv4 mlxfw mlx4_en mlx4_core lzo_rle lzo lz4_decompress lz4_compress libwx iptable_mangle iptable_filter ip_tables igc forcedeth e1000e crc_ccitt compat(O) brutal(O) br_netfilter bnx2 asn1_decoder ntfs3 sch_teql sch_sfq sch_multiq sch_gred sch_fq sch_codel em_text em_nbyte em_meta em_cmp act_skbmod act_simple act_pedit act_csum cls_bpf act_bpf sch_tbf sch_ingress sch_htb sch_hfsc em_u32 cls_u32 cls_route cls_matchall cls_fw cls_flow cls_basic act_skbedit act_mirred act_gact configs evdev i2c_dev cryptodev(O) xt_set x_tables ip_set_list_set ip_set_hash_netportnet ip_set_hash_netport ip_set_hash_netnet ip_set_hash_netiface ip_set_hash_net ip_set_hash_mac ip_set_hash_ipportnet ip_set_hash_ipportip ip_set_hash_ipport ip_set_hash_ipmark ip_set_hash_ipmac ip_set_hash_ip
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057240]  ip_set_bitmap_port ip_set_bitmap_ipmac ip_set_bitmap_ip ip_set nfnetlink ixgbe e1000 amd_xgbe ifb sit mdio xsk_diag netlink_diag tunnel6 tunnel4 ip_tunnel udp_diag tcp_diag raw_diag inet_diag tun nls_utf8 zram zsmalloc pcs_xpcs ena shortcut_fe_ipv6(O) shortcut_fe(O) xxhash_generic crypto_user algif_skcipher algif_rng algif_hash algif_aead af_alg sha512_ssse3 sha512_generic sha256_ssse3 seqiv drbg hmac geniv cmac chacha20poly1305 blake2b_generic authencesn authenc nls_iso8859_1 nls_cp437 uas xhci_plat_hcd fsl_mph_dr_of ehci_platform ehci_fsl igb xfs vfat fat exfat btrfs zstd_decompress zstd_compress zstd_common xxhash xor raid6_pq lzo_decompress lzo_compress libcrc32c button_hotplug(O) tg3 mii
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057317] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Tainted: G           O       6.11.11 #0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057321] Tainted: [O]=OOT_MODULE
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057323] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 3.20230228-4 06/06/2023
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057325] RIP: 0010:__alloc_pages_noprof+0x217/0x2f0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057328] Code: 00 00 00 48 89 f0 48 83 c6 10 39 50 18 77 f4 e9 ff fe ff ff 48 05 e8 07 00 00 48 89 45 c0 e9 c6 fe ff ff c6 05 a2 40 a3 01 01 <0f> 0b 31 c0 eb 9b f7 c1 00 00 80 00 75 77 f7 c1 00 00 08 00 0f 85
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057331] RSP: 0018:ffffc90000003818 EFLAGS: 00010246
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057334] RAX: 0000000080000101 RBX: 0000000000000014 RCX: 0000000000000000
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057344] RDX: 00000000ffffffff RSI: 0000000000000014 RDI: 0000000000040cc0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057346] RBP: ffffc90000003860 R08: 00000000fffffff8 R09: ffffffffa11f686a
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057348] R10: 00000000f5ffd1cb R11: 0000000000000000 R12: 000000000000001c
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057350] R13: ffff888010ca9d00 R14: 0000000000040cc0 R15: 0000000000000000
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057352] FS:  0000000000000000(0000) GS:ffff88807c600000(0000) knlGS:0000000000000000
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057354] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057356] CR2: 000000c0005e8000 CR3: 000000006a420000 CR4: 0000000000350ef0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057361] Call Trace:
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057363]  <IRQ>
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057366]  ? __warn+0x189/0x280
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057370]  ? __alloc_pages_noprof+0x217/0x2f0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057372]  ? report_bug+0x1b0/0x230
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057377]  ? handle_bug+0x69/0xa0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057380]  ? exc_invalid_op+0x1b/0x50
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057382]  ? asm_exc_invalid_op+0x1b/0x20
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057388]  ? _18+0x6a/0xf0 [oaf]
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057392]  ? __alloc_pages_noprof+0x217/0x2f0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057395]  ? _raw_spin_unlock_irqrestore+0x9/0x20
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057398]  ? ep_poll_callback+0x26b/0x350
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057401]  ___kmalloc_large_node+0x5c/0x270
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057404]  __kmalloc_large_node_noprof+0x16/0x90
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057407]  ? _18+0x6a/0xf0 [oaf]
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057410]  __kmalloc_noprof+0x1bb/0x2f0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057413]  _18+0x6a/0xf0 [oaf]
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057415]  ? __tcp_ack_snd_check+0x1e6/0x1f0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057420]  ? skb_copy_bits+0x1ad/0x290
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057423]  _47+0x347/0x3d0 [oaf]
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057426]  _91+0x1ba/0x1c0 [oaf]
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057429]  nf_hook_slow+0x5e/0xd0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057432]  ip_rcv+0x70/0x130
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057435]  ? ip_rcv_core+0x410/0x410
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057438]  __netif_receive_skb+0x52/0xc0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057441]  netif_receive_skb+0x5d/0x110
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057444]  br_pass_frame_up+0x18a/0x1e0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057448]  ? br_pass_frame_up+0x1e0/0x1e0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057451]  br_handle_frame_finish+0x4b7/0x4e0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057454]  ? __enqueue_entity+0x12b/0x130
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057458]  br_handle_frame+0x318/0x4e0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057460]  ? trace_raw_output_sched_numa_pair_template+0x60/0x130
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057465]  ? br_port_flags_change+0xc0/0xc0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057468]  ? br_get_rx_handler+0x40/0x40
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057471]  __netif_receive_skb_core+0xff/0xdf0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057474]  ? skb_free_head+0x35/0x1e0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057476]  ? skb_release_data+0x28f/0x2b0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057478]  ? __mod_timer+0x36b/0x410
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057482]  __netif_receive_skb+0x3b/0xc0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057484]  process_backlog+0x110/0x240
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057487]  __napi_poll+0x2a/0x1b0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057490]  net_rx_action+0x1ef/0x3f0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057492]  ? try_to_wake_up+0x658/0x750
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057495]  ? ktime_get_clocktai+0x10/0x10
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057498]  ? hrtimer_wakeup+0x24/0x30
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057501]  handle_softirqs+0xfb/0x260
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057504]  irq_exit_rcu+0x42/0x60
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057506]  sysvec_call_function_single+0x76/0x90
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057509]  </IRQ>
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057510]  <TASK>
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057511]  asm_sysvec_call_function_single+0x1b/0x20
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057515] RIP: 0010:pv_native_safe_halt+0x16/0x20
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057518] Code: 00 00 00 00 55 48 89 e5 0f 09 5d c3 0f 1f 84 00 00 00 00 00 55 48 89 e5 83 3d f5 32 14 01 00 7e 07 0f 00 2d 7a e3 52 00 fb f4 <5d> c3 0f 1f 84 00 00 00 00 00 55 48 89 e5 0f 22 d7 5d c3 0f 1f 80
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057520] RSP: 0018:ffffffff82c03e58 EFLAGS: 00000246
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057522] RAX: ffff88807c600000 RBX: 0000000000000000 RCX: 4000000000000000
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057524] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000074c2c
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057525] RBP: ffffffff82c03e58 R08: 0000000000000400 R09: 0000000000002c00
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057527] R10: 0000000000000000 R11: 0000000000002c00 R12: ffffffff82c03ea7
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057529] R13: ffffffff82d91380 R14: 0000000000000000 R15: 0000000000000000
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057531]  default_idle+0x9/0x20
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057534]  arch_cpu_idle+0x9/0x10
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057536]  default_idle_call+0x3b/0x60
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057539]  do_idle+0xd7/0x360
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057541]  ? do_idle+0x33c/0x360
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057544]  cpu_startup_entry+0x25/0x30
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057547]  rest_init+0xa4/0xb0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057549]  start_kernel+0x4b7/0x540
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057552]  x86_64_start_reservations+0x2a/0x30
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057555]  x86_64_start_kernel+0x9f/0xa0
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057558]  common_startup_64+0x13e/0x147
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057561]  </TASK>
-Tue Dec 24 22:43:10 2024 kern.warn kernel: [   74.057562] ---[ end trace 0000000000000000 ]---
-
-
-
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930295] ------------[ cut here ]------------
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930302] WARNING: CPU: 0 PID: 0 at __alloc_pages_noprof+0x217/0x2f0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930321] Modules linked in: oaf(O) pppoe ppp_async mt7921u(O) mt7921e(O) mt7921_common(O) iptable_nat xt_state xt_nat xt_conntrack xt_REDIRECT xt_NETMAP xt_MASQUERADE xt_CT pppox ppp_generic nft_redir nft_nat nft_masq nft_fullcone(O) nft_flow_offload nft_fib_inet nft_ct nft_chain_nat nf_nat_tftp nf_nat_snmp_basic nf_nat_sip nf_nat_pptp nf_nat_irc nf_nat_h323 nf_nat_amanda nf_nat nf_flow_table_inet nf_flow_table nf_conntrack_tftp nf_conntrack_snmp nf_conntrack_sip nf_conntrack_pptp nf_conntrack_netlink nf_conntrack_irc nf_conntrack_h323 nf_conntrack_broadcast nf_conntrack_amanda nf_conntrack mt792x_usb(O) mt792x_lib(O) mt76x2e(O) mt76x2_common(O) mt76x02_lib(O) mt76_usb(O) mt76_connac_lib(O) mt76(O) mlx5_core mac80211(O) lz4 ipt_REJECT cfg80211(O) zstd xt_time xt_tcpudp xt_string xt_multiport xt_mark xt_mac xt_limit xt_comment xt_bpf xt_TCPMSS xt_LOG usbnet txgbe ts_kmp ts_fsm ts_bm tls tcp_bbr slhc r8168(O) r8152(O) r8126(O) r8125(O) r8101(O) ngbe nft_tproxy nft_socket nft_reject_ipv6 nft_reject_ipv4
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930406]  nft_reject_inet nft_reject nft_quota nft_numgen nft_log nft_limit nft_hash nft_fib_ipv6 nft_fib_ipv4 nft_fib nf_tproxy_ipv6 nf_tproxy_ipv4 nf_tables nf_socket_ipv6 nf_socket_ipv4 nf_reject_ipv6 nf_reject_ipv4 nf_defrag_ipv6 nf_defrag_ipv4 mlxfw mlx4_en mlx4_core lzo_rle lzo lz4_decompress lz4_compress libwx iptable_mangle iptable_filter ip_tables igc forcedeth e1000e crc_ccitt compat(O) brutal(O) br_netfilter bnx2 asn1_decoder ntfs3 sch_teql sch_sfq sch_multiq sch_gred sch_fq sch_codel em_text em_nbyte em_meta em_cmp act_skbmod act_simple act_pedit act_csum cls_bpf act_bpf sch_tbf sch_ingress sch_htb sch_hfsc em_u32 cls_u32 cls_route cls_matchall cls_fw cls_flow cls_basic act_skbedit act_mirred act_gact configs evdev i2c_dev cryptodev(O) xt_set x_tables ip_set_list_set ip_set_hash_netportnet ip_set_hash_netport ip_set_hash_netnet ip_set_hash_netiface ip_set_hash_net ip_set_hash_mac ip_set_hash_ipportnet ip_set_hash_ipportip ip_set_hash_ipport ip_set_hash_ipmark ip_set_hash_ipmac ip_set_hash_ip
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930486]  ip_set_bitmap_port ip_set_bitmap_ipmac ip_set_bitmap_ip ip_set nfnetlink ixgbe e1000 amd_xgbe ifb sit mdio xsk_diag netlink_diag tunnel6 tunnel4 ip_tunnel udp_diag tcp_diag raw_diag inet_diag tun nls_utf8 zram zsmalloc pcs_xpcs ena shortcut_fe_ipv6(O) shortcut_fe(O) xxhash_generic crypto_user algif_skcipher algif_rng algif_hash algif_aead af_alg sha512_ssse3 sha512_generic sha256_ssse3 seqiv drbg hmac geniv cmac chacha20poly1305 blake2b_generic authencesn authenc nls_iso8859_1 nls_cp437 uas xhci_plat_hcd fsl_mph_dr_of ehci_platform ehci_fsl igb xfs vfat fat exfat btrfs zstd_decompress zstd_compress zstd_common xxhash xor raid6_pq lzo_decompress lzo_compress libcrc32c button_hotplug(O) tg3 mii
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930552] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Tainted: G           O       6.11.11 #0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930556] Tainted: [O]=OOT_MODULE
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930557] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 3.20230228-4 06/06/2023
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930559] RIP: 0010:__alloc_pages_noprof+0x217/0x2f0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930563] Code: 00 00 00 48 89 f0 48 83 c6 10 39 50 18 77 f4 e9 ff fe ff ff 48 05 e8 07 00 00 48 89 45 c0 e9 c6 fe ff ff c6 05 a2 40 a3 01 01 <0f> 0b 31 c0 eb 9b f7 c1 00 00 80 00 75 77 f7 c1 00 00 08 00 0f 85
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930566] RSP: 0018:ffffc90000003818 EFLAGS: 00010246
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930569] RAX: 0000000080000101 RBX: 0000000000000014 RCX: 0000000000000000
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930571] RDX: 00000000ffffffff RSI: 0000000000000014 RDI: 0000000000040cc0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930573] RBP: ffffc90000003860 R08: 00000000fffffff8 R09: ffffffffa10fe86a
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930575] R10: 00000000f5ffd1cb R11: 0000000000000000 R12: 000000000000001c
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930577] R13: ffff8880020f0500 R14: 0000000000040cc0 R15: 0000000000000000
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930579] FS:  0000000000000000(0000) GS:ffff88807e600000(0000) knlGS:0000000000000000
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930582] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930584] CR2: 000000c001152000 CR3: 000000003c361000 CR4: 0000000000350ef0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930589] Call Trace:
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930591]  <IRQ>
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930594]  ? __warn+0x189/0x280
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930598]  ? __alloc_pages_noprof+0x217/0x2f0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930601]  ? report_bug+0x1b0/0x230
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930605]  ? handle_bug+0x69/0xa0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930609]  ? exc_invalid_op+0x1b/0x50
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930611]  ? asm_exc_invalid_op+0x1b/0x20
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930617]  ? _18+0x6a/0xf0 [oaf]
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930621]  ? __alloc_pages_noprof+0x217/0x2f0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930624]  ___kmalloc_large_node+0x5c/0x270
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930626]  __kmalloc_large_node_noprof+0x16/0x90
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930629]  ? _18+0x6a/0xf0 [oaf]
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930632]  __kmalloc_noprof+0x1bb/0x2f0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930634]  _18+0x6a/0xf0 [oaf]
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930637]  ? krealloc_noprof+0x2f/0xd0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930641]  _47+0x347/0x3d0 [oaf]
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930644]  _91+0x1ba/0x1c0 [oaf]
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930647]  nf_hook_slow+0x5e/0xd0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930650]  ip_rcv+0x70/0x130
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930653]  ? ip_rcv_core+0x410/0x410
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930656]  __netif_receive_skb+0x52/0xc0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930659]  netif_receive_skb+0x5d/0x110
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930662]  br_pass_frame_up+0x18a/0x1e0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930666]  ? br_pass_frame_up+0x1e0/0x1e0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930669]  br_handle_frame_finish+0x4b7/0x4e0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930672]  ? kvm_sched_clock_read+0x11/0x20
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930674]  ? x2apic_send_IPI+0x30/0x40
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930679]  ? _raw_spin_unlock_irqrestore+0x9/0x20
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930682]  br_handle_frame+0x318/0x4e0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930685]  ? br_port_flags_change+0xc0/0xc0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930688]  ? br_get_rx_handler+0x40/0x40
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930691]  __netif_receive_skb_core+0xff/0xdf0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930694]  __netif_receive_skb+0x3b/0xc0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930697]  process_backlog+0x110/0x240
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930700]  __napi_poll+0x2a/0x1b0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930702]  net_rx_action+0x1ef/0x3f0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930705]  handle_softirqs+0xfb/0x260
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930708]  irq_exit_rcu+0x42/0x60
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930711]  sysvec_call_function_single+0x76/0x90
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930713]  </IRQ>
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930714]  <TASK>
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930715]  asm_sysvec_call_function_single+0x1b/0x20
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930719] RIP: 0010:pv_native_safe_halt+0x16/0x20
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930722] Code: 00 00 00 00 55 48 89 e5 0f 09 5d c3 0f 1f 84 00 00 00 00 00 55 48 89 e5 83 3d f5 32 14 01 00 7e 07 0f 00 2d 7a e3 52 00 fb f4 <5d> c3 0f 1f 84 00 00 00 00 00 55 48 89 e5 0f 22 d7 5d c3 0f 1f 80
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930724] RSP: 0018:ffffffff82c03e58 EFLAGS: 00000246
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930726] RAX: ffff88807e600000 RBX: 0000000000000000 RCX: 4000000000000000
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930728] RDX: 0000003b93cf1bdb RSI: 0000000000000000 RDI: 00000000000e8ff4
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930730] RBP: ffffffff82c03e58 R08: 3ffffffffffffffe R09: 0000007b5d909602
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930731] R10: ffff888001a11840 R11: 0000000000000011 R12: ffffffff82c03ea7
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930733] R13: ffffffff82d91380 R14: 0000000000000000 R15: 0000000000000000
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930735]  default_idle+0x9/0x20
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930738]  arch_cpu_idle+0x9/0x10
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930740]  default_idle_call+0x3b/0x60
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930743]  do_idle+0xd7/0x360
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930747]  ? do_idle+0x33c/0x360
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930749]  cpu_startup_entry+0x25/0x30
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930752]  rest_init+0xa4/0xb0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930754]  start_kernel+0x4b7/0x540
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930757]  x86_64_start_reservations+0x2a/0x30
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930761]  x86_64_start_kernel+0x9f/0xa0
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930763]  common_startup_64+0x13e/0x147
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930766]  </TASK>
-Tue Dec 24 23:03:39 2024 kern.warn kernel: [  255.930768] ---[ end trace 0000000000000000 ]---
-
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.255897] ------------[ cut here ]------------
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.255904] WARNING: CPU: 1 PID: 4899 at __alloc_pages_noprof+0x217/0x2f0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.255912] Modules linked in: oaf(O) pppoe ppp_async mt7921u(O) mt7921e(O) mt7921_common(O) iptable_nat xt_state xt_nat xt_conntrack xt_REDIRECT xt_NETMAP xt_MASQUERADE xt_CT pppox ppp_generic nft_redir nft_nat nft_masq nft_fullcone(O) nft_flow_offload nft_fib_inet nft_ct nft_chain_nat nf_nat_tftp nf_nat_snmp_basic nf_nat_sip nf_nat_pptp nf_nat_irc nf_nat_h323 nf_nat_amanda nf_nat nf_flow_table_inet nf_flow_table nf_conntrack_tftp nf_conntrack_snmp nf_conntrack_sip nf_conntrack_pptp nf_conntrack_netlink nf_conntrack_irc nf_conntrack_h323 nf_conntrack_broadcast nf_conntrack_amanda nf_conntrack mt792x_usb(O) mt792x_lib(O) mt76x2e(O) mt76x2_common(O) mt76x02_lib(O) mt76_usb(O) mt76_connac_lib(O) mt76(O) mlx5_core mac80211(O) lz4 ipt_REJECT cfg80211(O) zstd xt_time xt_tcpudp xt_string xt_multiport xt_mark xt_mac xt_limit xt_comment xt_bpf xt_TCPMSS xt_LOG usbnet txgbe ts_kmp ts_fsm ts_bm tls tcp_bbr slhc r8168(O) r8152(O) r8126(O) r8125(O) r8101(O) ngbe nft_tproxy nft_socket nft_reject_ipv6 nft_reject_ipv4
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256002]  nft_reject_inet nft_reject nft_quota nft_numgen nft_log nft_limit nft_hash nft_fib_ipv6 nft_fib_ipv4 nft_fib nf_tproxy_ipv6 nf_tproxy_ipv4 nf_tables nf_socket_ipv6 nf_socket_ipv4 nf_reject_ipv6 nf_reject_ipv4 nf_defrag_ipv6 nf_defrag_ipv4 mlxfw mlx4_en mlx4_core lzo_rle lzo lz4_decompress lz4_compress libwx iptable_mangle iptable_filter ip_tables igc forcedeth e1000e crc_ccitt compat(O) brutal(O) br_netfilter bnx2 asn1_decoder ntfs3 sch_teql sch_sfq sch_multiq sch_gred sch_fq sch_codel em_text em_nbyte em_meta em_cmp act_skbmod act_simple act_pedit act_csum cls_bpf act_bpf sch_tbf sch_ingress sch_htb sch_hfsc em_u32 cls_u32 cls_route cls_matchall cls_fw cls_flow cls_basic act_skbedit act_mirred act_gact configs evdev i2c_dev cryptodev(O) xt_set x_tables ip_set_list_set ip_set_hash_netportnet ip_set_hash_netport ip_set_hash_netnet ip_set_hash_netiface ip_set_hash_net ip_set_hash_mac ip_set_hash_ipportnet ip_set_hash_ipportip ip_set_hash_ipport ip_set_hash_ipmark ip_set_hash_ipmac ip_set_hash_ip
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256079]  ip_set_bitmap_port ip_set_bitmap_ipmac ip_set_bitmap_ip ip_set nfnetlink ixgbe e1000 amd_xgbe ifb sit mdio xsk_diag netlink_diag tunnel6 tunnel4 ip_tunnel udp_diag tcp_diag raw_diag inet_diag tun nls_utf8 zram zsmalloc pcs_xpcs ena shortcut_fe_ipv6(O) shortcut_fe(O) xxhash_generic crypto_user algif_skcipher algif_rng algif_hash algif_aead af_alg sha512_ssse3 sha512_generic sha256_ssse3 seqiv drbg hmac geniv cmac chacha20poly1305 blake2b_generic authencesn authenc nls_iso8859_1 nls_cp437 uas xhci_plat_hcd fsl_mph_dr_of ehci_platform ehci_fsl igb xfs vfat fat exfat btrfs zstd_decompress zstd_compress zstd_common xxhash xor raid6_pq lzo_decompress lzo_compress libcrc32c button_hotplug(O) tg3 mii
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256161] CPU: 1 UID: 0 PID: 4899 Comm: AdGuardHome Tainted: G           O       6.11.11 #0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256166] Tainted: [O]=OOT_MODULE
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256168] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 3.20230228-4 06/06/2023
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256170] RIP: 0010:__alloc_pages_noprof+0x217/0x2f0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256174] Code: 00 00 00 48 89 f0 48 83 c6 10 39 50 18 77 f4 e9 ff fe ff ff 48 05 e8 07 00 00 48 89 45 c0 e9 c6 fe ff ff c6 05 a2 40 a3 01 01 <0f> 0b 31 c0 eb 9b f7 c1 00 00 80 00 75 77 f7 c1 00 00 08 00 0f 85
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256178] RSP: 0000:ffffc900038e7750 EFLAGS: 00010246
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256181] RAX: 0000000080000101 RBX: 0000000000000014 RCX: 0000000000000000
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256183] RDX: 00000000ffffffff RSI: 0000000000000014 RDI: 0000000000040cc0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256185] RBP: ffffc900038e7798 R08: 00000000fffffff8 R09: ffffffffa112086a
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256186] R10: 000000006574f7df R11: 0000000000000000 R12: 000000000000001c
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256188] R13: ffff888018754000 R14: 0000000000040cc0 R15: 0000000000000000
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256191] FS:  00007f59eda51b38(0000) GS:ffff88807e700000(0000) knlGS:0000000000000000
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256193] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256196] CR2: 00007f33606651f0 CR3: 00000000564a7000 CR4: 0000000000350ef0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256201] Call Trace:
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256203]  <TASK>
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256205]  ? __warn+0x189/0x280
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256210]  ? __alloc_pages_noprof+0x217/0x2f0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256213]  ? report_bug+0x1b0/0x230
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256218]  ? handle_bug+0x69/0xa0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256221]  ? exc_invalid_op+0x1b/0x50
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256223]  ? asm_exc_invalid_op+0x1b/0x20
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256229]  ? _18+0x6a/0xf0 [oaf]
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256233]  ? __alloc_pages_noprof+0x217/0x2f0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256236]  ___kmalloc_large_node+0x5c/0x270
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256247]  __kmalloc_large_node_noprof+0x16/0x90
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256250]  ? _18+0x6a/0xf0 [oaf]
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256253]  __kmalloc_noprof+0x1bb/0x2f0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256256]  _18+0x6a/0xf0 [oaf]
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256259]  ? krealloc_noprof+0x2f/0xd0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256262]  _47+0x347/0x3d0 [oaf]
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256266]  _91+0x1ba/0x1c0 [oaf]
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256268]  nf_hook_slow+0x5e/0xd0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256272]  ip_rcv+0x70/0x130
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256274]  ? ip_rcv_core+0x410/0x410
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256277]  __netif_receive_skb+0x52/0xc0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256282]  netif_receive_skb+0x5d/0x110
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256284]  br_pass_frame_up+0x18a/0x1e0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256288]  ? br_pass_frame_up+0x1e0/0x1e0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256291]  br_handle_frame_finish+0x4b7/0x4e0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256294]  br_handle_frame+0x318/0x4e0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256297]  ? spurious_interrupt+0x80/0xa0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256300]  ? br_port_flags_change+0xc0/0xc0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256303]  ? br_get_rx_handler+0x40/0x40
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256306]  __netif_receive_skb_core+0xff/0xdf0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256309]  ? napi_complete_done+0x133/0x210
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256312]  __netif_receive_skb+0x3b/0xc0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256315]  process_backlog+0x110/0x240
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256317]  __napi_poll+0x2a/0x1b0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256320]  net_rx_action+0x1ef/0x3f0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256322]  ? vfs_read+0x243/0x2d0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256326]  handle_softirqs+0xfb/0x260
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256329]  irq_exit_rcu+0x42/0x60
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256331]  common_interrupt+0x4c/0xa0
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256334]  asm_common_interrupt+0x27/0x40
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256337] RIP: 0033:0x15d1c8c
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256339] Code: 66 10 0f 86 3c 07 00 00 55 48 89 e5 48 83 ec 60 48 89 da 48 29 fa 0f 1f 84 00 00 00 00 00 48 85 db 0f 8c 08 07 00 00 48 8b 3e <48> 85 ff 74 23 4c 8d 04 09 4c 39 c3 7f 15 66 0f 1f 44 00 00 48 81
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256342] RSP: 002b:000000c000461020 EFLAGS: 00000202
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256344] RAX: 0000000000000000 RBX: 0000000000000001 RCX: 0000000000000000
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256346] RDX: 0000000000000000 RSI: 000000000092bd80 RDI: 0000000000000010
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256347] RBP: 000000c000461080 R08: 0000000000000000 R09: 0000000000000000
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256349] R10: 00007f59ed9a5b40 R11: 0000000000000000 R12: 000000c0007f1230
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256351] R13: 0000000000000000 R14: 000000c0003e4fc0 R15: 000000003fffffff
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256353]  </TASK>
-Tue Dec 24 23:13:45 2024 kern.warn kernel: [  132.256354] ---[ end trace 0000000000000000 ]---
+Wed Dec 25 01:24:49 2024 daemon.info dnsmasq[1]: read /etc/hosts - 12 names
+Wed Dec 25 01:24:49 2024 daemon.info dnsmasq[1]: read /tmp/hosts/dhcp.cfg01411c - 1 names
+Wed Dec 25 01:24:49 2024 daemon.err collectd[3573]: Exiting normally.
+Wed Dec 25 01:24:49 2024 daemon.err collectd[3573]: collectd: Stopping 2 read threads.
+Wed Dec 25 01:24:49 2024 daemon.err collectd[3573]: collectd: Stopping 5 write threads.
+Wed Dec 25 01:24:49 2024 daemon.err collectd[3573]: rrdtool plugin: Shutting down the queue thread.
+Wed Dec 25 01:24:49 2024 daemon.err collectd[12401]: plugin_load: plugin "cpu" successfully loaded.
+Wed Dec 25 01:24:49 2024 daemon.err collectd[12401]: plugin_load: plugin "interface" successfully loaded.
+Wed Dec 25 01:24:49 2024 daemon.err collectd[12401]: plugin_load: plugin "iwinfo" successfully loaded.
+Wed Dec 25 01:24:49 2024 daemon.err collectd[12401]: plugin_load: plugin "load" successfully loaded.
+Wed Dec 25 01:24:49 2024 daemon.err collectd[12401]: plugin_load: plugin "memory" successfully loaded.
+Wed Dec 25 01:24:49 2024 daemon.err collectd[12401]: plugin_load: plugin "rrdtool" successfully loaded.
+Wed Dec 25 01:24:49 2024 daemon.err collectd[12401]: rrdtool plugin: RRASingle = true: creating only AVERAGE RRAs
+Wed Dec 25 01:24:49 2024 daemon.err collectd[12401]: Initialization complete, entering read-loop.
+Wed Dec 25 01:25:15 2024 daemon.info dnsmasq[1]: exiting on receipt of SIGTERM
+Wed Dec 25 01:25:15 2024 daemon.info dnsmasq[1]: started, version 2.90 cachesize 150
+Wed Dec 25 01:25:15 2024 daemon.info dnsmasq[1]: DNS service limited to local subnets
+Wed Dec 25 01:25:15 2024 daemon.info dnsmasq[1]: compile time options: IPv6 GNU-getopt no-DBus UBus no-i18n no-IDN DHCP DHCPv6 no-Lua TFTP conntrack ipset nftset auth cryptohash DNSSEC no-ID loop-detect inotify dumpfile
+Wed Dec 25 01:25:15 2024 daemon.info dnsmasq[1]: UBus support enabled: connected to system bus
+Wed Dec 25 01:25:15 2024 daemon.warn dnsmasq[1]: warning: no upstream servers configured
+Wed Dec 25 01:25:15 2024 daemon.info dnsmasq[1]: using only locally-known addresses for test
+Wed Dec 25 01:25:15 2024 daemon.info dnsmasq[1]: using only locally-known addresses for onion
+Wed Dec 25 01:25:15 2024 daemon.info dnsmasq[1]: using only locally-known addresses for localhost
+Wed Dec 25 01:25:15 2024 daemon.info dnsmasq[1]: using only locally-known addresses for local
+Wed Dec 25 01:25:15 2024 daemon.info dnsmasq[1]: using only locally-known addresses for invalid
+Wed Dec 25 01:25:15 2024 daemon.info dnsmasq[1]: using only locally-known addresses for bind
+Wed Dec 25 01:25:15 2024 daemon.info dnsmasq[1]: using only locally-known addresses for lan
+Wed Dec 25 01:25:15 2024 daemon.info dnsmasq[1]: read /etc/hosts - 12 names
+Wed Dec 25 01:25:15 2024 daemon.info dnsmasq[1]: read /tmp/hosts/dhcp.cfg01411c - 1 names
+Wed Dec 25 01:25:20 2024 daemon.err collectd[12401]: rrdtool plugin: rrd_update_r failed: /tmp/rrd/OpenWrt/cpu-0/percent-interrupt.rrd: opening '/tmp/rrd/OpenWrt/cpu-0/percent-interrupt.rrd': No such file or directory
+Wed Dec 25 01:25:28 2024 daemon.info dnsmasq[1]: read /etc/hosts - 12 names
+Wed Dec 25 01:25:28 2024 daemon.info dnsmasq[1]: read /tmp/hosts/dhcp.cfg01411c - 1 names
+Wed Dec 25 01:25:29 2024 daemon.info dnsmasq[1]: exiting on receipt of SIGTERM
+Wed Dec 25 01:25:30 2024 daemon.err procd: Got unexpected signal 1
+Wed Dec 25 01:25:30 2024 daemon.err mosdns[13232]: 2024-12-25T01:25:30.012+0800	INFO	working directory changed	{"path": "/etc/mosdns"}
+Wed Dec 25 01:25:30 2024 daemon.err mosdns[13232]: 2024-12-25T01:25:30.014+0800	INFO	main config loaded	{"file": "/var/etc/mosdns.json"}
+Wed Dec 25 01:25:30 2024 daemon.info dnsmasq[1]: started, version 2.90 cache disabled
+Wed Dec 25 01:25:30 2024 daemon.info dnsmasq[1]: DNS service limited to local subnets
+Wed Dec 25 01:25:30 2024 daemon.info dnsmasq[1]: compile time options: IPv6 GNU-getopt no-DBus UBus no-i18n no-IDN DHCP DHCPv6 no-Lua TFTP conntrack ipset nftset auth cryptohash DNSSEC no-ID loop-detect inotify dumpfile
+Wed Dec 25 01:25:30 2024 daemon.info dnsmasq[1]: UBus support enabled: connected to system bus
+Wed Dec 25 01:25:30 2024 daemon.info dnsmasq[1]: using nameserver 127.0.0.1#5335
+Wed Dec 25 01:25:30 2024 daemon.info dnsmasq[1]: using only locally-known addresses for test
+Wed Dec 25 01:25:30 2024 daemon.info dnsmasq[1]: using only locally-known addresses for onion
+Wed Dec 25 01:25:30 2024 daemon.info dnsmasq[1]: using only locally-known addresses for localhost
+Wed Dec 25 01:25:30 2024 daemon.info dnsmasq[1]: using only locally-known addresses for local
+Wed Dec 25 01:25:30 2024 daemon.info dnsmasq[1]: using only locally-known addresses for invalid
+Wed Dec 25 01:25:30 2024 daemon.info dnsmasq[1]: using only locally-known addresses for bind
+Wed Dec 25 01:25:30 2024 daemon.info dnsmasq[1]: using only locally-known addresses for lan
+Wed Dec 25 01:25:30 2024 daemon.info dnsmasq[1]: read /etc/hosts - 12 names
+Wed Dec 25 01:25:30 2024 daemon.info dnsmasq[1]: read /tmp/hosts/dhcp.cfg01411c - 1 names
+Wed Dec 25 01:25:47 2024 daemon.info dnsmasq[1]: exiting on receipt of SIGTERM
+Wed Dec 25 01:25:48 2024 daemon.err procd: Got unexpected signal 1
+Wed Dec 25 01:25:48 2024 daemon.info dnsmasq[1]: started, version 2.90 cache disabled
+Wed Dec 25 01:25:48 2024 daemon.info dnsmasq[1]: DNS service limited to local subnets
+Wed Dec 25 01:25:48 2024 daemon.info dnsmasq[1]: compile time options: IPv6 GNU-getopt no-DBus UBus no-i18n no-IDN DHCP DHCPv6 no-Lua TFTP conntrack ipset nftset auth cryptohash DNSSEC no-ID loop-detect inotify dumpfile
+Wed Dec 25 01:25:48 2024 daemon.info dnsmasq[1]: UBus support enabled: connected to system bus
+Wed Dec 25 01:25:48 2024 daemon.info dnsmasq[1]: using nameserver 127.0.0.1#5335
+Wed Dec 25 01:25:48 2024 daemon.info dnsmasq[1]: using only locally-known addresses for test
+Wed Dec 25 01:25:48 2024 daemon.info dnsmasq[1]: using only locally-known addresses for onion
+Wed Dec 25 01:25:48 2024 daemon.info dnsmasq[1]: using only locally-known addresses for localhost
+Wed Dec 25 01:25:48 2024 daemon.info dnsmasq[1]: using only locally-known addresses for local
+Wed Dec 25 01:25:48 2024 daemon.info dnsmasq[1]: using only locally-known addresses for invalid
+Wed Dec 25 01:25:48 2024 daemon.info dnsmasq[1]: using only locally-known addresses for bind
+Wed Dec 25 01:25:48 2024 daemon.info dnsmasq[1]: using only locally-known addresses for lan
+Wed Dec 25 01:25:48 2024 daemon.info dnsmasq[1]: read /etc/hosts - 12 names
+Wed Dec 25 01:25:48 2024 daemon.info dnsmasq[1]: read /tmp/hosts/dhcp.cfg01411c - 1 names
+Wed Dec 25 01:25:50 2024 daemon.err collectd[12401]: rrdtool plugin: rrd_update_r failed: /tmp/rrd/OpenWrt/cpu-0/percent-interrupt.rrd: opening '/tmp/rrd/OpenWrt/cpu-0/percent-interrupt.rrd': No such file or directory
+Wed Dec 25 01:26:20 2024 daemon.err collectd[12401]: rrdtool plugin: rrd_update_r failed: /tmp/rrd/OpenWrt/cpu-0/percent-interrupt.rrd: opening '/tmp/rrd/OpenWrt/cpu-0/percent-interrupt.rrd': No such file or directory
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: exiting on receipt of SIGTERM
+Wed Dec 25 01:26:25 2024 daemon.err procd: Got unexpected signal 1
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: started, version 2.90 cachesize 150
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: DNS service limited to local subnets
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: compile time options: IPv6 GNU-getopt no-DBus UBus no-i18n no-IDN DHCP DHCPv6 no-Lua TFTP conntrack ipset nftset auth cryptohash DNSSEC no-ID loop-detect inotify dumpfile
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: UBus support enabled: connected to system bus
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: using only locally-known addresses for test
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: using only locally-known addresses for onion
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: using only locally-known addresses for localhost
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: using only locally-known addresses for local
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: using only locally-known addresses for invalid
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: using only locally-known addresses for bind
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: using only locally-known addresses for lan
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: reading /tmp/resolv.conf.d/resolv.conf.auto
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: using nameserver 8.8.8.8#53
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: using only locally-known addresses for test
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: using only locally-known addresses for onion
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: using only locally-known addresses for localhost
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: using only locally-known addresses for local
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: using only locally-known addresses for invalid
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: using only locally-known addresses for bind
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: using only locally-known addresses for lan
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: read /etc/hosts - 12 names
+Wed Dec 25 01:26:25 2024 daemon.info dnsmasq[1]: read /tmp/hosts/dhcp.cfg01411c - 1 names
+Wed Dec 25 01:26:37 2024 daemon.info dnsmasq[1]: read /etc/hosts - 12 names
+Wed Dec 25 01:26:37 2024 daemon.info dnsmasq[1]: read /tmp/hosts/dhcp.cfg01411c - 1 names
+Wed Dec 25 01:26:39 2024 daemon.info dnsmasq[1]: exiting on receipt of SIGTERM
+Wed Dec 25 01:26:39 2024 daemon.err procd: Got unexpected signal 1
+Wed Dec 25 01:26:39 2024 daemon.err mosdns[14320]: 2024-12-25T01:26:39.432+0800	INFO	working directory changed	{"path": "/etc/mosdns"}
+Wed Dec 25 01:26:39 2024 daemon.info dnsmasq[1]: started, version 2.90 cache disabled
+Wed Dec 25 01:26:39 2024 daemon.info dnsmasq[1]: DNS service limited to local subnets
+Wed Dec 25 01:26:39 2024 daemon.info dnsmasq[1]: compile time options: IPv6 GNU-getopt no-DBus UBus no-i18n no-IDN DHCP DHCPv6 no-Lua TFTP conntrack ipset nftset auth cryptohash DNSSEC no-ID loop-detect inotify dumpfile
+Wed Dec 25 01:26:39 2024 daemon.info dnsmasq[1]: UBus support enabled: connected to system bus
+Wed Dec 25 01:26:39 2024 daemon.info dnsmasq[1]: using nameserver 127.0.0.1#5335
+Wed Dec 25 01:26:39 2024 daemon.info dnsmasq[1]: using only locally-known addresses for test
+Wed Dec 25 01:26:39 2024 daemon.info dnsmasq[1]: using only locally-known addresses for onion
+Wed Dec 25 01:26:39 2024 daemon.info dnsmasq[1]: using only locally-known addresses for localhost
+Wed Dec 25 01:26:39 2024 daemon.info dnsmasq[1]: using only locally-known addresses for local
+Wed Dec 25 01:26:39 2024 daemon.info dnsmasq[1]: using only locally-known addresses for invalid
+Wed Dec 25 01:26:39 2024 daemon.info dnsmasq[1]: using only locally-known addresses for bind
+Wed Dec 25 01:26:39 2024 daemon.err mosdns[14320]: 2024-12-25T01:26:39.434+0800	INFO	main config loaded	{"file": "/var/etc/mosdns.json"}
+Wed Dec 25 01:26:39 2024 daemon.info dnsmasq[1]: using only locally-known addresses for lan
+Wed Dec 25 01:26:39 2024 daemon.info dnsmasq[1]: read /etc/hosts - 12 names
+Wed Dec 25 01:26:39 2024 daemon.info dnsmasq[1]: read /tmp/hosts/dhcp.cfg01411c - 1 names
+Wed Dec 25 01:27:32 2024 daemon.info dnsmasq[1]: read /etc/hosts - 12 names
+Wed Dec 25 01:27:32 2024 daemon.info dnsmasq[1]: read /tmp/hosts/dhcp.cfg01411c - 1 names
+Wed Dec 25 01:27:33 2024 daemon.info dnsmasq[1]: read /etc/hosts - 12 names
+Wed Dec 25 01:27:33 2024 daemon.info dnsmasq[1]: read /tmp/hosts/dhcp.cfg01411c - 1 names
+Wed Dec 25 01:27:33 2024 daemon.err collectd[12401]: Exiting normally.
+Wed Dec 25 01:27:33 2024 daemon.err collectd[12401]: collectd: Stopping 2 read threads.
+Wed Dec 25 01:27:33 2024 daemon.err collectd[12401]: collectd: Stopping 5 write threads.
+Wed Dec 25 01:27:33 2024 daemon.err collectd[12401]: rrdtool plugin: Shutting down the queue thread.
+Wed Dec 25 01:27:33 2024 daemon.err collectd[15292]: plugin_load: plugin "cpu" successfully loaded.
+Wed Dec 25 01:27:33 2024 daemon.err collectd[15292]: plugin_load: plugin "interface" successfully loaded.
+Wed Dec 25 01:27:33 2024 daemon.err collectd[15292]: plugin_load: plugin "iwinfo" successfully loaded.
+Wed Dec 25 01:27:33 2024 daemon.err collectd[15292]: plugin_load: plugin "load" successfully loaded.
+Wed Dec 25 01:27:33 2024 daemon.err collectd[15292]: plugin_load: plugin "memory" successfully loaded.
+Wed Dec 25 01:27:33 2024 daemon.err collectd[15292]: plugin_load: plugin "rrdtool" successfully loaded.
+Wed Dec 25 01:27:33 2024 daemon.err collectd[15292]: rrdtool plugin: RRASingle = true: creating only AVERAGE RRAs
+Wed Dec 25 01:27:33 2024 daemon.err collectd[15292]: Initialization complete, entering read-loop.
+Wed Dec 25 01:27:41 2024 daemon.info dnsmasq[1]: read /etc/hosts - 12 names
+Wed Dec 25 01:27:41 2024 daemon.info dnsmasq[1]: read /tmp/hosts/dhcp.cfg01411c - 1 names
+Wed Dec 25 01:27:42 2024 daemon.info logread[15774]: Logread connected to 10.0.0.3:514 via udp
+Wed Dec 25 01:27:42 2024 daemon.info dnsmasq[1]: read /etc/hosts - 12 names
+Wed Dec 25 01:27:42 2024 daemon.info dnsmasq[1]: read /tmp/hosts/dhcp.cfg01411c - 1 names
+Wed Dec 25 01:27:42 2024 daemon.err collectd[15292]: Exiting normally.
+Wed Dec 25 01:27:42 2024 daemon.err collectd[15292]: collectd: Stopping 2 read threads.
+Wed Dec 25 01:27:42 2024 daemon.err collectd[15292]: collectd: Stopping 5 write threads.
+Wed Dec 25 01:27:42 2024 daemon.err collectd[15292]: rrdtool plugin: Shutting down the queue thread.
+Wed Dec 25 01:27:43 2024 daemon.err collectd[16201]: plugin_load: plugin "cpu" successfully loaded.
+Wed Dec 25 01:27:43 2024 daemon.err collectd[16201]: plugin_load: plugin "interface" successfully loaded.
+Wed Dec 25 01:27:43 2024 daemon.err collectd[16201]: plugin_load: plugin "iwinfo" successfully loaded.
+Wed Dec 25 01:27:43 2024 daemon.err collectd[16201]: plugin_load: plugin "load" successfully loaded.
+Wed Dec 25 01:27:43 2024 daemon.err collectd[16201]: plugin_load: plugin "memory" successfully loaded.
+Wed Dec 25 01:27:43 2024 daemon.err collectd[16201]: plugin_load: plugin "rrdtool" successfully loaded.
+Wed Dec 25 01:27:43 2024 daemon.err collectd[16201]: rrdtool plugin: RRASingle = true: creating only AVERAGE RRAs
+Wed Dec 25 01:27:43 2024 daemon.err collectd[16201]: Initialization complete, entering read-loop.
+Wed Dec 25 01:28:28 2024 kern.warn kernel: [  280.705232] init oaf sysctl...ok
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266579] ------------[ cut here ]------------
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266585] memcpy: detected buffer overflow: 1250 byte write of buffer size 38
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266625] WARNING: CPU: 1 PID: 0 at __fortify_report+0x45/0x50
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266633] Modules linked in: oaf(O) pppoe ppp_async mt7921u(O) mt7921e(O) mt7921_common(O) iptable_nat xt_state xt_nat xt_conntrack xt_REDIRECT xt_NETMAP xt_MASQUERADE xt_CT pppox ppp_generic nft_redir nft_nat nft_masq nft_fullcone(O) nft_flow_offload nft_fib_inet nft_ct nft_chain_nat nf_nat_tftp nf_nat_snmp_basic nf_nat_sip nf_nat_pptp nf_nat_irc nf_nat_h323 nf_nat_amanda nf_nat nf_flow_table_inet nf_flow_table nf_conntrack_tftp nf_conntrack_snmp nf_conntrack_sip nf_conntrack_pptp nf_conntrack_netlink nf_conntrack_irc nf_conntrack_h323 nf_conntrack_broadcast nf_conntrack_amanda nf_conntrack mt792x_usb(O) mt792x_lib(O) mt76x2e(O) mt76x2_common(O) mt76x02_lib(O) mt76_usb(O) mt76_connac_lib(O) mt76(O) mlx5_core mac80211(O) lz4 ipt_REJECT cfg80211(O) zstd xt_time xt_tcpudp xt_string xt_multiport xt_mark xt_mac xt_limit xt_comment xt_bpf xt_TCPMSS xt_LOG usbnet txgbe ts_kmp ts_fsm ts_bm tls tcp_bbr slhc r8168(O) r8152(O) r8126(O) r8125(O) r8101(O) ngbe nft_tproxy nft_socket nft_reject_ipv6 nft_reject_ipv4
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266713]  nft_reject_inet nft_reject nft_quota nft_numgen nft_log nft_limit nft_hash nft_fib_ipv6 nft_fib_ipv4 nft_fib nf_tproxy_ipv6 nf_tproxy_ipv4 nf_tables nf_socket_ipv6 nf_socket_ipv4 nf_reject_ipv6 nf_reject_ipv4 nf_defrag_ipv6 nf_defrag_ipv4 mlxfw mlx4_en mlx4_core lzo_rle lzo lz4_decompress lz4_compress libwx iptable_mangle iptable_filter ip_tables igc forcedeth e1000e crc_ccitt compat(O) brutal(O) br_netfilter bnx2 asn1_decoder ntfs3 sch_teql sch_sfq sch_multiq sch_gred sch_fq sch_codel em_text em_nbyte em_meta em_cmp act_skbmod act_simple act_pedit act_csum cls_bpf act_bpf sch_tbf sch_ingress sch_htb sch_hfsc em_u32 cls_u32 cls_route cls_matchall cls_fw cls_flow cls_basic act_skbedit act_mirred act_gact configs evdev i2c_dev cryptodev(O) xt_set x_tables ip_set_list_set ip_set_hash_netportnet ip_set_hash_netport ip_set_hash_netnet ip_set_hash_netiface ip_set_hash_net ip_set_hash_mac ip_set_hash_ipportnet ip_set_hash_ipportip ip_set_hash_ipport ip_set_hash_ipmark ip_set_hash_ipmac ip_set_hash_ip
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266789]  ip_set_bitmap_port ip_set_bitmap_ipmac ip_set_bitmap_ip ip_set nfnetlink ixgbe e1000 amd_xgbe ifb sit mdio xsk_diag netlink_diag tunnel6 tunnel4 ip_tunnel udp_diag tcp_diag raw_diag inet_diag tun nls_utf8 zram zsmalloc pcs_xpcs ena shortcut_fe_ipv6(O) shortcut_fe(O) xxhash_generic crypto_user algif_skcipher algif_rng algif_hash algif_aead af_alg sha512_ssse3 sha512_generic sha256_ssse3 seqiv drbg hmac geniv cmac chacha20poly1305 blake2b_generic authencesn authenc nls_iso8859_1 nls_cp437 uas xhci_plat_hcd fsl_mph_dr_of ehci_platform ehci_fsl igb xfs vfat fat exfat btrfs zstd_decompress zstd_compress zstd_common xxhash xor raid6_pq lzo_decompress lzo_compress libcrc32c button_hotplug(O) tg3 mii
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266852] CPU: 1 UID: 0 PID: 0 Comm: swapper/1 Tainted: G           O       6.11.11 #0
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266856] Tainted: [O]=OOT_MODULE
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266857] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 3.20230228-4 06/06/2023
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266859] RIP: 0010:__fortify_report+0x45/0x50
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266864] Code: 48 8b 34 c5 80 12 46 82 40 f6 c7 01 48 c7 c0 e2 d4 34 82 48 c7 c1 90 17 33 82 48 0f 44 c8 48 c7 c7 ae 9b 38 82 e8 5b ef a5 ff <0f> 0b 5d c3 cc cc cc cc cc cc cc 55 48 89 e5 e8 a7 ff ff ff 0f 0b
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266866] RSP: 0018:ffffc900000e88e0 EFLAGS: 00010286
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266869] RAX: 0000000000000043 RBX: ffff888068269800 RCX: 0000000000000027
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266871] RDX: ffff88807e500000 RSI: 0000000000000027 RDI: ffff88807e51de88
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266873] RBP: ffffc900000e88e0 R08: ffffffff82c47d40 R09: 0000000000002ffd
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266875] R10: 0000000000000004 R11: ffffc900000e87c8 R12: 00000000000004e2
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266877] R13: 0000000000000000 R14: 0000000000000026 R15: 0000000000000026
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266879] FS:  0000000000000000(0000) GS:ffff88807e500000(0000) knlGS:0000000000000000
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266882] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266884] CR2: 000000c001594000 CR3: 0000000069e12000 CR4: 0000000000350ef0
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266890] Call Trace:
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266892]  <IRQ>
+Wed Dec 25 01:29:20 2024 kern.warn kernel: [  333.266894]  ? __warn+0x189/0x280
+Wed Dec 25 01:29:39 2024 daemon.notice procd: /etc/rc.d/S13openssl: Generating engines.cnf
+Wed Dec 25 01:29:39 2024 daemon.info logread[1696]: Failed to send log data to 10.0.0.3:514 via udp
+Wed Dec 25 01:29:39 2024 daemon.notice procd: /etc/rc.d/S13openssl: Enabling afalg
+Wed Dec 25 01:29:39 2024 daemon.notice procd: /etc/rc.d/S13openssl: Enabling devcrypto
+Wed Dec 25 01:29:39 2024 daemon.notice procd: /etc/rc.d/S13openssl: Generating providers.cnf
+Wed Dec 25 01:29:39 2024 daemon.notice procd: /etc/rc.d/S13openssl: Enabling legacy
+Wed Dec 25 01:29:39 2024 daemon.debug zram_start: activating '/dev/zram0' for swapping (493 MiB)
+Wed Dec 25 01:29:39 2024 daemon.notice procd: /etc/rc.d/S15zram: zram_start: activating '/dev/zram0' for swapping (493 MiB)
+Wed Dec 25 01:29:39 2024 daemon.debug zram_reset: enforcing defaults via /sys/block/zram0/reset
+Wed Dec 25 01:29:39 2024 daemon.notice procd: /etc/rc.d/S15zram: zram_reset: enforcing defaults via /sys/block/zram0/reset
+Wed Dec 25 01:29:39 2024 daemon.debug zram_comp_algo: set compression algorithm 'zstd' for zram '/dev/zram0'
+Wed Dec 25 01:29:39 2024 daemon.notice procd: /etc/rc.d/S15zram: zram_comp_algo: set compression algorithm 'zstd' for zram '/dev/zram0'
+Wed Dec 25 01:29:39 2024 kern.info kernel: [    7.274349] zram0: detected capacity change from 0 to 1009664
+Wed Dec 25 01:29:39 2024 daemon.notice procd: /etc/rc.d/S15zram: Setting up swapspace version 1, size = 516943872 bytes
+Wed Dec 25 01:29:39 2024 kern.info kernel: [    7.288438] Adding 504828k swap on /dev/zram0.  Priority:100 extents:1 across:504828k SSDsc
+Wed Dec 25 01:29:40 2024 daemon.info dnsmasq[1]: started, version 2.90 cache disabled
+Wed Dec 25 01:29:40 2024 daemon.info dnsmasq[1]: DNS service limited to local subnets
+Wed Dec 25 01:29:40 2024 daemon.info dnsmasq[1]: compile time options: IPv6 GNU-getopt no-DBus UBus no-i18n no-IDN DHCP DHCPv6 no-Lua TFTP conntrack ipset nftset auth cryptohash DNSSEC no-ID loop-detect inotify dumpfile
+Wed Dec 25 01:29:40 2024 daemon.info dnsmasq[1]: UBus support enabled: connected to system bus
+Wed Dec 25 01:29:40 2024 daemon.info dnsmasq[1]: using nameserver 127.0.0.1#5335
+Wed Dec 25 01:29:40 2024 daemon.info dnsmasq[1]: using only locally-known addresses for test
+Wed Dec 25 01:29:40 2024 daemon.info dnsmasq[1]: using only locally-known addresses for onion
+Wed Dec 25 01:29:40 2024 daemon.info dnsmasq[1]: using only locally-known addresses for localhost
+Wed Dec 25 01:29:40 2024 daemon.info dnsmasq[1]: using only locally-known addresses for local
+Wed Dec 25 01:29:40 2024 daemon.info dnsmasq[1]: using only locally-known addresses for invalid
+Wed Dec 25 01:29:40 2024 daemon.info dnsmasq[1]: using only locally-known addresses for bind
+Wed Dec 25 01:29:40 2024 daemon.info dnsmasq[1]: using only locally-known addresses for lan
+Wed Dec 25 01:29:40 2024 daemon.info dnsmasq[1]: read /etc/hosts - 12 names
+Wed Dec 25 01:29:40 2024 daemon.info dnsmasq[1]: read /tmp/hosts/dhcp.cfg01411c - 1 names
+Wed Dec 25 01:29:40 2024 authpriv.info dropbear[2007]: Not backgrounding
+Wed Dec 25 01:29:40 2024 user.notice : Added device handler type: bonding
+Wed Dec 25 01:29:40 2024 user.notice : Added device handler type: 8021ad
+Wed Dec 25 01:29:40 2024 user.notice : Added device handler type: 8021q
+Wed Dec 25 01:29:40 2024 user.notice : Added device handler type: macvlan
+Wed Dec 25 01:29:40 2024 user.notice : Added device handler type: veth
+Wed Dec 25 01:29:40 2024 user.notice : Added device handler type: bridge
+Wed Dec 25 01:29:40 2024 user.notice : Added device handler type: Network device
+Wed Dec 25 01:29:40 2024 user.notice : Added device handler type: tunnel
+Wed Dec 25 01:29:40 2024 daemon.notice wpa_supplicant[2245]: Successfully initialized wpa_supplicant
+Wed Dec 25 01:29:41 2024 daemon.warn netifd: You have delegated IPv6-prefixes but haven't assigned them to any interface. Did you forget to set option ip6assign on your lan-interfaces?
+Wed Dec 25 01:29:41 2024 daemon.notice netifd: Interface 'lan' is enabled
+Wed Dec 25 01:29:41 2024 daemon.notice netifd: Interface 'lan' is setting up now
+Wed Dec 25 01:29:41 2024 daemon.notice netifd: Interface 'lan' is now up
+Wed Dec 25 01:29:41 2024 daemon.notice netifd: Interface 'loopback' is enabled
+Wed Dec 25 01:29:41 2024 daemon.notice netifd: Interface 'loopback' is setting up now
+Wed Dec 25 01:29:41 2024 daemon.notice netifd: Interface 'loopback' is now up
+Wed Dec 25 01:29:41 2024 daemon.notice netifd: Network device 'eth0' link is up
+Wed Dec 25 01:29:41 2024 daemon.notice netifd: Network device 'lo' link is up
+Wed Dec 25 01:29:41 2024 kern.info kernel: [    8.574930] 8021q: adding VLAN 0 to HW filter on device eth0
+Wed Dec 25 01:29:41 2024 kern.info kernel: [    8.575286] br-lan: port 1(eth0) entered blocking state
+Wed Dec 25 01:29:41 2024 kern.info kernel: [    8.575290] br-lan: port 1(eth0) entered disabled state
+Wed Dec 25 01:29:41 2024 kern.info kernel: [    8.575301] virtio_net virtio2 eth0: entered allmulticast mode
+Wed Dec 25 01:29:41 2024 kern.info kernel: [    8.575350] virtio_net virtio2 eth0: entered promiscuous mode
+Wed Dec 25 01:29:41 2024 daemon.notice netifd: Interface 'loopback' has link connectivity
+Wed Dec 25 01:29:41 2024 user.notice firewall: Reloading firewall due to ifup of lan (br-lan)
+Wed Dec 25 01:29:41 2024 user.notice nlbwmon: Reloading nlbwmon due to ifup of lan (br-lan)
+Wed Dec 25 01:29:41 2024 daemon.info logread[1696]: Logread connected to 10.0.0.3:514 via udp
+Wed Dec 25 01:29:42 2024 kern.info kernel: [    9.584131] br-lan: port 1(eth0) entered blocking state
+Wed Dec 25 01:29:42 2024 kern.info kernel: [    9.584140] br-lan: port 1(eth0) entered forwarding state
+Wed Dec 25 01:29:42 2024 daemon.notice netifd: bridge 'br-lan' link is up
+Wed Dec 25 01:29:42 2024 daemon.notice netifd: Interface 'lan' has link connectivity
+Wed Dec 25 01:29:42 2024 daemon.info dnsmasq[1]: exiting on receipt of SIGTERM
+Wed Dec 25 01:29:42 2024 daemon.err procd: Got unexpected signal 1
+Wed Dec 25 01:29:42 2024 daemon.info dnsmasq[1]: started, version 2.90 cache disabled
+Wed Dec 25 01:29:42 2024 daemon.info dnsmasq[1]: DNS service limited to local subnets
+Wed Dec 25 01:29:42 2024 daemon.info dnsmasq[1]: compile time options: IPv6 GNU-getopt no-DBus UBus no-i18n no-IDN DHCP DHCPv6 no-Lua TFTP conntrack ipset nftset auth cryptohash DNSSEC no-ID loop-detect inotify dumpfile
+Wed Dec 25 01:29:42 2024 daemon.info dnsmasq[1]: UBus support enabled: connected to system bus
+Wed Dec 25 01:29:42 2024 daemon.info dnsmasq[1]: using nameserver 127.0.0.1#5335
+Wed Dec 25 01:29:42 2024 daemon.info dnsmasq[1]: using only locally-known addresses for test
+Wed Dec 25 01:29:42 2024 daemon.info dnsmasq[1]: using only locally-known addresses for onion
+Wed Dec 25 01:29:42 2024 daemon.info dnsmasq[1]: using only locally-known addresses for localhost
+Wed Dec 25 01:29:42 2024 daemon.info dnsmasq[1]: using only locally-known addresses for local
+Wed Dec 25 01:29:42 2024 daemon.info dnsmasq[1]: using only locally-known addresses for invalid
+Wed Dec 25 01:29:42 2024 daemon.info dnsmasq[1]: using only locally-known addresses for bind
+Wed Dec 25 01:29:42 2024 daemon.info dnsmasq[1]: using only locally-known addresses for lan
+Wed Dec 25 01:29:42 2024 daemon.info dnsmasq[1]: read /etc/hosts - 12 names
+Wed Dec 25 01:29:42 2024 daemon.info dnsmasq[1]: read /tmp/hosts/dhcp.cfg01411c - 1 names
+Wed Dec 25 01:29:43 2024 daemon.info dnsmasq[1]: read /etc/hosts - 12 names
+Wed Dec 25 01:29:43 2024 daemon.info dnsmasq[1]: read /tmp/hosts/dhcp.cfg01411c - 1 names
+Wed Dec 25 01:29:43 2024 daemon.err collectd[3564]: plugin_load: plugin "cpu" successfully loaded.
+Wed Dec 25 01:29:43 2024 daemon.err collectd[3564]: plugin_load: plugin "interface" successfully loaded.
+Wed Dec 25 01:29:43 2024 daemon.err collectd[3564]: plugin_load: plugin "iwinfo" successfully loaded.
+Wed Dec 25 01:29:43 2024 daemon.err collectd[3564]: plugin_load: plugin "load" successfully loaded.
+Wed Dec 25 01:29:43 2024 daemon.err collectd[3564]: plugin_load: plugin "memory" successfully loaded.
+Wed Dec 25 01:29:43 2024 daemon.err collectd[3564]: plugin_load: plugin "rrdtool" successfully loaded.
+Wed Dec 25 01:29:43 2024 daemon.err collectd[3564]: rrdtool plugin: RRASingle = true: creating only AVERAGE RRAs
+Wed Dec 25 01:29:43 2024 daemon.err collectd[3564]: Initialization complete, entering read-loop.
+Wed Dec 25 01:29:43 2024 user.notice ucitrack: Setting up /etc/config/dhcp reload dependency on /etc/config/network
+Wed Dec 25 01:29:43 2024 user.notice ucitrack: Setting up /etc/config/network reload dependency on /etc/config/wireless
+Wed Dec 25 01:29:43 2024 user.notice ucitrack: Setting up /etc/config/luci-splash reload dependency on /etc/config/firewall
+Wed Dec 25 01:29:43 2024 user.notice ucitrack: Setting up /etc/config/qos reload dependency on /etc/config/firewall
+Wed Dec 25 01:29:43 2024 user.notice ucitrack: Setting up /etc/config/miniupnpd reload dependency on /etc/config/firewall
+Wed Dec 25 01:29:43 2024 user.notice ucitrack: Setting up /etc/config/odhcpd reload dependency on /etc/config/dhcp
+Wed Dec 25 01:29:43 2024 user.notice ucitrack: Setting up non-init /etc/config/fstab reload handler: /sbin/block mount
+Wed Dec 25 01:29:43 2024 user.notice ucitrack: Setting up /etc/config/system reload trigger for non-procd /etc/init.d/led
+Wed Dec 25 01:29:43 2024 user.notice ucitrack: Setting up /etc/config/luci_statistics reload dependency on /etc/config/system
+Wed Dec 25 01:29:43 2024 user.notice ucitrack: Setting up /etc/config/dhcp reload dependency on /etc/config/system
+Wed Dec 25 01:29:43 2024 user.notice ucitrack: Setting up /etc/config/firewall reload trigger for non-procd /etc/init.d/shortcut-fe
+Wed Dec 25 01:29:43 2024 user.notice ucitrack: Setting up /etc/config/firewall reload trigger for non-procd /etc/init.d/nat6
+Wed Dec 25 01:29:43 2024 user.notice ucitrack: Setting up non-init /etc/config/appfilter reload handler: /usr/bin/oaf_rule reload
+Wed Dec 25 01:29:43 2024 user.notice ucitrack: Setting up /etc/config/advancedplus reload trigger for non-procd /etc/init.d/advancedplus
+Wed Dec 25 01:29:43 2024 user.notice ucitrack: Setting up /etc/config/socat reload trigger for non-procd /etc/init.d/luci_socat
+Wed Dec 25 01:29:43 2024 user.notice ucitrack: Setting up /etc/config/netwizard reload trigger for non-procd /etc/init.d/netwizard
+Wed Dec 25 01:29:43 2024 user.notice ucitrack: Setting up /etc/config/openclash reload trigger for non-procd /etc/init.d/openclash
+Wed Dec 25 01:29:43 2024 user.notice ucitrack: Setting up /etc/config/passwall reload trigger for non-procd /etc/init.d/passwall
+Wed Dec 25 01:29:43 2024 user.notice ucitrack: Setting up /etc/config/passwall_server reload trigger for non-procd /etc/init.d/passwall_server
+Wed Dec 25 01:29:44 2024 daemon.notice procd: /etc/rc.d/S90tailscale: disabled in config
+Wed Dec 25 01:29:44 2024 daemon.notice procd: /etc/rc.d/S90tailscale: disabled in config
+Wed Dec 25 01:29:44 2024 daemon.notice procd: /etc/rc.d/S96appfilter: rm: can't remove '/tmp/app_class.txt': No such file or directory
+Wed Dec 25 01:29:44 2024 daemon.notice procd: /etc/rc.d/S96appfilter: #class chat 1 聊天
+Wed Dec 25 01:29:44 2024 daemon.info dnsmasq[1]: read /etc/hosts - 12 names
+Wed Dec 25 01:29:44 2024 daemon.info dnsmasq[1]: read /tmp/hosts/dhcp.cfg01411c - 1 names
+Wed Dec 25 01:29:44 2024 daemon.notice procd: /etc/rc.d/S96appfilter: #class game 2 游戏
+Wed Dec 25 01:29:44 2024 user.notice nlbwmon: Reloading nlbwmon due to ifup of loopback (lo)
+Wed Dec 25 01:29:44 2024 daemon.info dnsmasq[1]: read /etc/hosts - 12 names
+Wed Dec 25 01:29:44 2024 daemon.info dnsmasq[1]: read /tmp/hosts/dhcp.cfg01411c - 1 names
+Wed Dec 25 01:29:44 2024 daemon.notice procd: /etc/rc.d/S96appfilter: #class video 3 视频
+Wed Dec 25 01:29:45 2024 daemon.notice procd: /etc/rc.d/S96appfilter: #class shopping 4 购物
+Wed Dec 25 01:29:45 2024 daemon.notice procd: /etc/rc.d/S96appfilter: #class music 5 音乐
+Wed Dec 25 01:29:45 2024 daemon.notice procd: /etc/rc.d/S96appfilter: #class employee 6 招聘
+Wed Dec 25 01:29:45 2024 daemon.info dnsmasq[1]: read /etc/hosts - 12 names
+Wed Dec 25 01:29:45 2024 daemon.info dnsmasq[1]: read /tmp/hosts/dhcp.cfg01411c - 1 names
+Wed Dec 25 01:29:45 2024 daemon.notice procd: /etc/rc.d/S96appfilter: #class download 7 下载
+Wed Dec 25 01:29:45 2024 daemon.err mosdns[7118]: 2024-12-25T01:29:45.937+0800	INFO	working directory changed	{"path": "/etc/mosdns"}
+Wed Dec 25 01:29:45 2024 daemon.err mosdns[7118]: 2024-12-25T01:29:45.939+0800	INFO	main config loaded	{"file": "/var/etc/mosdns.json"}
+Wed Dec 25 01:29:46 2024 daemon.notice procd: /etc/rc.d/S96appfilter: #class website 8 常用网站
+Wed Dec 25 01:29:46 2024 kern.warn kernel: [   13.925688] init oaf sysctl...ok
+Wed Dec 25 01:29:46 2024 daemon.info aria2: Instance "main" disabled.
+Wed Dec 25 01:29:47 2024 daemon.notice procd: /etc/rc.d/S99openclash: OpenClash Restart...
+Wed Dec 25 01:29:47 2024 daemon.info dnsmasq[1]: exiting on receipt of SIGTERM
+Wed Dec 25 01:29:48 2024 daemon.notice procd: /etc/rc.d/S99openclash: OpenClash Already Stop!
+Wed Dec 25 01:29:48 2024 daemon.info dnsmasq[1]: started, version 2.90 cache disabled
+Wed Dec 25 01:29:48 2024 daemon.info dnsmasq[1]: DNS service limited to local subnets
+Wed Dec 25 01:29:48 2024 daemon.info dnsmasq[1]: compile time options: IPv6 GNU-getopt no-DBus UBus no-i18n no-IDN DHCP DHCPv6 no-Lua TFTP conntrack ipset nftset auth cryptohash DNSSEC no-ID loop-detect inotify dumpfile
+Wed Dec 25 01:29:48 2024 daemon.info dnsmasq[1]: UBus support enabled: connected to system bus
+Wed Dec 25 01:29:48 2024 daemon.info dnsmasq[1]: using nameserver 127.0.0.1#5335
+Wed Dec 25 01:29:48 2024 daemon.info dnsmasq[1]: using only locally-known addresses for test
+Wed Dec 25 01:29:48 2024 daemon.info dnsmasq[1]: using only locally-known addresses for onion
+Wed Dec 25 01:29:48 2024 daemon.info dnsmasq[1]: using only locally-known addresses for localhost
+Wed Dec 25 01:29:48 2024 daemon.info dnsmasq[1]: using only locally-known addresses for local
+Wed Dec 25 01:29:48 2024 daemon.info dnsmasq[1]: using only locally-known addresses for invalid
+Wed Dec 25 01:29:48 2024 daemon.info dnsmasq[1]: using only locally-known addresses for bind
+Wed Dec 25 01:29:48 2024 daemon.info dnsmasq[1]: using only locally-known addresses for lan
+Wed Dec 25 01:29:48 2024 daemon.info dnsmasq[1]: read /etc/hosts - 12 names
+Wed Dec 25 01:29:48 2024 daemon.info dnsmasq[1]: read /tmp/hosts/dhcp.cfg01411c - 1 names
+Wed Dec 25 01:29:48 2024 user.notice RAM Release: Update cron started
+Wed Dec 25 01:29:48 2024 user.notice RAM Release: Enabled: 1, Time: 03:00, Days: mon tue wed thu fri sat sun
+Wed Dec 25 01:29:48 2024 user.notice RAM Release: Cron job updated: 00 03 * * 1 2 3 4 5 6 0 TZ='Asia/Jakarta' /usr/bin/ram_release.sh release
+Wed Dec 25 01:29:48 2024 user.notice RAM Release: Service started
+Wed Dec 25 01:29:48 2024 daemon.info procd: Not starting instance wechatpush::instance1, command not set
+Wed Dec 25 01:29:48 2024 daemon.notice procd: /etc/rc.d/S99zerotier: disabled in config
+Wed Dec 25 01:29:48 2024 daemon.notice procd: /etc/rc.d/S99zerotier: disabled in config
+Wed Dec 25 01:29:48 2024 daemon.info procd: - init complete -
+Wed Dec 25 01:29:48 2024 daemon.notice ttyd[10109]: [2024/12/25 01:29:48:5031] N: ttyd 1.7.3 (libwebsockets 4.3.2-unknown)
+Wed Dec 25 01:29:48 2024 daemon.notice ttyd[10109]: [2024/12/25 01:29:48:5032] N: tty configuration:
+Wed Dec 25 01:29:48 2024 daemon.notice ttyd[10109]: [2024/12/25 01:29:48:5032] N:   start command: /bin/login
+Wed Dec 25 01:29:48 2024 daemon.notice ttyd[10109]: [2024/12/25 01:29:48:5032] N:   close signal: SIGHUP (1)
+Wed Dec 25 01:29:48 2024 daemon.notice ttyd[10109]: [2024/12/25 01:29:48:5032] N:   terminal type: xterm-256color
+Wed Dec 25 01:29:48 2024 daemon.notice ttyd[10109]: [2024/12/25 01:29:48:5057] N:    /usr/lib/libwebsockets-evlib_uv.so
+Wed Dec 25 01:29:48 2024 daemon.notice ttyd[10109]: [2024/12/25 01:29:48:5057] N: lws_create_context: LWS: 4.3.2-unknown, NET CLI SRV H1 H2 WS ConMon IPV6-off
+Wed Dec 25 01:29:48 2024 daemon.notice ttyd[10109]: [2024/12/25 01:29:48:5059] N: elops_init_pt_uv:  Using foreign event loop...
+Wed Dec 25 01:29:48 2024 daemon.notice ttyd[10109]: [2024/12/25 01:29:48:5060] N: __lws_lc_tag:  ++ [wsi|0|pipe] (1)
+Wed Dec 25 01:29:48 2024 daemon.notice ttyd[10109]: [2024/12/25 01:29:48:5061] N: __lws_lc_tag:  ++ [vh|0|netlink] (1)
+Wed Dec 25 01:29:48 2024 daemon.notice ttyd[10109]: [2024/12/25 01:29:48:5062] N: __lws_lc_tag:  ++ [vh|1|default|br-lan|br-lan|7681] (2)
+Wed Dec 25 01:29:48 2024 daemon.notice ttyd[10109]: [2024/12/25 01:29:48:5064] N: [vh|1|default|br-lan|br-lan|7681]: lws_socket_bind: source ads 10.0.0.29
+Wed Dec 25 01:29:48 2024 daemon.notice ttyd[10109]: [2024/12/25 01:29:48:5065] N: __lws_lc_tag:  ++ [wsi|1|listen|default|br-lan|7681] (2)
+Wed Dec 25 01:29:48 2024 daemon.notice ttyd[10109]: [2024/12/25 01:29:48:5065] N:  Listening on port: 7681
+Wed Dec 25 01:29:56 2024 daemon.err uhttpd[2601]: [info] luci: accepted login on /admin/status/overview for root from 10.0.0.104
+Wed Dec 25 01:30:03 2024 daemon.info dnsmasq[1]: exiting on receipt of SIGTERM
+Wed Dec 25 01:30:03 2024 daemon.info dnsmasq[1]: started, version 2.90 cache disabled
+Wed Dec 25 01:30:03 2024 daemon.info dnsmasq[1]: DNS service limited to local subnets
+Wed Dec 25 01:30:03 2024 daemon.info dnsmasq[1]: compile time options: IPv6 GNU-getopt no-DBus UBus no-i18n no-IDN DHCP DHCPv6 no-Lua TFTP conntrack ipset nftset auth cryptohash DNSSEC no-ID loop-detect inotify dumpfile
+Wed Dec 25 01:30:03 2024 daemon.info dnsmasq[1]: UBus support enabled: connected to system bus
+Wed Dec 25 01:30:03 2024 daemon.info dnsmasq[1]: using nameserver 127.0.0.1#5335
+Wed Dec 25 01:30:03 2024 daemon.info dnsmasq[1]: using only locally-known addresses for test
+Wed Dec 25 01:30:03 2024 daemon.info dnsmasq[1]: using only locally-known addresses for onion
+Wed Dec 25 01:30:03 2024 daemon.info dnsmasq[1]: using only locally-known addresses for localhost
+Wed Dec 25 01:30:03 2024 daemon.info dnsmasq[1]: using only locally-known addresses for local
+Wed Dec 25 01:30:03 2024 daemon.info dnsmasq[1]: using only locally-known addresses for invalid
+Wed Dec 25 01:30:03 2024 daemon.info dnsmasq[1]: using only locally-known addresses for bind
+Wed Dec 25 01:30:03 2024 daemon.info dnsmasq[1]: using only locally-known addresses for lan
+Wed Dec 25 01:30:03 2024 daemon.info dnsmasq[1]: read /etc/hosts - 12 names
+Wed Dec 25 01:30:03 2024 daemon.info dnsmasq[1]: read /tmp/hosts/dhcp.cfg01411c - 1 names
+Wed Dec 25 01:30:13 2024 daemon.info procd: Instance haproxy::instance1 s in a crash loop 6 crashes, 0 seconds since last crash
+Wed Dec 25 01:30:14 2024 daemon.err collectd[3564]: rrdtool plugin: rrd_update_r failed: /tmp/rrd/OpenWrt/cpu-0/percent-system.rrd: opening '/tmp/rrd/OpenWrt/cpu-0/percent-system.rrd': No such file or directory
+Wed Dec 25 01:30:14 2024 daemon.err collectd[3564]: rrdtool plugin: rrd_update_r failed: /tmp/rrd/OpenWrt/cpu-1/percent-user.rrd: opening '/tmp/rrd/OpenWrt/cpu-1/percent-user.rrd': No such file or directory
+Wed Dec 25 01:30:14 2024 daemon.err collectd[3564]: rrdtool plugin: rrd_update_r failed: /tmp/rrd/OpenWrt/cpu-1/percent-nice.rrd: expected 1 data source readings (got 0) from /tmp/rrd/OpenWrt/cpu-1/percent-nice.rrd:...
+Wed Dec 25 01:30:14 2024 daemon.err collectd[3564]: rrdtool plugin: rrd_update_r failed: /tmp/rrd/OpenWrt/cpu-1/percent-idle.rrd: opening '/tmp/rrd/OpenWrt/cpu-1/percent-idle.rrd': No such file or directory
