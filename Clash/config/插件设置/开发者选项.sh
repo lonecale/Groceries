@@ -12,15 +12,27 @@ LOG_OUT "Tip: Start Add Custom Firewall Rules..."
 en_mode=$(uci -q get openclash.config.en_mode)
 proxy_port=$(uci -q get openclash.config.proxy_port)
 dns_port=$(uci -q get openclash.config.dns_port)
+ipv6_enable=$(uci -q get openclash.config.ipv6_enable)
+ipv6_mode=$(uci -q get openclash.config.ipv6_mode || echo 0)
+ipv6_dns=$(uci -q get openclash.config.ipv6_dns || echo 0)
 china_ip_route=$(uci -q get openclash.config.china_ip_route)
 china_ip6_route=$(uci -q get openclash.config.china_ip6_route)
 disable_udp_quic=$(uci -q get openclash.config.disable_udp_quic)
+enable_redirect_dns=$(uci -q get openclash.config.enable_redirect_dns)
 
+ipv6_status=$([ "$ipv6_enable" == "1" ] && echo "是" || echo "否")
+ipv6_mode_status=$([ "$ipv6_mode" == "1" ] && echo "Redirect 模式" || ([ "$ipv6_mode" == "2" ] && echo "TUN 模式" || ([ "$ipv6_mode" == "3" ] && echo "Mix 混合模式【UDP-TUN，TCP-转发】" || echo "TProxy 模式")))
+ipv6_dns_status=$([ "$ipv6_dns" == "1" ] && echo "是" || echo "否")
 china_ip_route_status=$([ "$china_ip_route" == "1" ] && echo "绕过中国大陆" || ([ "$china_ip_route" == "2" ] && echo "海外用户回国模式" || echo "停用"))
 china_ip6_route_status=$([ "$china_ip6_route" == "1" ] && echo "绕过中国大陆" || ([ "$china_ip6_route" == "2" ] && echo "海外用户回国模式" || echo "停用"))
 disable_udp_quic_status=$([ "$disable_udp_quic" == "1" ] && echo "是" || echo "否")
+enable_redirect_status=$([ "$enable_redirect_dns" == "1" ] && echo "使用 Dnsmasq 转发" || ([ "$china_ip_route" == "2" ] && echo "使用防火墙转发" || echo "禁用"))
 
-LOG_OUT "当前运行模式:$en_mode, 代理端口:$proxy_port, DNS端口:$dns_port, IPV4 绕过大陆IP:$china_ip_route_status, IPV6 绕过大陆IP:$china_ip6_route_status, 禁用 QUIC:$disable_udp_quic_status"
+LOG_OUT "当前运行模式: $en_mode; 代理端口: $proxy_port; DNS端口: $dns_port"
+LOG_OUT "禁用 QUIC: $disable_udp_quic_status; 本地 DNS 劫持: $enable_redirect_status"
+LOG_OUT "IPV4 绕过大陆IP: $china_ip_route_status; IPV6 绕过大陆IP: $china_ip6_route_status"
+LOG_OUT "IPv6 流量代理: $ipv6_status; IPv6 代理模式: $ipv6_mode_status; 允许 IPv6 类型 DNS 解析: $ipv6_dns_status"
+
 
 # 检查当前系统使用的是iptables还是nftables
 if command -v nft > /dev/null 2>&1 && nft list ruleset > /dev/null 2>&1; then
@@ -181,10 +193,15 @@ if [ "$china_ip_route" == "1" ]; then
        LOG_OUT "要查看被设置为绕过 OpenClash 的 IPV4 地址列表，请运行 'nft list set inet fw4 mosdns_ip_route'"
 
    else
-       ipset create mosdns_ip_route hash:net -!
-       ipset flush mosdns_ip_route
 
-       # 检查 IPSet 集合
+       # 使用 -! 选项创建集合，忽略已存在的错误
+       ipset create mosdns_ip_route hash:net -!
+
+       # 清空集合内容
+       ipset flush mosdns_ip_route
+       LOG_OUT "mosdns 白名单 IPV4 集合已处理（创建或清空）"
+
+       # 检查 IPv4 集合操作是否成功
        if ipset list mosdns_ip_route > /dev/null 2>&1; then
            LOG_OUT "成功创建 mosdns 白名单 IPV4 集合"
        else
@@ -220,7 +237,7 @@ if [ "$china_ip6_route" == "1" ]; then
            LOG_OUT "mosdns 白名单 IPV6 集合已存在，正在清空..."
            nft flush set inet fw4 mosdns_ip6_route
        else
-           nft add set inet fw4 mosdns_ip6_route { type ipv4_addr\; flags interval\; auto-merge\; }
+           nft add set inet fw4 mosdns_ip6_route { type ipv6_addr\; flags interval\; auto-merge\; }
 
        fi
 
@@ -245,10 +262,14 @@ if [ "$china_ip6_route" == "1" ]; then
        LOG_OUT "要查看被设置为绕过 OpenClash 的 IPV6 地址列表，请运行 'nft list set inet fw4 mosdns_ip6_route'"
 
    else
+       # 使用 -! 选项创建集合，忽略已存在的错误
        ipset create mosdns_ip6_route hash:net family inet6 -!
-       ipset flush mosdns_ip6_route
 
-       # 检查 IPSet 集合
+       # 清空集合内容
+       ipset flush mosdns_ip6_route
+       LOG_OUT "mosdns 白名单 IPV6 集合已处理（创建或清空）"
+
+       # 检查 IPv6 集合操作是否成功
        if ipset list mosdns_ip6_route > /dev/null 2>&1; then
            LOG_OUT "成功创建 mosdns 白名单 IPV6 集合"
        else
@@ -279,10 +300,10 @@ if [ "$china_ip6_route" == "1" ]; then
 
 fi
 
-LOG_OUT "restart smartdns"
-/etc/init.d/smartdns restart
 LOG_OUT "restart mosdns"
 /etc/init.d/mosdns restart
+#LOG_OUT "restart smartdns"
+#/etc/init.d/smartdns restart
 #LOG_OUT "restart AdGuardHome"
 #/etc/init.d/AdGuardHome restart
 
