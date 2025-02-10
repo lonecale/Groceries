@@ -9,8 +9,8 @@
 LOG_OUT "Tip: Start Running Custom Overwrite Scripts..."
 LOGTIME=$(echo $(date "+%Y-%m-%d %H:%M:%S"))
 LOG_FILE="/tmp/openclash.log"
-CONFIG_FILE="$1" #config path
-
+#Config Path
+CONFIG_FILE="$1"
 # 使用 Ruby 编辑 YAML 文件的函数
 ruby_edit() {
   local config_path=$1
@@ -40,15 +40,16 @@ ruby_edit() {
 #ruby_edit "$CONFIG_FILE" "['dns']['nameserver-policy']" "{'geosite:geolocation-!cn' => ['tls://8.8.4.4', 'https://1.0.0.1/dns-query'], 'geosite:cn,private' => ['https://dns.alidns.com/dns-query']}"
 #ruby_edit "$CONFIG_FILE" "['dns']['nameserver-policy']" "{'geosite:cn,private' => ['https://dns.alidns.com/dns-query', 'https://doh.pub/dns-query']}"
 # 添加 proxy-server-nameserver 并赋值
-#ruby_edit "$CONFIG_FILE" "['dns']['proxy-server-nameserver']" "['https://doh.pub/dns-query']"
 ruby_edit "$CONFIG_FILE" "['dns']['proxy-server-nameserver']" "['https://dns.alidns.com/dns-query', 'https://doh.pub/dns-query']"
+#ruby_edit "$CONFIG_FILE" "['dns']['direct-nameserver']" "['https://dns.alidns.com/dns-query', 'https://doh.pub/dns-query']"
+#ruby_edit "$CONFIG_FILE" "['dns']['direct-nameserver-follow-policy']" "false"
 #ruby_edit "$CONFIG_FILE" "['dns']['proxy-server-nameserver']" "['223.5.5.5']"
 #ruby_edit "$CONFIG_FILE" "['dns']['prefer-h3']" "true"
 #ruby_edit "$CONFIG_FILE" "['tun']['mtu']" "1500"
 #ruby_edit "$CONFIG_FILE" "['dns']['cache-algorithm']" "'arc'"
-ruby_edit "$CONFIG_FILE" "['disable-keep-alive']" "false"
-ruby_edit "$CONFIG_FILE" "['keep-alive-interval']" "600"
-ruby_edit "$CONFIG_FILE" "['keep-alive-idle']" "600"
+#ruby_edit "$CONFIG_FILE" "['disable-keep-alive']" "false"
+ruby_edit "$CONFIG_FILE" "['keep-alive-interval']" "60"
+#ruby_edit "$CONFIG_FILE" "['keep-alive-idle']" "600"
 
 # 定义要删除的规则，使用一个字符串变量
 rules_to_remove="DOMAIN-SUFFIX,cloudfront.net,🎬 EmbyProxy"
@@ -58,7 +59,7 @@ rules_to_remove="DOMAIN-SUFFIX,cloudfront.net,🎬 EmbyProxy"
 # 删除规则文件指定规则
 check_and_remove_specified_rules() {
   local rule_dir=$1
-  echo "[$LOGTIME] 正在检查目录 $rule_dir 中的规则文件" | tee -a "$LOG_FILE"
+  echo "[$LOGTIME] 正在检查目录 $rule_dir 中需要删除的规则" | tee -a "$LOG_FILE"
 
   # 遍历目录下所有的 yaml 和 txt 文件
   for file in "$rule_dir"/*.yaml "$rule_dir"/*.txt; do
@@ -126,7 +127,7 @@ remove_specified_rule "$CONFIG_FILE"
 # 检查规则文件 为IP-CIDR 规则追加no-resolve
 check_and_append_no_resolve() {
     local rule_dir=$1
-    echo "[$LOGTIME] 正在检查目录 $rule_dir 中的规则文件" | tee -a "$LOG_FILE"
+    echo "[$LOGTIME] 正在检查目录 $rule_dir 中的no-resolve" | tee -a "$LOG_FILE"
     
     # 列出并处理所有 yaml 和 txt 文件
     for file in "$rule_dir"/*.yaml "$rule_dir"/*.txt; do
@@ -292,12 +293,28 @@ append_proxy_groups_custom_params "$CONFIG_FILE" "fallback" "lazy" "true" "timeo
     #ruby_edit "$CONFIG_FILE" "['dns']['nameserver-policy']" "{'+.msftconnecttest.com'=>'114.114.114.114', '+.msftncsi.com'=>'114.114.114.114', 'geosite:gfw'=>['https://dns.cloudflare.com/dns-query', 'https://dns.google/dns-query#ecs=1.1.1.1/24&ecs-override=true'], 'geosite:cn'=>['114.114.114.114'], 'geosite:geolocation-!cn'=>['https://dns.cloudflare.com/dns-query', 'https://dns.google/dns-query#ecs=1.1.1.1/24&ecs-override=true']}"
     #ruby_edit "$CONFIG_FILE" "['sniffer']" "{'enable'=>true, 'parse-pure-ip'=>true, 'force-domain'=>['+.netflix.com', '+.nflxvideo.net', '+.amazonaws.com', '+.media.dssott.com'], 'skip-domain'=>['+.apple.com', 'Mijia Cloud', 'dlg.io.mi.com', '+.oray.com', '+.sunlogin.net'], 'sniff'=>{'TLS'=>nil, 'HTTP'=>{'ports'=>[80, '8080-8880'], 'override-destination'=>true}}}"
 
+    #Hash Merge Demo
+    #1--config path
+    #2--key name
+    #3--hash
+    #ruby_merge_hash "$CONFIG_FILE" "['proxy-providers']" "'TW'=>{'type'=>'http', 'path'=>'./proxy_provider/TW.yaml', 'url'=>'https://gist.githubusercontent.com/raw/tw_clash', 'interval'=>3600, 'health-check'=>{'enable'=>true, 'url'=>'http://cp.cloudflare.com/generate_204', 'interval'=>300}}"
+    #ruby_merge_hash "$CONFIG_FILE" "['rule-providers']" "'Reject'=>{'type'=>'http', 'behavior'=>'classical', 'url'=>'https://testingcf.jsdelivr.net/gh/dler-io/Rules@main/Clash/Provider/Reject.yaml', 'path'=>'./rule_provider/Reject', 'interval'=>86400}"
+
     #Array Insert Value Demo:
     #1--config path
     #2--key name
     #3--position(start from 0, end with -1)
     #4--value
     #ruby_arr_insert "$CONFIG_FILE" "['dns']['nameserver']" "0" "114.114.114.114"
+
+    #Array Insert Hash Demo:
+    #1--config path
+    #2--key name
+    #3--position(start from 0, end with -1)
+    #4--hash
+    #ruby_arr_insert_hash "$CONFIG_FILE" "['proxy-groups']" "0" "{'name'=>'Disney', 'type'=>'select', 'disable-udp'=>false, 'use'=>['TW', 'SG', 'HK']}"
+    #ruby_arr_insert_hash "$CONFIG_FILE" "['proxies']" "0" "{'name'=>'HKG 01', 'type'=>'ss', 'server'=>'cc.hd.abc', 'port'=>'12345', 'cipher'=>'aes-128-gcm', 'password'=>'123456', 'udp'=>true, 'plugin'=>'obfs', 'plugin-opts'=>{'mode'=>'http', 'host'=>'microsoft.com'}}"
+    #ruby_arr_insert_hash "$CONFIG_FILE" "['listeners']" "0" "{'name'=>'name', 'type'=>'shadowsocks', 'port'=>'12345', 'listen'=>'0.0.0.0', 'rule'=>'sub-rule-1', 'proxy'=>'proxy'}"
 
     #Array Insert Other Array Demo:
     #1--config path
