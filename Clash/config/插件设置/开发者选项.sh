@@ -47,11 +47,9 @@ add_rules_for_chain() {
     local ipt_cmd=$1
     local table=$2
     local chain=$3
-    local ipset_name=$4
-    local match_type=$5
-    local match_conditions=$6  # 用于匹配条件
-    local action=$7
-    local action_modifiers=$8   # 用于动作的修饰，如 "REJECT --reject-with icmp-port-unreachable"
+    local match_conditions=$4  # 完整的匹配条件
+    local action=$5
+    local action_modifiers=$6   # 用于动作的修饰，如 "REJECT --reject-with icmp-port-unreachable"
 
     local route_rule="china_ip_route"
     if [ "$ipt_cmd" = "ip6tables" ]; then
@@ -65,16 +63,8 @@ add_rules_for_chain() {
         return
     fi
 
-    local match_cmd=""
-    if [ "$match_type" = "eq" ]; then
-        match_cmd="-m set --match-set $ipset_name dst"
-    elif [ "$match_type" = "neq" ]; then
-        match_cmd="-m set ! --match-set $ipset_name dst"
-    else
-        LOG_OUT "错误：无效的匹配类型 $match_type"
-        return
-    fi
-
+    # 计算插入位置（目标规则之后）
+    position=$((position + 1))
 
     # 检查链是否存在
     if ! $ipt_cmd -t $table -L $chain > /dev/null 2>&1; then
@@ -83,10 +73,10 @@ add_rules_for_chain() {
     fi
 	
     # 构建并检查规则是否存在
-    local cmd="$ipt_cmd -t $table -C $chain $match_conditions $match_cmd -j $action $action_modifiers"
+    local cmd="$ipt_cmd -t $table -C $chain $match_conditions -j $action $action_modifiers"
     if ! eval $cmd > /dev/null 2>&1; then
         # 添加规则
-        cmd="$ipt_cmd -t $table -I $chain $position $match_conditions $match_cmd -j $action $action_modifiers"
+        cmd="$ipt_cmd -t $table -I $chain $position $match_conditions -j $action $action_modifiers"
         if ! eval $cmd 2>&1 | grep -q "$ipt_cmd: "; then
             LOG_OUT "成功应用规则到 $chain 链 ($table 表) 位置 $position"
         else
@@ -100,12 +90,10 @@ add_rules_for_chain() {
 add_nft_rules_for_chain() {
     local table=$1
     local chain=$2
-    local ipset_name=$3
-    local match_type=$4
-    local ip_version=$5
-    local match_conditions=$6
-    local action=$7
-    local action_modifiers=$8
+    local ip_version=$3
+    local match_conditions=$4
+    local action=$5
+    local action_modifiers=$6
 
     local family="inet"
     local route_rule="china_ip_route"
@@ -114,38 +102,40 @@ add_nft_rules_for_chain() {
     fi
 
     # 打印接收到的参数，确认是否正确
-    # LOG_OUT "接收到的参数：table=$table, chain=$chain, ipset_name=$ipset_name, match_type=$match_type, ip_version=$ip_version, match_conditions=$match_conditions, action=$action, action_modifiers=$action_modifiers"
+    # LOG_OUT "接收到的参数：table=$table, chain=$chain, ip_version=$ip_version, match_conditions=$match_conditions, action=$action, action_modifiers=$action_modifiers"
 
-    # 获取链中的所有规则并查找目标规则的句柄
+    # 获取目标规则的句柄
     local handle=$(nft --json list chain $family $table $chain | jq -r --arg rule "$route_rule" '.nftables[] | select(.rule.expr[]? | select(.match.right == ("@" + $rule))) | .rule.handle')
+    # 获取链中包含特定规则的索引位置
+    local rule_index=$(nft --json list chain $family $table $chain | jq --arg rule "$route_rule" '.nftables | to_entries | map(select(.value.rule?.expr[]? | any(.match?; .right == ("@" + $rule)))) | .[0].key')
+    LOG_OUT "目标规则的句柄是: $handle, 目标规则的索引位置: $rule_index"
 
-    if [ -z "$handle" ]; then
+    # 检查是否找到符合条件的规则
+    if [[ $rule_index != "null" && $rule_index != "" ]]; then
+        # 计算目标规则之后的句柄
+        handle=$(nft --json list chain $family $table $chain | jq -r ".nftables[$((rule_index + 1))].rule.handle")
+        # 检查是否成功获取下一个规则的句柄
+        if [[ $handle != "null" && $handle != "" ]]; then
+            LOG_OUT "目标规则之后的句柄是: $handle"
+        else
+            LOG_OUT "警告：未在链 $chain 中找到 '$route_rule' 规则之后的有效规则。"
+            return
+        fi
+    else
         LOG_OUT "警告：未在 $chain 链中找到包含 '$route_rule' 的规则。请确认 $chain 链是否已正确配置，且包含必要的 '$route_rule' 规则。"
         return
     fi
 
-    # 构建要插入的规则命令
-    local rule_cmd="$match_conditions $ip_version daddr"
-    if [ "$match_type" = "eq" ]; then
-        rule_cmd="$rule_cmd @$ipset_name"
-    elif [ "$match_type" = "neq" ]; then
-        rule_cmd="$rule_cmd != @$ipset_name"
-    else
-        LOG_OUT "错误：无效的匹配类型 $match_type"
-        return
-    fi
-
+    local rule_cmd="$match_conditions $action"
     if [ -n "$action_modifiers" ]; then
-        rule_cmd="$rule_cmd $action $action_modifiers"
-    else
-        rule_cmd="$rule_cmd $action"
+        rule_cmd="$rule_cmd $action_modifiers"
     fi
 
     # LOG_OUT "执行前最终规则命令：$rule_cmd"
 
 
     # 检查链是否存在
-    if ! nft list chain inet $table $chain > /dev/null 2>&1; then
+    if ! nft list chain $family $table $chain > /dev/null 2>&1; then
         LOG_OUT "警告：防火墙链 $chain 不存在 ($table 表), 无法添加规则"
         return
     fi
@@ -179,12 +169,23 @@ if [ "$china_ip_route" == "1" ]; then
        fi
 
        # 添加规则到 openclash 和 openclash_output 链
-       add_nft_rules_for_chain "fw4" "openclash" "mosdns_ip_route" "eq" "ip" "" "counter return" ""
-       add_nft_rules_for_chain "fw4" "openclash_mangle" "mosdns_ip_route" "eq" "ip" "" "counter return" ""
-       add_nft_rules_for_chain "fw4" "openclash_output" "mosdns_ip_route" "eq" "ip" "skuid != 65534" "counter return" ""
+       add_nft_rules_for_chain "fw4" "openclash" "ip" "ip daddr @mosdns_ip_route" "counter return" ""
+       add_nft_rules_for_chain "fw4" "openclash_mangle" "ip" "ip daddr @mosdns_ip_route" "counter return" ""
+       add_nft_rules_for_chain "fw4" "openclash_output" "ip" "skuid != 65534 ip daddr @mosdns_ip_route" "counter return" ""
     
        if [ "$disable_udp_quic" == "1" ]; then
-           add_nft_rules_for_chain "fw4" "forward" "mosdns_ip_route" "neq" "ip" "oifname utun udp dport 443" "counter reject" 'comment "OpenClash QUIC REJECT"'
+           add_nft_rules_for_chain "fw4" "forward" "ip" "oifname utun udp dport 443 ip daddr != @china_ip_route ip daddr != @mosdns_ip_route" "counter reject" 'comment "OpenClash QUIC REJECT"'
+           del_route_rule="china_ip_route"
+           # del_handle=$(nft --json list chain inet fw4 forward | jq -r --arg rule "$del_route_rule" '.nftables[] | select(.rule.expr[]? | select(.match.right == ("@" + $rule))) | .rule.handle')
+           del_handle=$(nft --json list chain inet fw4 forward | jq -r --arg rule "$del_route_rule" '[.nftables[] | select(.rule.expr[]? | select(.match.right == ("@" + $rule))) | .rule.handle] | min')
+
+           if [ -z "$del_handle" ]; then
+             LOG_OUT "警告：未在 forward 链中找到包含 '$del_route_rule' 的规则。请确认 forward 链是否已正确配置，且包含必要的 '$del_route_rule' 规则。"
+             return
+           fi
+           nft delete rule inet fw4 forward handle $del_handle
+           # nft insert rule inet fw4 forward position 0 oifname utun udp dport 443 ip daddr != @china_ip_route ip daddr != @mosdns_ip_route counter reject comment \"OpenClash QUIC REJECT\"
+ 
            LOG_OUT "成功更新 FORWARD 规则以禁用非白名单 QUIC 流量，适用于 utun 接口。"
        else
            LOG_OUT "禁用 QUIC 规则未启用，跳过规则处理。"
@@ -209,18 +210,22 @@ if [ "$china_ip_route" == "1" ]; then
        fi
 	   
        # 添加规则到 openclash 和 openclash_output 链
-       add_rules_for_chain "iptables" "nat" "openclash" "mosdns_ip_route" "eq" "" "RETURN" ""
-       add_rules_for_chain "iptables" "nat" "openclash_output" "mosdns_ip_route" "eq" "-m owner ! --uid-owner 65534" "RETURN" ""
-       add_rules_for_chain "iptables" "mangle" "openclash" "mosdns_ip_route" "eq" "" "RETURN" ""
-       #add_rules_for_chain "iptables" "mangle" "openclash_output" "mosdns_ip_route" "eq" "-m owner ! --uid-owner 65534" "RETURN" ""
-       #add_rules_for_chain "iptables" "mangle" "openclash" "mosdns_ip_route" "neq" "" "RETURN" ""
+       add_rules_for_chain "iptables" "nat" "openclash" "-m set --match-set mosdns_ip_route dst" "RETURN" ""
+       add_rules_for_chain "iptables" "nat" "openclash_output" "-m owner ! --uid-owner 65534 -m set --match-set mosdns_ip_route dst" "RETURN" ""
+       add_rules_for_chain "iptables" "mangle" "openclash" "-m set --match-set mosdns_ip_route dst" "RETURN" ""
+
+       # add_rules_for_chain "iptables" "mangle" "openclash_output" "-m owner ! --uid-owner 65534 -m set --match-set mosdns_ip_route dst" "RETURN" ""
+       # add_rules_for_chain "iptables" "mangle" "openclash" "-m set ! --match-set mosdns_ip_route dst" "RETURN" ""
+
 
        if [ "$disable_udp_quic" == "1" ]; then
            # 首先尝试删除可能存在的针对QUIC的拒绝规则。
            # 然后，如果禁用 QUIC 规则被启用，添加一个新的 FORWARD 规则，该规则除了排除 china_ip_route 中的地址，
            # 还要排除 mosdns_ip_route 中的地址，从而拒绝不在这两个集合中的所有 UDP/443 流量。
-           add_rules_for_chain "iptables" "filter" "FORWARD" "mosdns_ip_route" "neq" "-p udp --dport 443 -o utun -m comment --comment 'OpenClash QUIC REJECT'" "REJECT" ""	
-           #iptables -I FORWARD -p udp --dport 443 -o utun -m comment --comment "OpenClash QUIC REJECT" -m set ! --match-set mosdns_ip_route dst -j REJECT
+           add_rules_for_chain "iptables" "filter" "FORWARD" "-p udp --dport 443 -o utun -m comment --comment 'OpenClash QUIC REJECT' -m set ! --match-set china_ip_route dst -m set ! --match-set mosdns_ip_route dst" "REJECT" ""
+
+           iptables -D FORWARD -p udp --dport 443 -o utun -m comment --comment "OpenClash QUIC REJECT" -m set ! --match-set china_ip_route dst -j REJECT
+           # iptables -I FORWARD -p udp --dport 443 -o utun -m comment --comment "OpenClash QUIC REJECT" -m set ! --match-set china_ip_route dst -m set ! --match-set mosdns_ip_route dst -j REJECT
            LOG_OUT "成功更新 FORWARD 规则以禁用非白名单 QUIC 流量，适用于 utun 接口。"
        else
            LOG_OUT "禁用 QUIC 规则未启用，跳过规则处理。"
@@ -249,11 +254,21 @@ if [ "$china_ip6_route" == "1" ]; then
        fi
 
        # 添加规则到 openclash 和 openclash_output 链
-       add_nft_rules_for_chain "fw4" "openclash_mangle_v6" "mosdns_ip6_route" "eq" "ip6" "" "counter return" ""
-       add_nft_rules_for_chain "fw4" "openclash_mangle_output_v6" "mosdns_ip6_route" "eq" "ip6" "skuid != 65534" "counter return" ""
+       add_nft_rules_for_chain "fw4" "openclash_mangle_v6" "ip6" "ip6 daddr @mosdns_ip6_route" "counter return" ""
+       add_nft_rules_for_chain "fw4" "openclash_mangle_output_v6" "ip6" "skuid != 65534 ip daddr @mosdns_ip6_route" "counter return" ""
 
        if [ "$disable_udp_quic" == "1" ]; then
-           add_nft_rules_for_chain "fw4" "forward" "mosdns_ip6_route" "neq" "ip6" "udp dport 443" "counter reject" 'comment "OpenClash QUIC REJECT"'
+           add_nft_rules_for_chain "fw4" "forward" "ip6" "oifname utun udp dport 443 ip daddr != @china_ip6_route ip daddr != @mosdns_ip6_route" "counter reject" 'comment "OpenClash QUIC REJECT"'
+           del_route_rule="china_ip6_route"
+           # del_handle=$(nft --json list chain inet fw4 forward | jq -r --arg rule "$del_route_rule" '.nftables[] | select(.rule.expr[]? | select(.match.right == ("@" + $rule))) | .rule.handle')
+           del_handle=$(nft --json list chain inet fw4 forward | jq -r --arg rule "$del_route_rule" '[.nftables[] | select(.rule.expr[]? | select(.match.right == ("@" + $rule))) | .rule.handle] | min')
+           if [ -z "$del_handle" ]; then
+             LOG_OUT "警告：未在 forward 链中找到包含 '$del_route_rule' 的规则。请确认 forward 链是否已正确配置，且包含必要的 '$del_route_rule' 规则。"
+             return
+           fi
+           nft delete rule inet fw4 forward handle $del_handle
+           # nft insert rule inet fw4 forward position 0 oifname utun udp dport 443 ip daddr != @china_ip6_route ip daddr != @mosdns_ip6_route counter reject comment \"OpenClash QUIC REJECT\"
+           
            LOG_OUT "成功更新 FORWARD 规则以禁用非白名单 QUIC 流量，适用于 utun 接口。"
        else
            LOG_OUT "禁用 QUIC 规则未启用，跳过规则处理。"
@@ -277,17 +292,19 @@ if [ "$china_ip6_route" == "1" ]; then
        fi
 
        # 添加规则到 openclash 和 openclash_output 链
-       add_rules_for_chain "ip6tables" "nat" "openclash" "mosdns_ip6_route" "eq" "" "RETURN" ""
-       add_rules_for_chain "ip6tables" "nat" "openclash_output" "mosdns_ip6_route" "eq" "-m owner ! --uid-owner 65534" "RETURN" ""
-       add_rules_for_chain "ip6tables" "mangle" "openclash" "mosdns_ip6_route" "eq" "" "RETURN" ""
-       #add_rules_for_chain "ip6tables" "mangle" "openclash_output" "mosdns_ip6_route" "eq" "-m owner ! --uid-owner 65534" "RETURN" ""
+       add_rules_for_chain "ip6tables" "nat" "openclash" "-m set --match-set mosdns_ip6_route dst" "RETURN" ""
+       add_rules_for_chain "ip6tables" "nat" "openclash_output" "-m owner ! --uid-owner 65534 -m set --match-set mosdns_ip6_route dst" "RETURN" ""
+       add_rules_for_chain "ip6tables" "mangle" "openclash" "-m set --match-set mosdns_ip6_route dst" "RETURN" ""
+       # add_rules_for_chain "ip6tables" "mangle" "openclash_output" "-m owner ! --uid-owner 65534 -m set --match-set mosdns_ip6_route dst" "RETURN" ""
+
 
        if [ "$disable_udp_quic" == "1" ]; then
            # 首先尝试删除可能存在的针对QUIC的拒绝规则。
            # 然后，如果禁用 QUIC 规则被启用，添加一个新的 FORWARD 规则，该规则除了排除 china_ip_route 中的地址，
            # 还要排除 mosdns_ip_route 中的地址，从而拒绝不在这两个集合中的所有 UDP/443 流量。
-           add_rules_for_chain "ip6tables" "filter" "FORWARD" "mosdns_ip6_route" "neq" "-p udp --dport 443 -o utun -m comment --comment 'OpenClash QUIC REJECT'" "REJECT" ""	
-           #ip6tables -I FORWARD -p udp --dport 443 -o utun -m comment --comment "OpenClash QUIC REJECT" -m set ! --match-set mosdns_ip6_route dst -j REJECT
+           add_rules_for_chain "ip6tables" "filter" "FORWARD" "-p udp --dport 443 -o utun -m comment --comment 'OpenClash QUIC REJECT' -m set ! --match-set china_ip6_route dst -m set ! --match-set mosdns_ip6_route dst" "REJECT" ""
+           ip6tables -D FORWARD -p udp --dport 443 -o utun -m comment --comment "OpenClash QUIC REJECT" -m set ! --match-set china_ip6_route dst -j REJECT
+           # ip6tables -I FORWARD -p udp --dport 443 -o utun -m comment --comment "OpenClash QUIC REJECT" -m set ! --match-set china_ip6_route dst -m set ! --match-set mosdns_ip6_route dst -j REJECT
            LOG_OUT "成功更新 FORWARD 规则以禁用非白名单 QUIC 流量，适用于 utun 接口。"
        else
            LOG_OUT "禁用 QUIC 规则未启用，跳过规则处理。"
