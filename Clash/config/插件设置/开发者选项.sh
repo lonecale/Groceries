@@ -312,7 +312,7 @@ if [ "$china_ip6_route" == "1" ]; then
            # 然后，如果禁用 QUIC 规则被启用，添加一个新的 FORWARD 规则，该规则除了排除 china_ip_route 中的地址，
            # 还要排除 mosdns_ip_route 中的地址，从而拒绝不在这两个集合中的所有 UDP/443 流量。
            add_rules_for_chain "ip6tables" "filter" "FORWARD" "-p udp --dport 443 -o utun -m comment --comment 'OpenClash QUIC REJECT' -m set ! --match-set china_ip6_route dst -m set ! --match-set mosdns_ip6_route dst" "REJECT" ""
-           ip6tables -D FORWARD -p udp --dport 443 -o utun -m 评论 --comment "OpenClash QUIC REJECT" -m set ! --match-set china_ip6_route dst -j REJECT
+           ip6tables -D FORWARD -p udp --dport 443 -o utun -m comment --comment "OpenClash QUIC REJECT" -m set ! --match-set china_ip6_route dst -j REJECT
            # ip6tables -I FORWARD -p udp --dport 443 -o utun -m comment --comment "OpenClash QUIC REJECT" -m set ! --match-set china_ip6_route dst -m set ! --match-set mosdns_ip6_route dst -j REJECT
            LOG_OUT "成功更新 FORWARD 规则以禁用非白名单 QUIC 流量，适用于 utun 接口。"
        else
