@@ -171,7 +171,9 @@ if [ "$china_ip_route" == "1" ]; then
        # 添加规则到 openclash 和 openclash_output 链
        add_nft_rules_for_chain "fw4" "openclash" "ip" "ip daddr @mosdns_ip_route" "counter return" ""
        add_nft_rules_for_chain "fw4" "openclash_mangle" "ip" "ip daddr @mosdns_ip_route" "counter return" ""
-       add_nft_rules_for_chain "fw4" "openclash_output" "ip" "skuid != 65534 ip daddr @mosdns_ip_route" "counter return" ""
+       add_nft_rules_for_chain "fw4" "openclash_mangle_output" "ip" "ip daddr @mosdns_ip_route" "counter return" ""
+       # add_nft_rules_for_chain "fw4" "openclash_output" "ip" "skuid != 65534 ip daddr @mosdns_ip_route" "counter return" ""
+       add_nft_rules_for_chain "fw4" "openclash_output" "ip" "ip daddr @mosdns_ip_route" "counter return" ""
     
        if [ "$disable_udp_quic" == "1" ]; then
            add_nft_rules_for_chain "fw4" "forward" "ip" "oifname utun udp dport 443 ip daddr != @china_ip_route ip daddr != @mosdns_ip_route" "counter reject" 'comment "OpenClash QUIC REJECT"'
@@ -211,8 +213,10 @@ if [ "$china_ip_route" == "1" ]; then
 	   
        # 添加规则到 openclash 和 openclash_output 链
        add_rules_for_chain "iptables" "nat" "openclash" "-m set --match-set mosdns_ip_route dst" "RETURN" ""
-       add_rules_for_chain "iptables" "nat" "openclash_output" "-m owner ! --uid-owner 65534 -m set --match-set mosdns_ip_route dst" "RETURN" ""
+       # add_rules_for_chain "iptables" "nat" "openclash_output" "-m owner ! --uid-owner 65534 -m set --match-set mosdns_ip_route dst" "RETURN" ""
+       add_rules_for_chain "iptables" "nat" "openclash_output" "-m set --match-set mosdns_ip_route dst" "RETURN" ""
        add_rules_for_chain "iptables" "mangle" "openclash" "-m set --match-set mosdns_ip_route dst" "RETURN" ""
+       add_rules_for_chain "iptables" "mangle" "openclash_output" "-m set --match-set mosdns_ip_route dst" "RETURN" ""
 
        # add_rules_for_chain "iptables" "mangle" "openclash_output" "-m owner ! --uid-owner 65534 -m set --match-set mosdns_ip_route dst" "RETURN" ""
        # add_rules_for_chain "iptables" "mangle" "openclash" "-m set ! --match-set mosdns_ip_route dst" "RETURN" ""
@@ -254,11 +258,14 @@ if [ "$china_ip6_route" == "1" ]; then
        fi
 
        # 添加规则到 openclash 和 openclash_output 链
+       add_nft_rules_for_chain "fw4" "openclash_v6" "ip6" "ip6 daddr @mosdns_ip6_route" "counter return" ""
        add_nft_rules_for_chain "fw4" "openclash_mangle_v6" "ip6" "ip6 daddr @mosdns_ip6_route" "counter return" ""
-       add_nft_rules_for_chain "fw4" "openclash_mangle_output_v6" "ip6" "skuid != 65534 ip daddr @mosdns_ip6_route" "counter return" ""
+       # add_nft_rules_for_chain "fw4" "openclash_mangle_output_v6" "ip6" "skuid != 65534 ip6 daddr @mosdns_ip6_route" "counter return" ""
+       add_nft_rules_for_chain "fw4" "openclash_mangle_output_v6" "ip6" "ip6 daddr @mosdns_ip6_route" "counter return" ""
+       add_nft_rules_for_chain "fw4" "openclash_output_v6" "ip6" "ip6 daddr @mosdns_ip6_route" "counter return" ""
 
        if [ "$disable_udp_quic" == "1" ]; then
-           add_nft_rules_for_chain "fw4" "forward" "ip6" "oifname utun udp dport 443 ip daddr != @china_ip6_route ip daddr != @mosdns_ip6_route" "counter reject" 'comment "OpenClash QUIC REJECT"'
+           add_nft_rules_for_chain "fw4" "forward" "ip6" "oifname utun udp dport 443 ip6 daddr != @china_ip6_route ip6 daddr != @mosdns_ip6_route" "counter reject" 'comment "OpenClash QUIC REJECT"'
            del_route_rule="china_ip6_route"
            # del_handle=$(nft --json list chain inet fw4 forward | jq -r --arg rule "$del_route_rule" '.nftables[] | select(.rule.expr[]? | select(.match.right == ("@" + $rule))) | .rule.handle')
            del_handle=$(nft --json list chain inet fw4 forward | jq -r --arg rule "$del_route_rule" '[.nftables[] | select(.rule.expr[]? | select(.match.right == ("@" + $rule))) | .rule.handle] | min')
@@ -267,7 +274,7 @@ if [ "$china_ip6_route" == "1" ]; then
              return
            fi
            nft delete rule inet fw4 forward handle $del_handle
-           # nft insert rule inet fw4 forward position 0 oifname utun udp dport 443 ip daddr != @china_ip6_route ip daddr != @mosdns_ip6_route counter reject comment \"OpenClash QUIC REJECT\"
+           # nft insert rule inet fw4 forward position 0 oifname utun udp dport 443 ip6 daddr != @china_ip6_route ip6 daddr != @mosdns_ip6_route counter reject comment \"OpenClash QUIC REJECT\"
            
            LOG_OUT "成功更新 FORWARD 规则以禁用非白名单 QUIC 流量，适用于 utun 接口。"
        else
@@ -293,9 +300,11 @@ if [ "$china_ip6_route" == "1" ]; then
 
        # 添加规则到 openclash 和 openclash_output 链
        add_rules_for_chain "ip6tables" "nat" "openclash" "-m set --match-set mosdns_ip6_route dst" "RETURN" ""
-       add_rules_for_chain "ip6tables" "nat" "openclash_output" "-m owner ! --uid-owner 65534 -m set --match-set mosdns_ip6_route dst" "RETURN" ""
+       # add_rules_for_chain "ip6tables" "nat" "openclash_output" "-m owner ! --uid-owner 65534 -m set --match-set mosdns_ip6_route dst" "RETURN" ""
+       add_rules_for_chain "ip6tables" "nat" "openclash_output" "-m set --match-set mosdns_ip6_route dst" "RETURN" ""
        add_rules_for_chain "ip6tables" "mangle" "openclash" "-m set --match-set mosdns_ip6_route dst" "RETURN" ""
        # add_rules_for_chain "ip6tables" "mangle" "openclash_output" "-m owner ! --uid-owner 65534 -m set --match-set mosdns_ip6_route dst" "RETURN" ""
+       add_rules_for_chain "ip6tables" "mangle" "openclash_output" "-m set --match-set mosdns_ip6_route dst" "RETURN" ""
 
 
        if [ "$disable_udp_quic" == "1" ]; then
@@ -303,7 +312,7 @@ if [ "$china_ip6_route" == "1" ]; then
            # 然后，如果禁用 QUIC 规则被启用，添加一个新的 FORWARD 规则，该规则除了排除 china_ip_route 中的地址，
            # 还要排除 mosdns_ip_route 中的地址，从而拒绝不在这两个集合中的所有 UDP/443 流量。
            add_rules_for_chain "ip6tables" "filter" "FORWARD" "-p udp --dport 443 -o utun -m comment --comment 'OpenClash QUIC REJECT' -m set ! --match-set china_ip6_route dst -m set ! --match-set mosdns_ip6_route dst" "REJECT" ""
-           ip6tables -D FORWARD -p udp --dport 443 -o utun -m comment --comment "OpenClash QUIC REJECT" -m set ! --match-set china_ip6_route dst -j REJECT
+           ip6tables -D FORWARD -p udp --dport 443 -o utun -m 评论 --comment "OpenClash QUIC REJECT" -m set ! --match-set china_ip6_route dst -j REJECT
            # ip6tables -I FORWARD -p udp --dport 443 -o utun -m comment --comment "OpenClash QUIC REJECT" -m set ! --match-set china_ip6_route dst -m set ! --match-set mosdns_ip6_route dst -j REJECT
            LOG_OUT "成功更新 FORWARD 规则以禁用非白名单 QUIC 流量，适用于 utun 接口。"
        else
