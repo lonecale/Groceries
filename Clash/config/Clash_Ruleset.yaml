@@ -27,12 +27,19 @@ log-level: info
 udp: true
 
 # TCP Keep Alive 包的间隔，单位为秒
-keep-alive-interval: 600
+keep-alive-interval: 60
 # TCP Keep Alive 的最大空闲时间
 keep-alive-idle: 600
 # 禁用 TCP Keep Alive，在 Android 默认为 true
 disable-keep-alive: false
 
+# 可以将静态网页资源 (比如 Clash-dashboard) 运行在 Clash API, 路径为 API 地址/ui，可以为绝对路径，或者 Clash 工作目录的相对路径
+# external-ui: "/usr/share/openclash/ui"
+# 自定义外部用户界面名字
+# 合并为 external-ui/zashboard
+# external-ui-name: zashboard
+# 自定义外部用户界面下载地址
+# external-ui-url: 'https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip'
 
 # 更改geoip使用文件,mmdb或者dat,可选 true/false,true为dat,此项有默认值 false
 geodata-mode: false
@@ -72,14 +79,14 @@ proxy-providers:
       additional-prefix: "[机场名称2] " # 为订阅节点添加机场名称前缀
 
 # 锚点 - 节点筛选组
-FilterZY: &FilterZY '^(?=.*((?i)HKG|Hong Kong|香港 IEPL|香港高级|高级 专线 香港)).*$'
+# FilterZY: &FilterZY '^(?=.*((?i)HKG|Hong Kong|香港 IEPL|香港高级|高级 专线 香港)).*$'
 FilterHK: &FilterHK '^(?=.*((?i)🇭🇰|香港|(\b(HK|Hong)\b)))(?!.*((?i)标准|回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 FilterTW: &FilterTW '^(?=.*((?i)🇹🇼|台湾|(\b(TW|Tai|Taiwan)\b)))(?!.*((?i)标准|回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 FilterJP: &FilterJP '^(?=.*((?i)🇯🇵|日本|川日|东京|大阪|泉日|埼玉|(\b(JP|Japan)\b)))(?!.*((?i)标准|回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 FilterKR: &FilterKR '^(?=.*((?i)🇰🇷|韩国|韓|首尔|(\b(KR|Korea)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 FilterSG: &FilterSG '^(?=.*((?i)🇸🇬|新加坡|狮|(\b(SG|Singapore)\b)))(?!.*((?i)标准|回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 FilterUS: &FilterUS '^(?=.*((?i)🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(\b(US|United States)\b)))(?!.*((?i)标准|回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
-FilterUK: &FilterUK '^(?=.*((?i)🇬🇧|英国|伦敦|(\b(UK|United Kingdom)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
+FilterUK: &FilterUK '^(?=.*((?i)🇬🇧|英国|伦敦|(\b(UK|United Kingdom)\b)))(?!.*((?i)Traffic|流量|回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 FilterFR: &FilterFR '^(?=.*((?i)🇫🇷|法国|(\b(FR|France)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 FilterDE: &FilterDE '^(?=.*((?i)🇩🇪|德国|(\b(DE|Germany)\b)))(?!.*((?i)回国|校园|游戏|🎮|(\b(GAME)\b))).*$'
 FilterGame: &FilterGame '^(?=.*((?i)游戏|🎮|(\b(GAME)\b)))(?!.*((?i)回国|校园)).*$'
@@ -113,12 +120,12 @@ RuleProvidersIpcidrMrs: &RuleProvidersIpcidrMrs {type: http, behavior: ipcidr, i
 
 # 策略组
 proxy-groups: 
-  #- {name: 节点选择, type: select, proxies: [手动切换, 自动选择, HK负载均衡, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png}
+  # - {name: 节点选择, type: select, proxies: [手动切换, 自动选择, HK负载均衡, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Filter.png}
   - {name: 手动切换, type: select, include-all-providers: true, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png}
   - {name: 自动选择, <<: *UrlTest, filter: *FilterAll, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Auto.png}
-  #- {name: HK负载均衡, <<: *LoadBalance, filter: *FilterZY, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin.png}
-  - {name: HK故障转移, <<: *FallBack, filter: *FilterZY, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png}
-  - {name: ProxyDNS, type: select, proxies: [手动切换, HK故障转移, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png}
+  # - {name: HK负载均衡, <<: *LoadBalance, filter: *FilterZY, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Round_Robin.png}
+  # - {name: HK故障转移, <<: *FallBack, filter: *FilterZY, icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Available_1.png}
+  - {name: ProxyDNS, type: select, proxies: [手动切换, 🚥香港故障转移策略组, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Server.png}
   - {name: 国际CDN下载, type: select, include-all-providers: true, filter: "(?i)实验性", proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Download.png}
   - {name: Speedtest, type: select, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️油管节点, 🏷️奈飞节点, 🏷️Disney节点, 🏷️冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speedtest.png}
   - {name: OpenAi, type: select, include-all-providers: true, filter: *FilterUS, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ChatGPT.png}
