@@ -1,6 +1,6 @@
 # mihomo 配置
 # 日期：2024-10-22 23:00
-# 适用版本：适用于使用 mihomo 核心的 OpenClash 等程序。本配置仅含规则以及订阅定义，其它设置请于程序内自行配置。
+# 适用版本：所有使用 mihomo 核心的程序
 
 # HTTP(S) 代理服务器端口
 port: 7890
@@ -33,13 +33,29 @@ keep-alive-idle: 600
 # 禁用 TCP Keep Alive，在 Android 默认为 true
 disable-keep-alive: false
 
+# 开启统一延迟时，会进行两次延迟测试，以消除连接握手等带来的不同类型节点的延迟差异，可选值 true/false
+unified-delay: true 
+# TCP 并发，可选值 true/false
+tcp-concurrent: true
+# 控制是否让 Clash 去匹配进程，always 开启，强制匹配所有进程，strict 默认，由 Clash 判断是否开启，off 不匹配进程，推荐在路由器上使用此模式
+find-process-mode: strict
+# 全局 TLS 指纹，优先低于 proxy 内的 client-fingerprint，目前支持开启 TLS 传输的 TCP/grpc/WS/HTTP , 支持协议有 VLESS,Vmess 和 trojan
+# 可选："chrome", "firefox", "safari", "iOS", "android", "edge", "360"," qq", "random"
+# 若选择 "random", 则按 Cloudflare Radar 数据按概率生成一个现代浏览器指纹。
+global-client-fingerprint: chrome
+
+# 外部控制器，可以使用 RESTful API 来控制你的 Clash 内核，API 监听地址，你可以将 127.0.0.1 修改为 0.0.0.0 来监听所有 IP
+external-controller: 0.0.0.0:9090
 # 可以将静态网页资源 (比如 Clash-dashboard) 运行在 Clash API, 路径为 API 地址/ui，可以为绝对路径，或者 Clash 工作目录的相对路径
-# external-ui: "/usr/share/openclash/ui"
+external-ui: ui
 # 自定义外部用户界面名字
 # 合并为 external-ui/zashboard
-# external-ui-name: zashboard
+external-ui-name: zashboard 
 # 自定义外部用户界面下载地址
-# external-ui-url: 'https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip'
+# external-ui-url: 'https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip'
+external-ui-url: 'https://github.com/Zephyruso/zashboard/releases/latest/download/dist-cdn-fonts.zip'
+# 自定义 API 的访问密钥
+secret: ''
 
 # 更改geoip使用文件,mmdb或者dat,可选 true/false,true为dat,此项有默认值 false
 geodata-mode: false
@@ -55,10 +71,93 @@ geox-url:
   mmdb: 'https://github.com/xream/geoip/releases/latest/download/ipinfo.country.mmdb'
   asn: 'https://raw.githubusercontent.com/P3TERX/GeoLite.mmdb/download/GeoLite2-ASN.mmdb'
 
+profile:
+  # 储存 API 对策略组的选择，以供下次启动时使用
+  store-selected: true 
+  # 持久化 fake-ip 储存 fakeip 映射表，域名再次发生连接时，使用原有映射地址
+  store-fake-ip: true  
+
+# 嗅探域名
+sniffer:               
+  # 是否启用嗅探
+  enable: true
+  # 对 redir-host 类型识别的流量进行强制嗅探
+  force-dns-mapping: true
+  # 对所有未获取到域名的流量进行强制嗅探
+  parse-pure-ip: true
+  # 是否使用嗅探结果作为实际访问，默认为 true
+  # override-destination: true
+  sniff:
+    HTTP:
+      # ports字段，表示端口范围。示例：ports: [80, 8080-8880]
+      ports: [80, 8080-8880]
+      # override-destination字段（可选），用于覆盖全局override-destination设置
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  # 需要强制嗅探的域名（默认情况下只对IP进行嗅探）
+  force-domain:
+    - +.v2ex.com
+  # 需要跳过嗅探的域名。主要解决部分站点sni字段非域名，导致嗅探结果异常的问题，如米家设备Mijia Cloud
+  skip-domain:
+    - +.push.apple.com
+    - Mijia Cloud
+    - dlg.io.mi.com
+    - +.oray.com
+    - +.sunlogin.net
+
+# Tun 配置  
+tun:
+  enable: false
+  # tun 模式堆栈,可用值：system/gvisor/mixed
+  stack: mixed
+  # dns劫持,一般设置为 any:53 即可, 即劫持所有53端口的udp流量
+  dns-hijack: [any:53]
+  # 自动设置全局路由，可以自动将全局流量路由进入tun网卡。
+  auto-route: true
+  # 自动选择流量出口接口，多出口网卡同时连接的设备建议手动指定出口网卡
+  auto-detect-interface: true
+
 dns:
+  enable: true
   #缓存算法: lru: 最近最少使用 arc: 自适应替换缓存
   cache-algorithm: arc
-
+  # 优先使用 DOH 的 http/3
+  # prefer-h3: true
+  # DNS监听地址，仅支持 udp
+  listen: 0.0.0.0:1053
+  # 是否解析 IPV6, 如为 false, 则回应 AAAA 的空解析
+  ipv6: true
+  # DNS处理模式，可选值 normal/fake-ip/redir-host
+  enhanced-mode: fake-ip
+  # Fake-IP解析地址池
+  fake-ip-range: 28.0.0.1/8
+  # fakeip 过滤，以下地址不会下发 fakeip 映射用于连接
+  # fake-ip-filter": ['+.*']
+  fake-ip-filter: ['*', '+.lan', '+.local', '+.direct', '+.market.xiaomi.com', '+.msftconnecttest.com', '+.msftncsi.com', 'localhost.*.qq.com', 'localhost.*.weixin.qq.com']
+  # fake-ip-filter: ['*.lan','*.direct', cable.auth.com, '*.msftconnecttest.com', '*.msftncsi.com', network-test.debian.org, detectportal.firefox.com, resolver1.opendns.com, '*.srv.nintendo.net', '*.stun.playstation.net', 'xbox.*.microsoft.com', '*.xboxlive.com', 'stun.*', global.turn.twilio.com, global.stun.twilio.com, app.yinxiang.com, injections.adguard.org, local.adguard.org, cable.auth.com, 'localhost.*.qq.com', 'localhost.*.weixin.qq.com', '*.logon.battlenet.com.cn', '*.logon.battle.net', '*.blzstatic.cn', 'music.163.com', '*.music.163.com', '*.126.net', musicapi.taihe.com, music.taihe.com, songsearch.kugou.com, trackercdn.kugou.com, '*.kuwo.cn', api-jooxtt.sanook.com, api.joox.com, joox.com, y.qq.com, '*.y.qq.com', streamoc.music.tc.qq.com, mobileoc.music.tc.qq.com, isure.stream.qqmusic.qq.com, dl.stream.qqmusic.qq.com, aqqmusic.tc.qq.com, amobile.music.tc.qq.com, '*.xiami.com', '*.music.migu.cn', music.migu.cn, proxy.golang.org, '*.mcdn.bilivideo.cn', '*.cmpassport.com', id6.me, 'open.e.189.cn', mdn.open.wo.cn, opencloud.wostore.cn, auth.wosms.cn, '*.jegotrip.com.cn', '*.icitymobile.mobi', '*.pingan.com.cn', '*.cmbchina.com', '*.10099.com.cn', pool.ntp.org, '*.pool.ntp.org', 'ntp.*.com', 'time.*.com', 'ntp?.*.com', 'time?.*.com', 'time.*.gov', 'time.*.edu.cn', '*.ntp.org.cn', 'PDC._msDCS.*.*', 'DC._msDCS.*.*', 'GC._msDCS.*.*']
+  # 此设置决定 nameserver、fallback 和 nameserver-policy 中的 DNS 服务器连接是否遵循 'rules' 中的规则：如果设置为 false（默认值），这些 DNS 服务器的连接将不考虑 'rules' 中的设置，而默认采用直连。如果设置为 true，则这些 DNS 服务器的连接方式（代理或直连）将根据 'rules' 中对其地址或域名的具体配置来决定。例如，如果 DNS 服务器的域名或地址在 'rules' 中被配置为通过代理，则 DNS 查询将通过代理发送；如果配置为直连，则将直连发送。特别指定的设置（如 8.8.8.8#RULES）将优先考虑。仅当proxy-server-nameserver非空时可以开启此选项, 强烈不建议和prefer-h3一起使用,此外，这三者配置中的dns服务器如果出现域名会采用default-nameserver配置项解析，也请确保正确配置default-nameserver
+  respect-rules: false
+  # 默认 DNS, 用于解析 DNS 服务器 的域名,只支持纯 IP
+  default-nameserver: ['223.5.5.5', '180.184.1.1']
+  # 代理节点域名解析服务器，仅用于解析代理节点的域名
+  proxy-server-nameserver: ['https://doh.pub/dns-query']
+  # 指定域名查询的解析服务器，可使用 geosite, 优先于 nameserver/fallback 查询
+  nameserver-policy:
+    'geosite:category-ads-all': rcode://success
+    # 'geosite:cn': system
+    '*': system
+    '+.lan': system
+    '+.local': system
+    'geosite:private,cn,apple': ['https://dns.alidns.com/dns-query', 'https://doh.pub/dns-query']
+    # 'www.baidu.com,+.google.cn': ['223.5.5.5', 'https://dns.alidns.com/dns-query']
+    # 'geosite:gfw,geolocation-!cn': ['https://dns.cloudflare.com/dns-query', 'https://dns.google/dns-query']
+  # 默认的域名解析服务器，如不配置 fallback/proxy-server-nameserver , 则所有域名都由 nameserver 解析
+  nameserver: ['https://dns.alidns.com/dns-query', 'https://doh.pub/dns-query']
+  # 后备域名解析服务器，一般情况下使用境外 DNS, 保证结果可信 配置 fallback后默认启用 fallback-filter,geoip-code为 cn
+  # fallback: ['https://dns.cloudflare.com/dns-query#ProxyDNS', 'https://dns.google/dns-query#ProxyDNS']
 
 # 锚点 - 节点订阅的参数 [每12小时更新一次订阅节点，每 300 秒一次健康检查]
 NodeParam: &NodeParam {type: http, interval: 42300, health-check: {enable: true, url: 'https://www.apple.com/library/test/success.html', interval: 300}}
@@ -71,12 +170,18 @@ proxy-providers:
     path: './proxy_provider/机场名称1.yaml'
     override:
       additional-prefix: "[机场名称1] " # 为订阅节点添加机场名称前缀
+      #ip-version: ipv4
+
   机场名称2:
     url: '机场2的订阅URL'
     <<: *NodeParam
     path: './proxy_provider/机场名称2.yaml'
     override:
       additional-prefix: "[机场名称2] " # 为订阅节点添加机场名称前缀
+      #ip-version: ipv4
+
+proxies: 
+  - {name: Direct4, type: direct, udp: true, ip-version: ipv4-prefer}
 
 # 锚点 - 节点筛选组
 # FilterZY: &FilterZY '^(?=.*((?i)HKG|Hong Kong|香港 IEPL|香港高级|高级 专线 香港)).*$'
@@ -99,11 +204,11 @@ FilterAll: &FilterAll '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客�
 
 # 策略组参数锚点
 # 锚点 - 时延优选参数 [每 300 秒一次惰性健康检查，容差 20ms，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
-UrlTest: &UrlTest {type: url-test, interval: 300, tolerance: 20, lazy: true, url: 'https://www.apple.com/library/test/success.html', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: false, include-all-providers: true}
+UrlTest: &UrlTest {type: url-test, interval: 300, tolerance: 20, lazy: true, url: 'https://www.apple.com/library/test/success.html', expected-status: 200/204, disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: false, include-all-providers: true}
 # 锚点 - 故障转移参数 [每 300 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
-FallBack: &FallBack {type: fallback, interval: 300, lazy: true, url: 'https://www.apple.com/library/test/success.html', disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: false, include-all-providers: true}
+FallBack: &FallBack {type: fallback, interval: 300, lazy: true, url: 'https://www.apple.com/library/test/success.html', expected-status: 200/204, disable-udp: false, timeout: 2000, max-failed-times: 3, hidden: false, include-all-providers: true}
 # 锚点 - 负载均衡参数 [每 300 秒一次惰性健康检查，时延超过 2 秒判定为失败，失败 3 次则自动触发健康检查]
-LoadBalance: &LoadBalance {type: load-balance, interval: 300, lazy: true, url: 'https://www.apple.com/library/test/success.html', disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, hidden: false, include-all-providers: true}
+LoadBalance: &LoadBalance {type: load-balance, interval: 300, lazy: true, url: 'https://www.apple.com/library/test/success.html', expected-status: 200/204, disable-udp: false, strategy: consistent-hashing, timeout: 2000, max-failed-times: 3, hidden: false, include-all-providers: true}
 
 # 锚点 - 规则参数 [每12小时更新一次订阅规则]
 RuleProvidersYaml: &RuleProvidersYaml {type: http, behavior: classical, interval: 42300, format: yaml}
@@ -157,9 +262,9 @@ proxy-groups:
   - {name: 国际媒体, type: select, include-all-providers: true, filter: "(?i)实验性", proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️油管节点, 🏷️奈飞节点, 🏷️Disney节点, 🏷️冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ForeignMedia.png}
   - {name: Nintendo, type: select, include-all-providers: true, filter: *FilterGame, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Nintendo.png}
   - {name: 游戏平台, type: select, include-all-providers: true, filter: *FilterGame, proxies: [DIRECT, 手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, 🏷️冷门地区节点], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Game.png}
-  - {name: 全球直连, type: select, proxies: [DIRECT, 手动切换], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png}
+  - {name: 全球直连, type: select, proxies: [DIRECT, Direct4, 手动切换], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Area.png}
   - {name: 广告拦截, type: select, proxies: [REJECT, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Advertising.png}
-  - {name: 应用净化, type: select, proxies: [REJECT, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hijacking.png}
+  # - {name: 应用净化, type: select, proxies: [REJECT, DIRECT], icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hijacking.png}
   # - {name: 兜底策略, type: select, proxies: [手动切换, 香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/shindgewongxj/WHATSINStash/main/icon/fallback.png}
   - {name: 兜底策略, <<: *FallBack, include-all-providers: false, proxies: [香港策略, 台湾策略, 日本策略, 韩国策略, 新国策略, 美国策略, 英国策略, 法国策略, 德国策略, DIRECT], icon: https://raw.githubusercontent.com/shindgewongxj/WHATSINStash/main/icon/fallback.png}
 
@@ -219,15 +324,19 @@ rule-providers:
     path: './ruleset/Lan.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Lan/Lan_No_Resolve.yaml'
 
-  Direct:
-    <<: *RuleProvidersYaml
-    path: './ruleset/Direct.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Direct/Direct_No_Resolve.yaml'
+#  Direct:
+#    <<: *RuleProvidersYaml
+#    path: './ruleset/Direct.yaml'
+#    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Direct/Direct_No_Resolve.yaml'
 
   BanAD:
     <<: *RuleProvidersText
     path: './ruleset/BanAD.txt'
     url: 'https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list'
+
+  ADs_merged:
+    <<: *RuleProvidersDomainMrs
+    url: "https://raw.ihtw.moe/raw.githubusercontent.com/JohnsonRan/CRules/mihomo/rules/ADs_merged.mrs"
 
   BanProgramAD:
     <<: *RuleProvidersText
@@ -244,15 +353,15 @@ rule-providers:
     path: './ruleset/NaSDDNS.yaml'
     url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/NaSDDNS/NaSDDNS_No_Resolve.yaml'
 
-#  PrivateTracker:
-#    <<: *RuleProvidersYaml
-#    path: './ruleset/PrivateTracker.yaml'
-#    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrivateTracker/PrivateTracker_No_Resolve.yaml'
-
   category-pt:
-    <<: *RuleProvidersDomainYaml
+    <<: *RuleProvidersYaml
     path: './ruleset/category-pt.yaml'
-    url: 'https://raw.githubusercontent.com/ixff/clash-rules/release/category-pt.txt'
+    url: 'https://raw.githubusercontent.com/ixff/meta-rules-dat/meta/geo/geosite/classical/category-pt.yaml'
+
+  PrivateTracker:
+    <<: *RuleProvidersYaml
+    path: './ruleset/PrivateTracker.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/PrivateTracker/PrivateTracker_No_Resolve.yaml'
 
 #  DNSlist:
 #    <<: *RuleProvidersYaml
@@ -273,11 +382,6 @@ rule-providers:
     <<: *RuleProvidersYaml
     path: './ruleset/InternationalDownloadCDN.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/InternationalDownloadCDN.yaml'
-
-  InternationalMail:
-    <<: *RuleProvidersYaml
-    path: './ruleset/InternationalMail.yaml'
-    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Mail/Mail_No_Resolve.yaml'
 
   OpenAI:
     <<: *RuleProvidersYaml
@@ -361,6 +465,11 @@ rule-providers:
     <<: *RuleProvidersYaml
     path: './ruleset/Talkatone.yaml'
     url: 'https://kelee.one/Tool/Clash/Rule/Talkatone.yaml'
+
+  InternationalMail:
+    <<: *RuleProvidersYaml
+    path: './ruleset/InternationalMail.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Mail/Mail_No_Resolve.yaml'
 
   Nintendo:
     <<: *RuleProvidersYaml
@@ -532,6 +641,11 @@ rule-providers:
 #    path: './ruleset/cn.yaml'
 #    url: 'https://raw.githubusercontent.com/yuumimi/rules/release/clash/cn.txt'
 
+  ChinaMaxNoIP:
+    <<: *RuleProvidersDomainYaml
+    path: './ruleset/ChinaMaxNoIP.yaml'
+    url: 'https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/ChinaMaxNoIP/ChinaMaxNoIP_Domain.yaml'
+
   ChinaCompanyIp:
     <<: *RuleProvidersText
     path: './ruleset/ChinaCompanyIp.txt'
@@ -550,18 +664,25 @@ rule-providers:
 
 # 规则指向
 rules:
+# Stun
+  - DST-PORT,3478/19302,DIRECT
   - RULE-SET, Lan, DIRECT
-  - RULE-SET, Direct, 全球直连
+  # - RULE-SET, Direct, 全球直连
   - RULE-SET, BanAD, 广告拦截
+  - RULE-SET, ADs_merged, 广告拦截
   - GEOSITE,category-ads-all,广告拦截
-  - RULE-SET, BanProgramAD, 应用净化
-  - RULE-SET, BlockHttpDNS, 应用净化
+  - RULE-SET, BanProgramAD, 广告拦截
+  - RULE-SET, BlockHttpDNS, 广告拦截
+#  - AND,((NETWORK,UDP),(DST-PORT,443),(RULE-SET,YouTube)),广告拦截
+  - AND,((NETWORK,UDP),(DST-PORT,443),(NOT,((RULE-SET,ChinaMaxNoIP)))),广告拦截
   - RULE-SET, NaSDDNS, 全球直连
 # Transmission检测地址
   - DOMAIN-SUFFIX,portcheck.transmissionbt.com, 全球直连
   - DOMAIN-SUFFIX,fsm.name, 国际媒体
-#  - RULE-SET, PrivateTracker, 全球直连
+  - DOMAIN-SUFFIX,icc2022.com, 国际媒体
   - RULE-SET, category-pt, 全球直连
+# PrivateTracker包含BT trackers以及部分PT
+#  - RULE-SET, PrivateTracker, 全球直连
   - RULE-SET, ChinaDownloadCDN, 全球直连
   - RULE-SET, InternationalDownloadCDN, 国际CDN下载
   - RULE-SET, OpenAI, OpenAi
@@ -579,9 +700,9 @@ rules:
 #  - RULE-SET, Telegram_lodepuly, 电报消息
   - RULE-SET, Twitter, Twitter
   - RULE-SET, Talkatone, Talkatone
+  - RULE-SET, InternationalMail, 国际邮件
   - RULE-SET, Nintendo, Nintendo
   - RULE-SET, Game, 游戏平台
-  - RULE-SET, InternationalMail, 国际邮件
   - RULE-SET, AppleProxy, 苹果国际服务
   - RULE-SET, Apple, 苹果服务
   - RULE-SET, OneDrive, 微软云盘
