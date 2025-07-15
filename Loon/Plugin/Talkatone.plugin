@@ -1,15 +1,17 @@
 #!name = Talkatone
 #!desc = Talkatone去广告分流，使用前请在本插件的详情页面为[PROXY]项分配代理策略。本模块仅适用于 Talkatone 登陆后使用，不适用于软件注册，若尝试登录时失败可以将 tktn.at 的策略改为 DIRECT 后再试，成功后改回本来策略或重新更新本模块。
-#!author = LOWERTOP[https://github.com/LOWERTOP/Shadowrocket-First/blob/main/Talkatone.sgmodule],可莉🅥[https://kelee.one/Tool/Loon/Rule/Talkatone.list],Repcz[https://github.com/Repcz/Tool/blob/X/Loon/Rules/Talkatone.list],jqyisbest[https://github.com/jqyisbest/CustomNetworkControls/blob/main/Loon/Talkatone.plugin]
+#!author = LOWERTOP[https://github.com/LOWERTOP/Shadowrocket-First/blob/main/Talkatone.sgmodule],可莉🅥[https://kelee.one/Tool/Loon/Lsr/Talkatone.lsr]
 #!tag = 分流,去广告
 #!system = iOS,iPadOS
 #!loon_version = 3.2.3(753)
 #!homepage = https://github.com/lonecale/Rules
 #!icon = https://raw.githubusercontent.com/luestr/IconResource/main/App_icon/120px/Talkatone.png
-#!date = 2024-11-21 19:00:00
+#!date = 2025-07-15 15:00:00
 
 [Rule]
+# 规则由TalkatoneAntiAds.list+TalkatoneProxyOnly.list组成
 # 以下为该软件部分去广告规则
+# DOMAIN-KEYWORD,googleads,REJECT-DROP
 DOMAIN-SUFFIX,aax.amazon-adsystem.com,REJECT-DROP
 DOMAIN-SUFFIX,aax-fe.amazon-adsystem.com,REJECT-DROP
 DOMAIN-SUFFIX,aax-fe-sin.amazon-adsystem.com,REJECT-DROP
@@ -78,8 +80,10 @@ DOMAIN-SUFFIX,www.googletagservices-cn.com,REJECT-DROP
 # 以下为该软件需要走代理的规则
 DOMAIN-SUFFIX,tktn.at,PROXY
 DOMAIN-SUFFIX,tktn.be,PROXY
-DOMAIN-SUFFIX,tenor.com,PROXY
 DOMAIN-SUFFIX,talkatone.com,PROXY
+# 贴图服务
+DOMAIN-SUFFIX,tenor.com,PROXY
+
 IP-CIDR,50.117.27.0/24,PROXY,no-resolve
 IP-CIDR,63.251.124.0/24,PROXY,no-resolve
 IP-CIDR,69.46.75.0/24,PROXY,no-resolve
